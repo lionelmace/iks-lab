@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Main command lines · IBM Cloud Kubernetes Service Lab</title>
+        <title>Deploy with Helm · IBM Cloud Kubernetes Service Lab</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -81,10 +81,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="prepare-get-cluster.html" />
+    <link rel="next" href="devops-continuous-delivery.html" />
     
     
-    <link rel="prev" href="prepare-plugins.html" />
+    <link rel="prev" href="bind-service.html" />
     
 
     </head>
@@ -167,7 +167,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="2.3" data-path="prepare-cli.html">
+        <li class="chapter " data-level="2.3" data-path="prepare-cli.html">
             
                 <a href="prepare-cli.html">
             
@@ -316,7 +316,7 @@
         
         
     
-        <li class="chapter " data-level="4.1" data-path="devops-helm.html">
+        <li class="chapter active" data-level="4.1" data-path="devops-helm.html">
             
                 <a href="devops-helm.html">
             
@@ -547,7 +547,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Main command lines</a>
+        <a href="." >Deploy with Helm</a>
     </h1>
 </div>
 
@@ -562,11 +562,93 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="main-command-lines">Main Command Lines</h1>
-<p>This schema will become handy during the lab to find our which CLI you need to use.</p>
-<p>     <a href="images/cli-main-cmds.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/cli-main-cmds.png" alt="">
-     </a></p>
+                                <h1 id="deploy-the-app-with-helm-charts">Deploy the app with Helm Charts</h1>
+<p>Helm helps you manage Kubernetes applications &#x2014; Helm Charts helps you define, install, and upgrade even the most complex Kubernetes application.</p>
+<p>During this lab, we are going to install a helm client and configure it. Then we are going to deploy the same app with Helm.</p>
+<p>Charts are easy to create, version, share, and publish &#x2014; so start using Helm and stop the copy-and-paste madness.</p>
+<p>Helm is a client/server application :</p>
+<ul>
+<li>Helm client</li>
+<li>Tiller server.</li>
+</ul>
+<p>LMA do we need to configure RBAC?
+<a href="https://github.com/phthom/ContainerOrchestration/blob/master/4-HelmLab.md" target="_blank">https://github.com/phthom/ContainerOrchestration/blob/master/4-HelmLab.md</a></p>
+<h2 id="initialize-helm--tiller">Initialize Helm &amp; Tiller</h2>
+<ol>
+<li><p>Initialize Helm by navigating and running the below command in your cluster</p>
+<pre class="language-"><code class="lang-sh"> helm init
+</code></pre>
+<p> Results:</p>
+<pre class="language-"><code> $ helm init
+ $HELM_HOME has been configured at /Users/mace/.helm.
+
+ Tiller (the Helm server-side component) has been installed into your Kubernetes Cluster.
+
+ Please note: by default, Tiller is deployed with an insecure &apos;allow unauthenticated users&apos; policy.
+ For more information on securing your installation see: https://docs.helm.sh/using_helm/#securing-your-helm-installation
+ Happy Helming!
+</code></pre></li>
+<li><p>Verify that the tiller-deploy pod has a Status of Running in your cluster.</p>
+<pre class="language-"><code class="lang-sh"> kubectl get pods -n kube-system -l app<span class="token operator">=</span>helm
+</code></pre>
+<p> Results:</p>
+<pre class="language-"><code> NAME                           READY     STATUS    RESTARTS   AGE
+ tiller-deploy-75f5797b-sxmrq   1/1       Running   0          4m
+</code></pre></li>
+</ol>
+<h2 id="deploy-the-app-with-helm">Deploy the app with Helm</h2>
+<ol>
+<li><p>Go to the folder kubernetes/helm/chart</p>
+<pre class="language-"><code class="lang-sh"> <span class="token function">cd</span> mytodos/kubernetes/helm/chart
+</code></pre>
+</li>
+<li><p>To install a Helm chart, run the below command</p>
+<pre class="language-"><code class="lang-sh"> helm <span class="token function">install</span> <span class="token keyword">.</span> --name mytodos
+</code></pre>
+<p> Results:</p>
+<pre class="language-"><code> NAME:   mytodos
+ LAST DEPLOYED: Fri Nov 16 18:51:12 2018
+ NAMESPACE: default
+ STATUS: DEPLOYED
+
+ RESOURCES:
+ ==&gt; v1/Service
+ NAME     TYPE       CLUSTER-IP     EXTERNAL-IP  PORT(S)   AGE
+ mytodos  ClusterIP  172.21.52.118  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>       8080/TCP  0s
+
+ ==&gt; v1beta2/Deployment
+ NAME     DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE
+ mytodos  3        3        3           0          0s
+
+ ==&gt; v1beta1/Ingress
+ NAME     HOSTS                                            ADDRESS           PORTS    AGE
+ mytodos  todo.hacluster.eu-de.containers.appdomain.cloud  149.81.67.38,...  80, 443  0s
+
+ ==&gt; v1/Pod(related)
+ NAME                      READY  STATUS             RESTARTS  AGE
+ mytodos-86884779d9-4c62z  0/1    ContainerCreating  0         0s
+ mytodos-86884779d9-jzzpt  0/1    ContainerCreating  0         0s
+ mytodos-86884779d9-qxnt2  0/1    ContainerCreating  0         0s
+</code></pre></li>
+<li><p>Get the application URL by running these commands:</p>
+<pre class="language-"><code> https://todo.hacluster.eu-de.containers.appdomain.cloud/
+</code></pre><blockquote>
+<p>To run with local values in debug mode: <code>helm install . --name mytodos --values=local-values.yaml --debug</code></p>
+</blockquote>
+</li>
+<li><p>To get the status of the helm deployement</p>
+<pre class="language-"><code> helm status mytodos
+</code></pre></li>
+</ol>
+<h2 id="delete-your-deployment">Delete your deployment</h2>
+<ol>
+<li><p>To delete your deployment</p>
+<pre class="language-"><code> helm delete --purge mytodos
+</code></pre><blockquote>
+<p>Generally, an helm chart is managing many pods, deployments, secrets, volumes and services. So deleting the chart is a quick way to clean up your work.</p>
+</blockquote>
+</li>
+</ol>
 
                                 
                                 </section>
@@ -594,12 +676,12 @@
 
             
                 
-                <a href="prepare-plugins.html" class="navigation navigation-prev " aria-label="Previous page: Install Container Plugins">
+                <a href="bind-service.html" class="navigation navigation-prev " aria-label="Previous page: Optional: Bind a Cloud Service">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="prepare-get-cluster.html" class="navigation navigation-next " aria-label="Next page: Get a cluster">
+                <a href="devops-continuous-delivery.html" class="navigation navigation-next " aria-label="Next page: Deploy with Continuous Delivery">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -610,7 +692,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Main command lines","level":"2.3","depth":1,"next":{"title":"Get a cluster","level":"2.4","depth":1,"path":"prepare-get-cluster.md","ref":"prepare-get-cluster.md","articles":[]},"previous":{"title":"Install Container Plugins","level":"2.2","depth":1,"path":"prepare-plugins.md","ref":"prepare-plugins.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"prepare-cli.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Deploy with Helm","level":"4.1","depth":1,"next":{"title":"Deploy with Continuous Delivery","level":"4.2","depth":1,"path":"devops-continuous-delivery.md","ref":"devops-continuous-delivery.md","articles":[]},"previous":{"title":"Optional: Bind a Cloud Service","level":"3.7","depth":1,"path":"bind-service.md","ref":"bind-service.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"devops-helm.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
