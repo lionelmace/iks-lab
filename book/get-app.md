@@ -18,9 +18,11 @@ We will use a web application for managing todos. The front end is written in An
     npm install
     ```
 
+# Run the application locally
+
 1. Run the application locally
     ```sh
-    npm install
+    npm start
     ```
     Results:
     ```
@@ -29,13 +31,6 @@ We will use a web application for managing todos. The front end is written in An
     added 158 packages from 170 contributors and audited 559 packages in 25.3s
     found 0 vulnerabilities
     ```
-
-# Run the application locally
-
-1. Run the container.
-   ```sh
-   npm start
-   ```
 
 1. After your app starts, click on the eye on the top right corner and select the port `8080` 
 

@@ -15,7 +15,7 @@
       ]
     },
     "webheader": {
-      "headerTitle" : "<b>DRAFT</b> IKS Lab"
+      "headerTitle" : "IBM Cloud Kubernetes Service (IKS) Lab"
     }
   },
   "plugins": [

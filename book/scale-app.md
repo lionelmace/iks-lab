@@ -1,4 +1,4 @@
-# Scale applicationand Clean your services
+# Scale application and Clean your services
 
 1. Let's scale up to 3 replicas
     ```sh

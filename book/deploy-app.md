@@ -11,7 +11,13 @@ In this lab, we will test the **Ingress**.
     cd kubernetes
     ```
 
-1. Edit the YAML file `deploy-app.yml` to set the region, the namespace of your private registry and the cluster name.
+1. Edit the YAML file `deploy-app.yaml` using the online web editor.
+
+    ![](./images/cloudshell-ide-shortcut.png)
+
+    ![](./images/cloudshell-ide-view.png)
+
+1. to set the region, the namespace of your private registry and the cluster name.
 
     Your YAML file should look as follows:
     ```yaml
@@ -88,9 +94,9 @@ In this lab, we will test the **Ingress**.
     ```
 
 1. Deploy the app into your Kubernetes cluster.
+    ```sh
+    kubectl apply -f deploy-app.yml
     ```
-    kubectl create -f deploy-app.yml
-    ````
     Result:
     ```
     deployment.apps/mytodos created
@@ -102,4 +108,4 @@ In this lab, we will test the **Ingress**.
     ```
     https://<cluster-name>.eu-de.containers.appdomain.cloud/todo/
     ```
-    In this example, the url would be ```https://lab-cluster1.eu-de.containers.appdomain.cloud/todo/```
+    In this example, the url would be ```https://lab-cluster-1.eu-de.containers.appdomain.cloud/todo/```
