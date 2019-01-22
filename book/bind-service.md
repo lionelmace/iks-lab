@@ -1,6 +1,7 @@
-# Step 7 - Use a Kubernetes Secret to connect to a IBM Cloud Service
+# Use a Kubernetes Secret to connect to a IBM Cloud Service
 
-This web application uses a Cloudant DBaaS to store the todo. We will first create an instance the Cloudant service, then use a Kubernetes Secret to connect to this DBaaS to the cluster.
+The initial version of the application uses an in-memory database to store the todo. Yet, the web application can be configured to store the todo in either a Cloudant or a Mongo DBaaS.
+We will use a Cloudant DB to demonstrate how to connnect the web app to the  Cloudant service using the Kubernetes Secret.
 
 ## Create an instance of Cloudant and its credentials
 
@@ -26,7 +27,7 @@ This web application uses a Cloudant DBaaS to store the todo. We will first crea
 1. Copy the Credentials from the console to the file credentials.env  LMA
 
 1. Optional: Create an instance of a service using the CLI instead of the Console.
-    ```
+    ```sh
     ibmcloud resource service-instance-create <service_instance_name> <service_name> <service_plan_name> <location>
     ```
     Example:
@@ -40,14 +41,14 @@ This web application uses a Cloudant DBaaS to store the todo. We will first crea
 
 
 1. Optional: Verify you see the new instance created using the CLI
-    ```
-    ic resource service-instances
+    ```sh
+    ibmcloud resource service-instances
     ```
 
 ## Create the Kubernetes Secret
 
 1. Unless you have created a new namespace, we will use the namespace **default** in this lab. To find the list of Kubernetes namespaces:
-    ```
+    ```sh
     kubectl get namespaces
     ```
     Output:
@@ -60,14 +61,14 @@ This web application uses a Cloudant DBaaS to store the todo. We will first crea
 
 1. Create the secret used by the application to obtain service credentials:
 
-    ```
+    ```sh
     kubectl create secret generic database-credentials --from-env-file=/path/to/credentials.env
     ```
     Result:
     > secret/database-credentials created
 
 1. Control that your secret was successfully created
-    ```
+    ```sh
     kubectl get secrets
     ```
 

@@ -90,7 +90,6 @@ In this lab, we will test the **Ingress**.
       selector:
         app: mytodos
         tier: frontend
-
     ```
 
 1. Deploy the app into your Kubernetes cluster.
