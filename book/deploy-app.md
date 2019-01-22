@@ -114,6 +114,6 @@ In this lab, we will test both the **NodePort** and **Ingress** approaches.
     In this example, the url would be ```http://169.47.227.138:31513```
 
 
-## Deploy with Automatic Load Balancer ALB (also known as Ingress)
+## Deploy with Automatic Load Balancer ALB (a.k.a Ingress)
 
 1. LMA
