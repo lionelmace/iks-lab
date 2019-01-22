@@ -577,7 +577,7 @@
 <ol>
 <li><p>Open the creation page for the toolchain by clicking <a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&amp;branch=master" target="_blank">Create toolchain</a></p>
 </li>
-<li><p>Review the diagram of the toolchain. The diagram shows each tool integration in its lifecycle phase in the toolchain.</p>
+<li><p>The diagram of the toolchain shows each tool integration in its lifecycle phase in the toolchain.</p>
 <p>      <a href="images/toolchain-landing.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/toolchain-landing.png" alt="">
      </a></p>
@@ -585,16 +585,23 @@
 <li><p>Review the default information for the toolchain settings. Select the region <strong>Frankfurt</strong> and the Resource Group <strong>lab</strong>.</p>
 </li>
 <li><p>Click Delivery Pipeline.</p>
+<ul>
+<li><p><strong>App name</strong>: Enter the name for your application. The app name must be unique (if you want, you can just use the default value provided).</p>
 </li>
-</ol>
-<p><strong>App name</strong>: Enter the name for your application. The app name must be unique (if you want, you can just use the default value provided).</p>
-<p><strong>Container Registry Region</strong>: Select the region you want the docker images to be created into.</p>
-<p><strong>Container Registry Namespace</strong>: This is your folder in the global image registry in a region, used to manage your own set of images. It must be a unique name. In this lab, we use <strong>lab_registry</strong>.</p>
-<p><strong>IBM Cloud API Key</strong>: Create a new IBM Cloud API Key.</p>
-<p><strong>Cluster Region</strong>: Select the region for the target cluster. </p>
-<p><strong>Cluster Name</strong>: The name of the Kubernetes  cluster that you got assigned. Exemple: <code>lab-cluster-1</code></p>
-<p><strong>Cluster Namespace</strong>: It is a best practice to use explicit namespaces in clusters to separate deployed resources. For instance, we use &#x2018;prod&#x2019; to denote a prod environment within this cluster. Later in the tutorial, we will add a &#x2018;staging&#x2019; environment within the same cluster. You can leave this setting at its default &apos;prod&apos; value.</p>
-<ol>
+<li><p><strong>Container Registry Region</strong>: Select the region you want the docker images to be created into.</p>
+</li>
+<li><p><strong>Container Registry Namespace</strong>: This is your folder in the global image registry in a region, used to manage your own set of images. It must be a unique name. In this lab, we use <strong>lab_registry</strong>.</p>
+</li>
+<li><p><strong>IBM Cloud API Key</strong>: Create a new IBM Cloud API Key.</p>
+</li>
+<li><p><strong>Cluster Region</strong>: Select the region for the target cluster. </p>
+</li>
+<li><p><strong>Cluster Name</strong>: The name of the Kubernetes  cluster that you got assigned. Exemple: <code>lab-cluster-1</code></p>
+</li>
+<li><p><strong>Cluster Namespace</strong>: It is a best practice to use explicit namespaces in clusters to separate deployed resources. For instance, we use &#x2018;prod&#x2019; to denote a prod environment within this cluster. Later in the tutorial, we will add a &#x2018;staging&#x2019; environment within the same cluster. You can leave this setting at its default &apos;prod&apos; value.</p>
+</li>
+</ul>
+</li>
 <li><p>Click Create. After a few moments, your new toolchain&apos;s Overview page opens.</p>
 <p>      <a href="images/toolchain-created.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/toolchain-created.png" alt="">
