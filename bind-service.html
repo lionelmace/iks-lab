@@ -450,12 +450,27 @@
             
         </li>
     
-        <li class="chapter " data-level="6.6" data-path="cluster-cleanup.html">
+        <li class="chapter " data-level="6.6" data-path="test-resiliency.html">
+            
+                <a href="test-resiliency.html">
+            
+                    
+                        <b>6.6.</b>
+                    
+                    Test the resiliency
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.7" data-path="cluster-cleanup.html">
             
                 <a href="cluster-cleanup.html">
             
                     
-                        <b>6.6.</b>
+                        <b>6.7.</b>
                     
                     Clean up the cluster
             
@@ -610,7 +625,44 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 </ol>
 <h2 id="redeploy-the-app">Redeploy the app</h2>
 <ol>
-<li>Modify the YML to uncommend href: env LMA</li>
+<li><p>Modify the YAML to uncomment the last 3 lines of the Deployment section as of envFrom.</p>
+<p> Your YAML file should look as follows:</p>
+<h2 id="yaml"> ```yaml</h2>
+<h1 id="application-to-deploy">Application to deploy</h1>
+<p> apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: mytodos
+ spec:
+   replicas: 2 # tells deployment to run 2 pods matching the template
+   selector:</p>
+<pre class="language-"><code> matchLabels:
+   app: mytodos
+</code></pre><p>   template:   # create pods using pod definition in this template</p>
+<pre class="language-"><code> metadata:
+   labels:
+     app: mytodos
+     tier: frontend
+ spec:
+   containers:
+   - name: mytodos
+     image: registry.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>region</span><span class="token punctuation">&gt;</span></span>.bluemix.net/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>namespace</span><span class="token punctuation">&gt;</span></span>/todo-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>lastname</span><span class="token punctuation">&gt;</span></span>:1.0
+     imagePullPolicy: Always
+     resources:
+       requests:
+         cpu: 250m     # 250 millicores = 1/4 core
+         memory: 128Mi # 128 MB
+       limits:
+         cpu: 500m
+         memory: 384Mi
+     envFrom:
+     - secretRef:
+         name: database-credentials
+</code></pre></li>
+<li><p>Redeploy the application with this configuration</p>
+<pre class="language-"><code class="lang-sh"> kubectl apply -f deploy-app.yaml
+</code></pre>
+</li>
 </ol>
 
                                 

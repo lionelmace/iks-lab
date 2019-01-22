@@ -450,12 +450,27 @@
             
         </li>
     
-        <li class="chapter " data-level="6.6" data-path="cluster-cleanup.html">
+        <li class="chapter " data-level="6.6" data-path="test-resiliency.html">
+            
+                <a href="test-resiliency.html">
+            
+                    
+                        <b>6.6.</b>
+                    
+                    Test the resiliency
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.7" data-path="cluster-cleanup.html">
             
                 <a href="cluster-cleanup.html">
             
                     
-                        <b>6.6.</b>
+                        <b>6.7.</b>
                     
                     Clean up the cluster
             
@@ -532,52 +547,17 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="scale-application-and-clean-your-services">Scale application and Clean your services</h1>
+                                <h1 id="scale-the-application-using-the-replica">Scale the application using the replica</h1>
+<p>The application was deployed with 2 replicas. Let&apos;s scale it to 3 replicas.</p>
 <ol>
 <li><p>Let&apos;s scale up to 3 replicas</p>
 <pre class="language-"><code class="lang-sh"> kubectl scale --replicas<span class="token operator">=</span>3 deployment/mytodos
 </code></pre>
 </li>
-<li><p>Then, inspect our Pods again.</p>
+<li><p>Then, inspect your Pods again.</p>
 <pre class="language-"><code class="lang-sh"> kubectl get pods
 </code></pre>
-</li>
-</ol>
-<h2 id="test-resiliency">Test Resiliency</h2>
-<ol>
-<li><p>Activate the watch on the pod in a separate windows to track what&apos;s going on your pods while you kill your worker nodes:</p>
-<pre class="language-"><code class="lang-sh"> kubectl get po -o wide -w
-</code></pre>
-</li>
-<li><p>Find the IP of the worker node</p>
-<pre class="language-"><code class="lang-sh"> kubectl get nodes
-</code></pre>
-</li>
-<li><p>Kill the worker node</p>
-<pre class="language-"><code class="lang-sh"> kubectl drain 10.75.4.70 --ignore-daemonsets --delete-local-data
-</code></pre>
-<p> Output:</p>
-<pre class="language-"><code> node/10.75.4.70 already cordoned
- WARNING: Deleting pods with local storage: kubernetes-dashboard-7d5d4f48c4-pmgp9; Ignoring DaemonSet-managed pods: logdna-agent-lm8v4, calico-node-78rms, ibm-keepalived-watcher-l6vp8, ibm-kube-fluentd-5ghgk, ibm-master-proxy-48ttq
- pod/ibm-storage-watcher-74c46db958-hfz5v evicted
- pod/kubernetes-dashboard-7d5d4f48c4-pmgp9 evicted
- pod/ibm-cloud-provider-ip-161-156-93-78-5c7d96bb68-pvg9j evicted
- pod/ibm-file-plugin-b759f7cb7-6jmdx evicted
- pod/kube-dns-autoscaler-6cf64dc49f-gh6xk evicted
- pod/calico-kube-controllers-6744d867-7fgxl evicted
- pod/public-crac8b7d523dea4c85bea1139ef7328163-alb1-657b4fbbb4-xvq2q evicted
- pod/client-certificate-demo-676dbdd676-8b7k7 evicted
- pod/kube-dns-amd64-5dc4d6b67-clvnh evicted
-</code></pre></li>
-<li><p>Check the status of your node. You should see the node has the status <code>SchedulingDisabled</code></p>
-<pre class="language-"><code> NAME           STATUS                     ROLES     AGE       VERSION
- 10.123.12.75   Ready                      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>    48d       v1.11.3+IKS
- 10.135.52.88   Ready                      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>    48d       v1.11.3+IKS
- 10.75.4.70     Ready,SchedulingDisabled   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>    48d       v1.11.3+IKS
-</code></pre></li>
-<li><p>Re-activate the worker node</p>
-<pre class="language-"><code class="lang-sh"> kubectl uncordon 10.75.4.70
-</code></pre>
+<p> You should now see 3 pods.</p>
 </li>
 </ol>
 

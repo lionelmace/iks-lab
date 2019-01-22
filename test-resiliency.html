@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Install Container Plugins · IBM Cloud Kubernetes Service Lab</title>
+        <title>Test the resiliency · IBM Cloud Kubernetes Service Lab</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -81,10 +81,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="prepare-cli.html" />
+    <link rel="next" href="cluster-cleanup.html" />
     
     
-    <link rel="prev" href="prepare-prereq.html" />
+    <link rel="prev" href="appendix.html" />
     
 
     </head>
@@ -152,7 +152,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="2.2" data-path="prepare-plugins.html">
+        <li class="chapter " data-level="2.2" data-path="prepare-plugins.html">
             
                 <a href="prepare-plugins.html">
             
@@ -450,7 +450,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6.6" data-path="test-resiliency.html">
+        <li class="chapter active" data-level="6.6" data-path="test-resiliency.html">
             
                 <a href="test-resiliency.html">
             
@@ -532,7 +532,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Install Container Plugins</a>
+        <a href="." >Test the resiliency</a>
     </h1>
 </div>
 
@@ -547,58 +547,40 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="install-the-kubernetes-service-and-container-registry-plugins">Install the Kubernetes Service and Container Registry plugins</h1>
-<p><code>ibmcloud</code> is the command line tool to interact with IBM Cloud. It comes with plugins to work with IBM Cloud services. For the lab, we need two plugins <strong>Kubernetes Service</strong> and <strong>Container Registry</strong>.</p>
+                                <h1 id="test-resiliency">Test Resiliency</h1>
 <ol>
-<li><p>Open a command line utility.</p>
+<li><p>Activate the watch on the pod in a separate windows to track what&apos;s going on your pods while you kill your worker nodes:</p>
+<pre class="language-"><code class="lang-sh"> kubectl get po -o wide -w
+</code></pre>
 </li>
-<li><p>Before installing any plugin, you need to add the repository hosting IBM Cloud CLI plug-ins.</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud plugin repos
+<li><p>Find the IP of the worker node</p>
+<pre class="language-"><code class="lang-sh"> kubectl get nodes
+</code></pre>
+</li>
+<li><p>Kill the worker node</p>
+<pre class="language-"><code class="lang-sh"> kubectl drain 10.75.4.70 --ignore-daemonsets --delete-local-data
 </code></pre>
 <p> Output:</p>
-<pre class="language-"><code> Listing added plug-in repositories...
-
- Repo Name   URL                                    Description
- IBM Cloud   https://plugins.cloud.ibm.com          Official repository (Formerly named &apos;Bluemix&apos;)
+<pre class="language-"><code> node/10.75.4.70 already cordoned
+ WARNING: Deleting pods with local storage: kubernetes-dashboard-7d5d4f48c4-pmgp9; Ignoring DaemonSet-managed pods: logdna-agent-lm8v4, calico-node-78rms, ibm-keepalived-watcher-l6vp8, ibm-kube-fluentd-5ghgk, ibm-master-proxy-48ttq
+ pod/ibm-storage-watcher-74c46db958-hfz5v evicted
+ pod/kubernetes-dashboard-7d5d4f48c4-pmgp9 evicted
+ pod/ibm-cloud-provider-ip-161-156-93-78-5c7d96bb68-pvg9j evicted
+ pod/ibm-file-plugin-b759f7cb7-6jmdx evicted
+ pod/kube-dns-autoscaler-6cf64dc49f-gh6xk evicted
+ pod/calico-kube-controllers-6744d867-7fgxl evicted
+ pod/public-crac8b7d523dea4c85bea1139ef7328163-alb1-657b4fbbb4-xvq2q evicted
+ pod/client-certificate-demo-676dbdd676-8b7k7 evicted
+ pod/kube-dns-amd64-5dc4d6b67-clvnh evicted
 </code></pre></li>
-<li><p>If you don&apos;t see a repository, run the following command:</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud plugin repo-add <span class="token string">&quot;IBM Cloud&quot;</span> https://plugins.cloud.ibm.com
-</code></pre>
-</li>
-</ol>
-<h2 id="install-the-kubernetes-service-ks-plugin">Install the Kubernetes Service (KS) plugin</h2>
-<p>To create Kubernetes clusters, and manage worker nodes, install the Container Service plug-in.</p>
-<ol>
-<li><p>To install the Container Service plugin, run the following command:</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud plugin <span class="token function">install</span> container-service -r <span class="token string">&quot;IBM Cloud&quot;</span>
-</code></pre>
-</li>
-<li><p>Log in to the IBM Cloud Kubernetes Service. The prefix for running commands by using the IBM Cloud Kubernetes Service plug-in is <strong>ibmcloud ks</strong>.</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud ks init
-</code></pre>
-</li>
-</ol>
-<h2 id="install-the-container-registry-cr-plugin">Install the Container Registry (CR) plugin</h2>
-<ol>
-<li><p>To manage a private image registry, install the Container Registry plug-in.</p>
-<p> This plug-in connects to a private image registry, where you can store docker images that can be used to build containers. The prefix for running registry commands is <strong>ibmcloud cr</strong>.</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud plugin <span class="token function">install</span> container-registry -r <span class="token string">&quot;IBM Cloud&quot;</span>
-</code></pre>
-</li>
-</ol>
-<h2 id="verify-the-plugins-installation">Verify the plugins installation</h2>
-<ol>
-<li><p>To verify that the plug-in has been installed properly, run the following command:</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud plugin list
-</code></pre>
-<p> and both plug-ins are displayed in the results:</p>
-<pre class="language-"><code> Listing installed plug-ins...
-
- Plugin Name          Version
- container-registry                     0.1.347   
- container-service/kubernetes-service   0.2.19
+<li><p>Check the status of your node. You should see the node has the status <code>SchedulingDisabled</code></p>
+<pre class="language-"><code> NAME           STATUS                     ROLES     AGE       VERSION
+ 10.123.12.75   Ready                      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>    48d       v1.11.3+IKS
+ 10.135.52.88   Ready                      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>    48d       v1.11.3+IKS
+ 10.75.4.70     Ready,SchedulingDisabled   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>    48d       v1.11.3+IKS
 </code></pre></li>
-<li>To update the container registry plugin<pre class="language-"><code class="lang-sh"> ibmcloud plugin update container-registry
+<li><p>Re-activate the worker node</p>
+<pre class="language-"><code class="lang-sh"> kubectl uncordon 10.75.4.70
 </code></pre>
 </li>
 </ol>
@@ -629,12 +611,12 @@
 
             
                 
-                <a href="prepare-prereq.html" class="navigation navigation-prev " aria-label="Previous page: Pre-Requisites">
+                <a href="appendix.html" class="navigation navigation-prev " aria-label="Previous page: Appendix">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="prepare-cli.html" class="navigation navigation-next " aria-label="Next page: Main command lines">
+                <a href="cluster-cleanup.html" class="navigation navigation-next " aria-label="Next page: Clean up the cluster">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -645,7 +627,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Install Container Plugins","level":"2.2","depth":1,"next":{"title":"Main command lines","level":"2.3","depth":1,"path":"prepare-cli.md","ref":"prepare-cli.md","articles":[]},"previous":{"title":"Pre-Requisites","level":"2.1","depth":1,"path":"prepare-prereq.md","ref":"prepare-prereq.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"prepare-plugins.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Test the resiliency","level":"6.6","depth":1,"next":{"title":"Clean up the cluster","level":"6.7","depth":1,"path":"cluster-cleanup.md","ref":"cluster-cleanup.md","articles":[]},"previous":{"title":"Appendix","level":"6.5","depth":1,"path":"appendix.md","ref":"appendix.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"test-resiliency.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

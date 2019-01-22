@@ -450,12 +450,27 @@
             
         </li>
     
-        <li class="chapter " data-level="6.6" data-path="cluster-cleanup.html">
+        <li class="chapter " data-level="6.6" data-path="test-resiliency.html">
+            
+                <a href="test-resiliency.html">
+            
+                    
+                        <b>6.6.</b>
+                    
+                    Test the resiliency
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.7" data-path="cluster-cleanup.html">
             
                 <a href="cluster-cleanup.html">
             
                     
-                        <b>6.6.</b>
+                        <b>6.7.</b>
                     
                     Clean up the cluster
             
@@ -549,7 +564,7 @@
        <img src="images/cloudshell-ide-view.png" alt="">
      </a></p>
 </li>
-<li><p>to set the region, the namespace of your private registry and the cluster name.</p>
+<li><p>In the YAML, set the region (3 changes), the namespace of your private registry (1 change), the docker image name (1 change) and the cluster name (3 changes).</p>
 <p> Your YAML file should look as follows:</p>
 <pre class="language-"><code class="lang-yaml"> <span class="token punctuation">---</span>
  <span class="token comment"># Application to deploy</span>
@@ -594,10 +609,10 @@
  <span class="token key atrule">spec</span><span class="token punctuation">:</span>
    <span class="token key atrule">tls</span><span class="token punctuation">:</span>
    <span class="token punctuation">-</span> <span class="token key atrule">hosts</span><span class="token punctuation">:</span>
-     <span class="token punctuation">-</span> &lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>.eu<span class="token punctuation">-</span>de.containers.appdomain.cloud
+     <span class="token punctuation">-</span> &lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>.&lt;region<span class="token punctuation">&gt;</span>.containers.appdomain.cloud
      <span class="token key atrule">secretName</span><span class="token punctuation">:</span> &lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>
    <span class="token key atrule">rules</span><span class="token punctuation">:</span>
-   <span class="token punctuation">-</span> <span class="token key atrule">host</span><span class="token punctuation">:</span> &lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>.eu<span class="token punctuation">-</span>de.containers.appdomain.cloud
+   <span class="token punctuation">-</span> <span class="token key atrule">host</span><span class="token punctuation">:</span> &lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>.&lt;region<span class="token punctuation">&gt;</span>.containers.appdomain.cloud
      <span class="token key atrule">http</span><span class="token punctuation">:</span>
        <span class="token key atrule">paths</span><span class="token punctuation">:</span>
        <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> /todo/
