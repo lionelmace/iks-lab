@@ -48,7 +48,66 @@ https://github.com/phthom/ContainerOrchestration/blob/master/4-HelmLab.md
 
 1. Go to the folder kubernetes/helm/chart
     ```sh
-    cd mytodos/kubernetes/helm/chart
+    cd mytodo/chart/mytodos
+    ```
+
+1. Edit the file **local-values.yaml** to change the repository values which includes: the region, the registry namespace, the image name, and the tag (=version).
+
+    ```yaml
+      # Default values for mytodos.
+      # This is a YAML-formatted file.
+      # Declare variables to be passed into your templates.
+
+    replicaCount: 3
+
+    image:
+      repository: registry.<region>.bluemix.net/<namespace>/todo-<lastname>
+      tag: 1.0
+      pullPolicy: Always
+
+     # secret:
+     #   database: database-credentials
+
+    nameOverride: ""
+    fullnameOverride: ""
+
+    service:
+      type: ClusterIP
+      port: 8080
+
+    ingress:
+      enabled: true
+      annotations:
+        # Force the use of https if the request is http
+        ingress.bluemix.net/redirect-to-https: "True"
+        # Activate App ID for Authentication
+        # Requires the existence of an App Id service bound to the cluster
+        # ingress.bluemix.net/appid-auth: "bindSecret=binding-app-id-20180705 namespace=default requestType=web serviceName=mytodos"
+    path: /
+    hosts:
+        - todo.<cluster-name>.<region>.containers.appdomain.cloud
+    tls:
+        - secretName: <cluster-name>
+        hosts:
+            - todo.<cluster-name>.<region>.containers.appdomain.cloud
+
+    resources:
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    limits:
+        cpu: 500m
+        memory: 384Mi
+    requests:
+        cpu: 250m
+        memory: 128Mi
+
+    nodeSelector: {}
+
+    tolerations: []
+
+    affinity: {}
     ```
 
 1. To install a Helm chart, run the below command
@@ -74,7 +133,7 @@ https://github.com/phthom/ContainerOrchestration/blob/master/4-HelmLab.md
 
     ==> v1beta1/Ingress
     NAME     HOSTS                                            ADDRESS           PORTS    AGE
-    mytodos  todo.hacluster.eu-de.containers.appdomain.cloud  149.81.67.38,...  80, 443  0s
+    mytodos  todo.lab-cluster-1.eu-de.containers.appdomain.cloud  149.81.67.38,...  80, 443  0s
 
     ==> v1/Pod(related)
     NAME                      READY  STATUS             RESTARTS  AGE
@@ -83,18 +142,18 @@ https://github.com/phthom/ContainerOrchestration/blob/master/4-HelmLab.md
     mytodos-86884779d9-qxnt2  0/1    ContainerCreating  0         0s
     ```
 
-1. Get the application URL by running these commands:
-    ```
-    https://todo.hacluster.eu-de.containers.appdomain.cloud/
-    ```
-
-    > To run with local values in debug mode: ```
-    helm install . --name mytodos --values=local-values.yaml --debug```
-
 1. To get the status of the helm deployement
     ```
     helm status mytodos
     ```
+
+1. Get the application URL by running these commands:
+    ```
+    https://todo.<cluster-name>.eu-de.containers.appdomain.cloud/
+    ```
+
+    > To run with local values in debug mode: ```
+    helm install . --name mytodos --values=local-values.yaml --debug```
 
 ## Delete your deployment
 
