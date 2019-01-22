@@ -11,13 +11,19 @@ In this lab, we will test the **Ingress**.
     cd kubernetes
     ```
 
-1. Edit the YAML file `deploy-app.yaml` using the online web editor.
+1. Let's use the online web editor to modify the deployment file. Click the pen on the top right corner
 
     ![](./images/cloudshell-ide-shortcut.png)
 
+1. Open the project **mytodos** you cloned before. Select Files on the left hand side, then Open Workspace and search for the downloaded project
+
+    ![](./images/cloudshell-ide-open.png)
+
     ![](./images/cloudshell-ide-view.png)
 
-1. In the YAML, set the region (3 changes), the namespace of your private registry (1 change), the docker image name (1 change) and the cluster name (3 changes).
+1. Select the YAML file `ingress-tls-deploy.yaml` .
+
+1. Set the region (3 changes), the namespace of your private registry (1 change), the docker image name (1 change) and the cluster name (3 changes).
 
     Your YAML file should look as follows:
     ```yaml
@@ -94,7 +100,7 @@ In this lab, we will test the **Ingress**.
 
 1. Deploy the app into your Kubernetes cluster.
     ```sh
-    kubectl apply -f deploy-app.yml
+    kubectl apply -f ingress-tls-deploy.yaml
     ```
     Result:
     ```

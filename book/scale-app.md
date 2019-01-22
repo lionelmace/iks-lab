@@ -12,3 +12,10 @@ The application was deployed with 2 replicas. Let's scale it to 3 replicas.
     kubectl get pods
     ```
     You should now see 3 pods.
+
+# Clean up the environment
+
+1. Delete the deployment and the services
+    ```sh
+    kubectl delete -f ingress-tls-deploy.yaml
+    ```
