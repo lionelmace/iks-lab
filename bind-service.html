@@ -532,8 +532,9 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="step-7---use-a-kubernetes-secret-to-connect-to-a-ibm-cloud-service">Step 7 - Use a Kubernetes Secret to connect to a IBM Cloud Service</h1>
-<p>This web application uses a Cloudant DBaaS to store the todo. We will first create an instance the Cloudant service, then use a Kubernetes Secret to connect to this DBaaS to the cluster.</p>
+                                <h1 id="use-a-kubernetes-secret-to-connect-to-a-ibm-cloud-service">Use a Kubernetes Secret to connect to a IBM Cloud Service</h1>
+<p>The initial version of the application uses an in-memory database to store the todo. Yet, the web application can be configured to store the todo in either a Cloudant or a Mongo DBaaS.
+We will use a Cloudant DB to demonstrate how to connnect the web app to the  Cloudant service using the Kubernetes Secret.</p>
 <h2 id="create-an-instance-of-cloudant-and-its-credentials">Create an instance of Cloudant and its credentials</h2>
 <ol>
 <li><p>Go to the <a href="https://cloud.ibm.com/catalog" target="_blank">Cloud Services Catalog</a> </p>
@@ -562,8 +563,9 @@
 <li><p>Copy the Credentials from the console to the file credentials.env  LMA</p>
 </li>
 <li><p>Optional: Create an instance of a service using the CLI instead of the Console.</p>
-<pre class="language-"><code> ibmcloud resource service-instance-create <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>service_instance_name</span><span class="token punctuation">&gt;</span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>service_name</span><span class="token punctuation">&gt;</span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>service_plan_name</span><span class="token punctuation">&gt;</span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>location</span><span class="token punctuation">&gt;</span></span>
-</code></pre><p> Example:</p>
+<pre class="language-"><code class="lang-sh"> ibmcloud resource service-instance-create <span class="token operator">&lt;</span>service_instance_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>service_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>service_plan_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>location<span class="token operator">&gt;</span>
+</code></pre>
+<p> Example:</p>
 <pre class="language-"><code> ibmcloud resource service-instance-create todo-cloudant cloudant lite eu-de
 </code></pre><blockquote>
 <p>Warning: Kubernetes Secrets do not accept underscore in the service instance name. LMA true?</p>
@@ -573,29 +575,33 @@
 </li>
 </ol>
 <ol>
-<li>Optional: Verify you see the new instance created using the CLI<pre class="language-"><code> ic resource service-instances
-</code></pre></li>
+<li>Optional: Verify you see the new instance created using the CLI<pre class="language-"><code class="lang-sh"> ibmcloud resource service-instances
+</code></pre>
+</li>
 </ol>
 <h2 id="create-the-kubernetes-secret">Create the Kubernetes Secret</h2>
 <ol>
 <li><p>Unless you have created a new namespace, we will use the namespace <strong>default</strong> in this lab. To find the list of Kubernetes namespaces:</p>
-<pre class="language-"><code> kubectl get namespaces
-</code></pre><p> Output:</p>
+<pre class="language-"><code class="lang-sh"> kubectl get namespaces
+</code></pre>
+<p> Output:</p>
 <pre class="language-"><code> NAME          STATUS    AGE
  default       Active    7d
  ibm-system    Active    7d
  kube-system   Active    7d
 </code></pre></li>
 <li><p>Create the secret used by the application to obtain service credentials:</p>
-<pre class="language-"><code> kubectl create secret generic database-credentials --from-env-file=/path/to/credentials.env
-</code></pre><p> Result:</p>
+<pre class="language-"><code class="lang-sh"> kubectl create secret generic database-credentials --from-env-file<span class="token operator">=</span>/path/to/credentials.env
+</code></pre>
+<p> Result:</p>
 <blockquote>
 <p>secret/database-credentials created</p>
 </blockquote>
 </li>
 <li><p>Control that your secret was successfully created</p>
-<pre class="language-"><code> kubectl get secrets
-</code></pre></li>
+<pre class="language-"><code class="lang-sh"> kubectl get secrets
+</code></pre>
+</li>
 <li><p>You can view the secret in the Kubernetes Dashboard</p>
 <p>      <a href="images/k8s-secret.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/k8s-secret.png" alt="">
