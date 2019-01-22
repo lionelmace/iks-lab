@@ -556,15 +556,22 @@
 <pre class="language-"><code class="lang-sh"> <span class="token function">cd</span> kubernetes
 </code></pre>
 </li>
-<li><p>Edit the YAML file <code>deploy-app.yaml</code> using the online web editor.</p>
+<li><p>Let&apos;s use the online web editor to modify the deployment file. Click the pen on the top right corner</p>
 <p>      <a href="images/cloudshell-ide-shortcut.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/cloudshell-ide-shortcut.png" alt="">
+     </a></p>
+</li>
+<li><p>Open the project <strong>mytodos</strong> you cloned before. Select Files on the left hand side, then Open Workspace and search for the downloaded project</p>
+<p>      <a href="images/cloudshell-ide-open.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/cloudshell-ide-open.png" alt="">
      </a></p>
 <p>      <a href="images/cloudshell-ide-view.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/cloudshell-ide-view.png" alt="">
      </a></p>
 </li>
-<li><p>In the YAML, set the region (3 changes), the namespace of your private registry (1 change), the docker image name (1 change) and the cluster name (3 changes).</p>
+<li><p>Select the YAML file <code>ingress-tls-deploy.yaml</code> .</p>
+</li>
+<li><p>Set the region (3 changes), the namespace of your private registry (1 change), the docker image name (1 change) and the cluster name (3 changes).</p>
 <p> Your YAML file should look as follows:</p>
 <pre class="language-"><code class="lang-yaml"> <span class="token punctuation">---</span>
  <span class="token comment"># Application to deploy</span>
@@ -638,7 +645,7 @@
 </code></pre>
 </li>
 <li><p>Deploy the app into your Kubernetes cluster.</p>
-<pre class="language-"><code class="lang-sh"> kubectl apply -f deploy-app.yml
+<pre class="language-"><code class="lang-sh"> kubectl apply -f ingress-tls-deploy.yaml
 </code></pre>
 <p> Result:</p>
 <pre class="language-"><code> deployment.apps/mytodos created
