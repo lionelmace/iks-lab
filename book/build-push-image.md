@@ -13,7 +13,7 @@ Before you can run the application on the cluster, you first need to push the Do
     ```sh
     ibmcloud cr namespace-list
     ```
-    You should get a namespace called **lab-registry**
+    You should get a namespace called **lab_registry**
 
 1. Build a Docker image. Make sure to replace the value region and namespace
     ```sh
@@ -37,7 +37,7 @@ Before you can run the application on the cluster, you first need to push the Do
     Listing images...
 
     REPOSITORY                                  NAMESPACE   TAG       DIGEST         CREATED        SIZE     VULNERABILITY STATUS
-    registry.eu-de.bluemix.net/lab-registry/todo-mace   namespace   1   0d90cb732881   1 minute ago   264 MB   OK
+    registry.eu-de.bluemix.net/lab_registry/todo-mace   namespace   1   0d90cb732881   1 minute ago   264 MB   OK
     ``` 
 
 1. The image is also visible in the IBM Cloud Console. Go to the [Container Registry](https://cloud.ibm.com/containers-kubernetes/registry/main/start).
