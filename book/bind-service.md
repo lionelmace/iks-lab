@@ -114,6 +114,7 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
             envFrom:
             - secretRef:
                 name: database-credentials
+    ```
 
 1. Redeploy the application with this configuration
     ```sh

@@ -21,7 +21,7 @@ In this lab, we will test the **Ingress**.
 
     ![](./images/cloudshell-ide-view.png)
 
-1. Select the YAML file `ingress-tls-deploy.yaml` .
+1. Select the file `ingress-tls-deploy.yaml` .
 
 1. Set the region (3 changes), the namespace of your private registry (1 change), the docker image name (1 change) and the cluster name (3 changes).
 
