@@ -627,38 +627,39 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 <ol>
 <li><p>Modify the YAML to uncomment the last 3 lines of the Deployment section as of envFrom.</p>
 <p> Your YAML file should look as follows:</p>
-<h2 id="yaml"> ```yaml</h2>
-<h1 id="application-to-deploy">Application to deploy</h1>
-<p> apiVersion: apps/v1
- kind: Deployment
- metadata:
-   name: mytodos
- spec:
-   replicas: 2 # tells deployment to run 2 pods matching the template
-   selector:</p>
-<pre class="language-"><code> matchLabels:
-   app: mytodos
-</code></pre><p>   template:   # create pods using pod definition in this template</p>
-<pre class="language-"><code> metadata:
-   labels:
-     app: mytodos
-     tier: frontend
- spec:
-   containers:
-   - name: mytodos
-     image: registry.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>region</span><span class="token punctuation">&gt;</span></span>.bluemix.net/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>namespace</span><span class="token punctuation">&gt;</span></span>/todo-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>lastname</span><span class="token punctuation">&gt;</span></span>:1.0
-     imagePullPolicy: Always
-     resources:
-       requests:
-         cpu: 250m     # 250 millicores = 1/4 core
-         memory: 128Mi # 128 MB
-       limits:
-         cpu: 500m
-         memory: 384Mi
-     envFrom:
-     - secretRef:
-         name: database-credentials
-</code></pre></li>
+<pre class="language-"><code class="lang-yaml"> <span class="token punctuation">---</span>
+ <span class="token comment"># Application to deploy</span>
+ <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+ <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
+ <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodos
+ <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+   <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">2 </span><span class="token comment"># tells deployment to run 2 pods matching the template</span>
+   <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+     <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+       <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodos
+   <span class="token key atrule">template</span><span class="token punctuation">:</span>   <span class="token comment"># create pods using pod definition in this template</span>
+     <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+       <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+         <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodos
+         <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
+     <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+       <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+       <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodos
+         <span class="token key atrule">image</span><span class="token punctuation">:</span> registry.&lt;region<span class="token punctuation">&gt;</span>.bluemix.net/&lt;namespace<span class="token punctuation">&gt;</span>/todo<span class="token punctuation">-</span>&lt;lastname<span class="token punctuation">&gt;</span><span class="token punctuation">:</span><span class="token number">1.0</span>
+         <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> Always
+         <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+           <span class="token key atrule">requests</span><span class="token punctuation">:</span>
+             <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 250m     <span class="token comment"># 250 millicores = 1/4 core</span>
+             <span class="token key atrule">memory</span><span class="token punctuation">:</span> 128Mi <span class="token comment"># 128 MB</span>
+           <span class="token key atrule">limits</span><span class="token punctuation">:</span>
+             <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 500m
+             <span class="token key atrule">memory</span><span class="token punctuation">:</span> 384Mi
+         <span class="token key atrule">envFrom</span><span class="token punctuation">:</span>
+         <span class="token punctuation">-</span> <span class="token key atrule">secretRef</span><span class="token punctuation">:</span>
+             <span class="token key atrule">name</span><span class="token punctuation">:</span> database<span class="token punctuation">-</span>credentials
+</code></pre>
+</li>
 <li><p>Redeploy the application with this configuration</p>
 <pre class="language-"><code class="lang-sh"> kubectl apply -f deploy-app.yaml
 </code></pre>
