@@ -2,39 +2,19 @@
 
 Different ways exist to make your app accessible from the internet. To choose the best networking option for your application, you can follow the decision tree available [here](https://cloud.ibm.com/docs/containers/cs_network_planning.html#planning).
 
-In this lab, we will test both the **NodePort** and **Ingress** approaches.
+In this lab, we will test the **Ingress**.
 
-## Deploy with NodePort
+## Deploy with Ingress
 
 1. Navigate to the folder **kubernetes**.
     ```sh
     cd kubernetes
     ```
 
-1. Edit the YAML file `nodeport-deploy.yml` to set the namespace of your private registry. If you don't remember this namespace, run the following command:
-    ```sh
-    ibmcloud cr namespace-list
-    ```
+1. Edit the YAML file `deploy-app.yml` to set the region, the namespace of your private registry and the cluster name.
 
     Your YAML file should look as follows:
     ```yaml
-    ---
-    # Service to expose frontend
-    apiVersion: v1
-    kind: Service
-    metadata:
-      name: mytodos
-      labels:
-        app: mytodos
-        tier: frontend
-    spec:
-      type: NodePort
-      ports:
-      - port: 8080
-        nodePort: 31513
-      selector:
-        app: mytodos
-        tier: frontend
     ---
     # Application to deploy
     apiVersion: apps/v1
@@ -46,7 +26,7 @@ In this lab, we will test both the **NodePort** and **Ingress** approaches.
       selector:
         matchLabels:
           app: mytodos
-      template: # create pods using pod definition in this template
+      template:   # create pods using pod definition in this template
         metadata:
           labels:
             app: mytodos
@@ -54,7 +34,7 @@ In this lab, we will test both the **NodePort** and **Ingress** approaches.
         spec:
           containers:
           - name: mytodos
-            image: registry.<region>.bluemix.net/<namespace>/mytodos:1
+            image: registry.<region>.bluemix.net/<namespace>/todo-<lastname>:1.0
             imagePullPolicy: Always
             resources:
               requests:
@@ -63,57 +43,63 @@ In this lab, we will test both the **NodePort** and **Ingress** approaches.
               limits:
                 cpu: 500m
                 memory: 384Mi
+            # envFrom:
+            # - secretRef:
+            #     name: database-credentials
+    ---
+    apiVersion: extensions/v1beta1
+    kind: Ingress
+    metadata:
+      name: mytodos-ingress
+      annotations:
+        ingress.bluemix.net/rewrite-path: "serviceName=mytodos rewrite=/"
+        # Force the use of https if the request is http
+        ingress.bluemix.net/redirect-to-https: "True"
+    spec:
+      tls:
+      - hosts:
+        - <cluster-name>.eu-de.containers.appdomain.cloud
+        secretName: <cluster-name>
+      rules:
+      - host: <cluster-name>.eu-de.containers.appdomain.cloud
+        http:
+          paths:
+          - path: /todo/
+            backend:
+              serviceName: mytodos
+              servicePort: 8080
+    ---
+    # Service to expose frontend
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: mytodos
+      labels:
+        app: mytodos
+        tier: frontend
+    spec:
+      ports:
+      - protocol: TCP
+        port: 8080
+      selector:
+        app: mytodos
+        tier: frontend
+
     ```
 
-1. Deploy the app to a pod in your Kubernetes cluster.
+1. Deploy the app into your Kubernetes cluster.
     ```
-    kubectl create -f nodeport-deploy.yml
+    kubectl create -f deploy-app.yml
     ````
     Result:
     ```
-    service "mytodos" created
-    deployment "mytodos" created    
-    ```
-    This command will make the app accessible to the world by exposing the deployment as a NodePort service.
-
-1. To test your app in a browser, get the details to form the URL.
-    ```
-    kubectl describe service mytodos
-    ```
-    Output:
-    ```
-    Name:			mytodos
-    Namespace:		default
-    Labels:			app=mytodos
-    			tier=frontend
-    Selector:		app=mytodos,tier=frontend
-    Type:			NodePort
-    IP:			10.10.10.205
-    Port:			<unset>	3000/TCP
-    NodePort:		<unset>	31513/TCP
-    Endpoints:		172.30.51.102:3000,172.30.51.103:3000
-    Session Affinity:	None
-    No events.
-    ```
-    > The NodePorts are randomly assigned when they are generated with the expose command, but within 30000-32767. In this example, the NodePort is 31513.
-
-1. Get the public IP of the worker node in the cluster
-
-    ```
-    ibmcloud ks workers <cluster_name_or_id>
-    Listing cluster workers...
-    OK
-    ID                                            Public IP        Private IP      Machine Type   State      Status
-    dal10-pa10c8f571c84d4ac3b52acbf50fd11788-w1   169.47.227.138   10.171.53.188   free           deployed   Deploy Automation Successful
+    deployment.apps/mytodos created
+    ingress.extensions/mytodos-ingress created
+    service/mytodos created   
     ```
 
 1. Open a browser and check out the app with the following URL:
     ```
-    http://<IP_address>:<NodePort>
+    https://<cluster-name>.eu-de.containers.appdomain.cloud/todo/
     ```
-    In this example, the url would be ```http://169.47.227.138:31513```
-
-
-## Deploy with Automatic Load Balancer ALB (a.k.a Ingress)
-
-1. LMA
+    In this example, the url would be ```https://lab-cluster1.eu-de.containers.appdomain.cloud/todo/```

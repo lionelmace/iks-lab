@@ -4,7 +4,7 @@ For this lab, a hosted shell is provided for you with all the necessary tools. U
 
 1. Using Chrome or Firefox, go to the [Cloud Shell](https://cloudshell-console-workshop.ng.bluemix.net/) and login using the Login button.
 
-1. Passcode is `cl0udshell`
+1. Passcode is `ibmcl0ud`
 
 1. Using the account drop down, choose the IBM account.
 
