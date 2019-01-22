@@ -17,8 +17,9 @@ https://github.com/phthom/ContainerOrchestration/blob/master/4-HelmLab.md
 ## Initialize Helm & Tiller
 
 1. Initialize Helm by navigating and running the below command in your cluster
-
-    `helm init`
+    ```sh
+    helm init
+    ```
 
     Results:
     ```
@@ -33,12 +34,12 @@ https://github.com/phthom/ContainerOrchestration/blob/master/4-HelmLab.md
     ```
 
 1. Verify that the tiller-deploy pod has a Status of Running in your cluster.
-
-    `kubectl get pods -n kube-system -l app=helm`
+    ```sh
+    kubectl get pods -n kube-system -l app=helm
+    ```
 
     Results:
     ```
-    $ kubectl get pods -n kube-system -l app=helm
     NAME                           READY     STATUS    RESTARTS   AGE
     tiller-deploy-75f5797b-sxmrq   1/1       Running   0          4m
     ```
@@ -46,12 +47,12 @@ https://github.com/phthom/ContainerOrchestration/blob/master/4-HelmLab.md
 ## Deploy the app with Helm
 
 1. Go to the folder kubernetes/helm/chart
-    ```
+    ```sh
     cd mytodos/kubernetes/helm/chart
     ```
 
-1. LMA To install a Helm chart, run the below command
-    ```
+1. To install a Helm chart, run the below command
+    ```sh
     helm install . --name mytodos
     ```
 
@@ -80,10 +81,10 @@ https://github.com/phthom/ContainerOrchestration/blob/master/4-HelmLab.md
     mytodos-86884779d9-4c62z  0/1    ContainerCreating  0         0s
     mytodos-86884779d9-jzzpt  0/1    ContainerCreating  0         0s
     mytodos-86884779d9-qxnt2  0/1    ContainerCreating  0         0s
+    ```
 
-
-    NOTES:
-    1. Get the application URL by running these commands:
+1. Get the application URL by running these commands:
+    ```
     https://todo.hacluster.eu-de.containers.appdomain.cloud/
     ```
 
@@ -103,16 +104,3 @@ https://github.com/phthom/ContainerOrchestration/blob/master/4-HelmLab.md
     ```
 
     > Generally, an helm chart is managing many pods, deployments, secrets, volumes and services. So deleting the chart is a quick way to clean up your work.
-
-
-## Deploy using a Continuous Delivery Pipeline
-
-The **Deploy to IBM Cloud** button is an efficient way to create a cloned copy of the code in a new Git repository (repo) to deploy it to IBM Cloud by using a toolchain.
-
-A toolchain is created that includes a new private clone of your Git repo, a pipeline for building and deploying code changes, the Eclipse Orion Web IDE for editing code on the Cloud, and an issue tracker.
-
-[![Create toolchain](https://cloud.ibm.com/devops/setup/deploy/button_x2.png)](https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master)
-
-Once the toolchain has completed, the application will be available at `https://todo.<your-cluster-ingress-domain>`.
-
-The toolchain includes a stage named **UNINSTALL (manual)**. This stage can only be triggered manually and will remove all resources created by the toolchain (app and services).

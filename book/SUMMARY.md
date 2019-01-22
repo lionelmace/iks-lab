@@ -23,7 +23,8 @@
 
 ## Lab 2 - Deploy a web app with DevOps and Helm charts
 
-* [Deploy with Helm](deploy-with-helm.md)
+* [Deploy with Helm](devops-helm.md)
+* [Deploy with Continuous Delivery](devops-continuous-delivery.md)
 
 ## Lab 3 - Monitor your cluster
 
