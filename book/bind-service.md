@@ -79,4 +79,43 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 
 ## Redeploy the app
 
-1. Modify the YML to uncommend href: env LMA
+1. Modify the YAML to uncomment the last 3 lines of the Deployment section as of envFrom.
+
+    Your YAML file should look as follows:
+    ```yaml
+    ---
+    # Application to deploy
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: mytodos
+    spec:
+      replicas: 2 # tells deployment to run 2 pods matching the template
+      selector:
+        matchLabels:
+          app: mytodos
+      template:   # create pods using pod definition in this template
+        metadata:
+          labels:
+            app: mytodos
+            tier: frontend
+        spec:
+          containers:
+          - name: mytodos
+            image: registry.<region>.bluemix.net/<namespace>/todo-<lastname>:1.0
+            imagePullPolicy: Always
+            resources:
+              requests:
+                cpu: 250m     # 250 millicores = 1/4 core
+                memory: 128Mi # 128 MB
+              limits:
+                cpu: 500m
+                memory: 384Mi
+            envFrom:
+            - secretRef:
+                name: database-credentials
+
+1. Redeploy the application with this configuration
+    ```sh
+    kubectl apply -f deploy-app.yaml
+    ```

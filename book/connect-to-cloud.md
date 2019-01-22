@@ -6,8 +6,6 @@ For this lab, a hosted shell is provided for you with all the necessary tools. U
 
 1. Passcode is `ibmcl0ud`
 
-1. Using the account drop down, choose the IBM account.
-
 1. Click on the Terminal icon to launch your web shell.
 
     ![](./images/cloud-shell.png)
@@ -19,7 +17,7 @@ For this lab, a hosted shell is provided for you with all the necessary tools. U
     ibmcloud login
     ```
 
-1. Select an Account unless you have only one. 
+1. Select the account **Lionel Mace's Account**. 
 
 1. Once logged in you will see the following message:
     ```
@@ -35,7 +33,7 @@ For this lab, a hosted shell is provided for you with all the necessary tools. U
     Space:
     ```
 
-1. By default, you are being logged in the region US South. Select the region **EU Central** (eu-de).
+1. By default, you are being logged in the region US South. Switch to the region **EU Central** (eu-de).
     ```sh
     ibmcloud target -r eu-de
     ```

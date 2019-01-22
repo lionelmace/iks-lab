@@ -36,6 +36,7 @@
 * [Weavescope](weavescope.md)
 * [Provisioning with Terraform](appendix-terraform.md)
 * [Appendix](appendix.md)
+* [Test the resiliency](test-resiliency.md)
 * [Clean up the cluster](cluster-cleanup.md)
 
 ## Resources

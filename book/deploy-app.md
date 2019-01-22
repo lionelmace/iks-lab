@@ -17,7 +17,7 @@ In this lab, we will test the **Ingress**.
 
     ![](./images/cloudshell-ide-view.png)
 
-1. to set the region, the namespace of your private registry and the cluster name.
+1. In the YAML, set the region (3 changes), the namespace of your private registry (1 change), the docker image name (1 change) and the cluster name (3 changes).
 
     Your YAML file should look as follows:
     ```yaml
@@ -64,10 +64,10 @@ In this lab, we will test the **Ingress**.
     spec:
       tls:
       - hosts:
-        - <cluster-name>.eu-de.containers.appdomain.cloud
+        - <cluster-name>.<region>.containers.appdomain.cloud
         secretName: <cluster-name>
       rules:
-      - host: <cluster-name>.eu-de.containers.appdomain.cloud
+      - host: <cluster-name>.<region>.containers.appdomain.cloud
         http:
           paths:
           - path: /todo/
