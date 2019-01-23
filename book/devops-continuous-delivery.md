@@ -99,10 +99,8 @@ A delivery pipeline automates the continuous deployment of a project. In a proje
 
 1. Click **CANCEL** to return to the pipeline.
 
-1. On the PROD stage, click **View logs and history** and then click the **Deploy Helm chart** job. This job deploys the app into the Kubernetes cluster. At the end of the log file, find the link to http://URL.
+1. On the PROD stage, click **View logs and history** and then click the **Deploy Helm chart** job. This job deploys the app into the Kubernetes cluster. At the end of the log file, find the link to the running application.
 
-    ![](./images/toolchain-created.png)
+    ![](./images/toolchain-pipeline-deploy.png)
 
-1. On the pipeline's log page, click the **Back** arrow to return to the pipeline page.
-
-1. Browse to http://URL to see the running application.
+1. Browse to the given url to see the running application. The url should look similar to this https://todo.lab-cluster-2.eu-de.containers.appdomain.cloud/.
