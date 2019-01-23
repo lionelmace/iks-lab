@@ -577,9 +577,37 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="installing-agent-on-ibm-kubernetes-service-iks">Installing agent on IBM Kubernetes Service (IKS)</h1>
+                                <h1 id="monitoring-metrics-with-sysdig">Monitoring metrics with Sysdig</h1>
 <p>Sysdig Platform documentation encompasses everything related to handling the Sysdig agent installation, administration and configuration.</p>
-<p>NOTE: These instructions assume that you have provisioned a Sysdig service instance on IBM Cloud, have obtained an ACCESS-KEY and have your KUBECONFIG environment variable pointed to the appropriate cluster.</p>
+<h2 id="provision-an-instance-of-monitoring-with-sysdig-service">Provision an instance of Monitoring with Sysdig service</h2>
+<ol>
+<li><p>Go to the <a href="https://cloud.ibm.com/observe" target="_blank"><strong>Observability</strong> category</a></p>
+<p>      <a href="images/observe-landing.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/observe-landing.png" alt="">
+     </a></p>
+</li>
+<li><p>Select the category <strong>Monitoring</strong></p>
+</li>
+<li><p>Click the button <strong>Create logging instance</strong>.</p>
+</li>
+<li><p>Make sure to enter a meaningful name for the service instance such as logdna-YOURINITIAL.</p>
+</li>
+<li><p>Select the resource group that your cluster is in. By default, the Default resource group is set for you.</p>
+<p>      <a href="images/logging-creation.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/logging-creation.png" alt="">
+     </a></p>
+</li>
+<li><p>Choose a service plan for your service instance. By default, the Lite plan is selected for you. The Lite plan is good enough to continue the lab.</p>
+<p>      <a href="images/logging-plan.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/logging-plan.png" alt="">
+     </a></p>
+<blockquote>
+<p>The service plan that you choose for an IBM Log Analysis with LogDNA instance defines the number of days that data is stored and retained in LogDNA. For example, if you choose the Free plan, data is not stored at all. However, if you choose the 7 day plan, data is stored for 7 days and you have access to it through the LogDNA Web UI.</p>
+</blockquote>
+</li>
+<li><p>Click <strong>Create</strong>. The Observability dashboard opens and shows the details for your service.</p>
+</li>
+</ol>
 <h2 id="install-script">Install script:</h2>
 <p>The following script can be run to configure the Sysdig configuration based on the arguments and deploy it to a kubernetes cluster:</p>
 <pre class="language-"><code>curl -sL https://raw.githubusercontent.com/draios/sysdig-cloud-scripts/master/agent_deploy/IBMCloud-Kubernetes-Service/install-agent-k8s.sh | bash -s -- -a <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ACCESS-KEY</span><span class="token punctuation">&gt;</span></span> -c <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>SYSDIG-ENDPOINT</span><span class="token punctuation">&gt;</span></span> -t <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TAGS</span><span class="token punctuation">&gt;</span></span>
