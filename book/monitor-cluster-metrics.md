@@ -10,9 +10,9 @@ Sysdig Platform documentation encompasses everything related to handling the Sys
 
 1. Select the category **Monitoring**
 
-1. Click the button **Create logging instance**.
+1. Click the button **Create monitoring instance**.
 
-1. Make sure to enter a meaningful name for the service instance such as logdna-YOURINITIAL.
+1. Make sure to enter a meaningful name for the service instance such as sysdig-YOURINITIAL.
 
 1. Select the resource group that your cluster is in. By default, the Default resource group is set for you.
 
@@ -20,7 +20,7 @@ Sysdig Platform documentation encompasses everything related to handling the Sys
 
 1. Choose a service plan for your service instance. By default, the Lite plan is selected for you. The Lite plan is good enough to continue the lab.
 
-    ![](./images/logging-plan.png)
+    ![](./images/sysdig-plan.png)
 
     > The service plan that you choose for an IBM Log Analysis with LogDNA instance defines the number of days that data is stored and retained in LogDNA. For example, if you choose the Free plan, data is not stored at all. However, if you choose the 7 day plan, data is stored for 7 days and you have access to it through the LogDNA Web UI.
 

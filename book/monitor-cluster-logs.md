@@ -14,9 +14,9 @@ On the IBM Cloud, to configure cluster-level logging for a Kubernetes cluster, y
 
 1. Select the category **Logging**
 
-1. Click the button **Create monitoring instance**.
+1. Click the button **Create logging instance**.
 
-1. Make sure to enter a meaningful name for the service instance such as sysdig-YOURINITIAL.
+1. Make sure to enter a meaningful name for the service instance such as logdna-YOURINITIAL.
 
 1. Select the resource group that your cluster is in. By default, the Default resource group is set for you.
 
@@ -24,7 +24,7 @@ On the IBM Cloud, to configure cluster-level logging for a Kubernetes cluster, y
 
 1. Choose a service plan for your service instance. By default, the Lite plan is selected for you. The Lite plan is good enough to continue the lab.
 
-    ![](./images/sysdig-plan.png)
+    ![](./images/logging-plan.png)
 
 1. Click **Create**. The Observability dashboard opens and shows the details for your service.
 
