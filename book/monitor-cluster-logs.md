@@ -41,7 +41,6 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
 1. From the terminal, run the two commands given in the following screen. This will automatically install a logdna-agent pod on each node of your cluster.
 
     ![](./images/logdna-agents.png)
-
     
 
 ## View logs in the LogDNA dashboard
