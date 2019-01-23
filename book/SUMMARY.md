@@ -28,7 +28,7 @@
 
 ## Lab 3 - Monitor your cluster
 
-* [Kubernetes Dashboard](monitor-kube-dashboard)
+* [Kubernetes Dashboard](monitor-kube-dashboard.md)
 * [Cluster Logs](monitor-cluster-logs.md)
 * [Monitoring your cluster](monitor-cluster-metrics.md)
 
