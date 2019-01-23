@@ -1,6 +1,8 @@
 # Monitoring metrics with Sysdig
 
-Sysdig Platform documentation encompasses everything related to handling the Sysdig agent installation, administration and configuration.
+Sysdig Monitor is part of Sysdig’s container intelligence platform. Sysdig uses a unified platform to deliver security, monitoring, and forensics in a container and microservices-friendly architecture.
+
+Once the agent has started sending metrics to Sysdig for your environment, you can use the Sysdig Monitor UI to view and analyze that data.
 
 ## Provision an instance of Monitoring with Sysdig service
 
@@ -25,7 +27,6 @@ Sysdig Platform documentation encompasses everything related to handling the Sys
     > The service plan that you choose for an IBM Log Analysis with LogDNA instance defines the number of days that data is stored and retained in LogDNA. For example, if you choose the Free plan, data is not stored at all. However, if you choose the 7 day plan, data is stored for 7 days and you have access to it through the LogDNA Web UI.
 
 1. Click **Create**. The Observability dashboard opens and shows the details for your service.
-
 
 
 ## Install script:
@@ -87,10 +88,3 @@ You may also add an OPTIONAL entry for tags. An example yaml would look like thi
     ```
     kubectl apply -f sysdig-agent-daemonset-v2.yaml
     ```
-
-
-## Navigating Sysdig UI
-
-Sysdig Monitor is part of Sysdig’s container intelligence platform. Sysdig uses a unified platform to deliver security, monitoring, and forensics in a container and microservices-friendly architecture.
-
-Once the agent has started sending metrics to Sysdig for your environment, you can use the Sysdig Monitor UI to view and analyze that data.
