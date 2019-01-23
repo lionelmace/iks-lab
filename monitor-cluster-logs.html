@@ -613,6 +613,19 @@
 </li>
 </ol>
 <h2 id="configure-the-logdna-agent-on-every-worker-node-in-a-cluster">Configure the LogDNA agent on every worker (node) in a cluster.</h2>
+<p>To configure your Kubernetes cluster to send logs to your IBM Log Analysis with LogDNA instance, you must install a logdna-agent pod on each node of your cluster. The LogDNA agent reads log files from the pod where it is installed, and forwards the log data to your LogDNA instance.</p>
+<ol>
+<li><p>Click <strong>Edit log sources</strong></p>
+<p>      <a href="images/logging-configure.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/logging-configure.png" alt="">
+     </a></p>
+</li>
+<li><p>From the terminal, run the two commands given in the following screen. This will automatically install a logdna-agent pod on each node of your cluster.</p>
+<p>      <a href="images/logdna-agents.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/logdna-agents.png" alt="">
+     </a></p>
+</li>
+</ol>
 <h2 id="view-logs-in-the-logdna-dashboard">View logs in the LogDNA dashboard</h2>
 <ol>
 <li><p>Launch the LogDNA dashboard and view logs
