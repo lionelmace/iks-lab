@@ -579,23 +579,37 @@
                                 
                                 <h1 id="logging-with-logdna">Logging with LogDNA</h1>
 <p>IBM Log Analysis with LogDNA is a third-party service that you can include as part of your IBM Cloud architecture to add log management capabilities. IBM Log Analysis with LogDNA is operated by LogDNA in partnership with IBM.</p>
-<p>The service plan that you choose for an IBM Log Analysis with LogDNA instance defines the number of days that data is stored and retained in LogDNA. For example, if you choose the Free plan, data is not stored at all. However, if you choose the 7 day plan, data is stored for 7 days and you have access to it through the LogDNA Web UI.</p>
 <p>On the IBM Cloud, to configure cluster-level logging for a Kubernetes cluster, you must provision an instance of the IBM Log Analysis with LogDNA service.</p>
+<p>     <a href="images/logdna-architecture.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/logdna-architecture.png" alt="">
+     </a></p>
 <h2 id="provision-an-instance-of-log-analysis-with-logdna-service">Provision an instance of Log Analysis with LogDNA service</h2>
 <ol>
-<li><p>In the <a href="https://cloud.ibm.com/observe/logging" target="_blank"><strong>Observability</strong> category, under Logging</a>, locate the LogDNA service instance.</p>
+<li><p>Go to the <a href="https://cloud.ibm.com/observe/logging" target="_blank"><strong>Observability</strong> category</a></p>
+<p>      <a href="images/observe-landing.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/observe-landing.png" alt="">
+     </a></p>
 </li>
-<li><p>Click IBM Log Analysis with LogDNA. The Observability dashboard opens.</p>
+<li><p>Select the category <strong>Logging*</strong></p>
 </li>
-<li><p>Select Create instance.</p>
+<li><p>Click the button <strong>Create logging instance</strong>.</p>
 </li>
-<li><p>Enter a name for the service instance.</p>
+<li><p>Make sure to enter a meaningful name for the service instance such as logdna-YOURLASTNAME</p>
 </li>
 <li><p>Select the resource group that your cluster is in. By default, the Default resource group is set for you.</p>
+<p>      <a href="images/logging-creation.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/logging-creation.png" alt="">
+     </a></p>
 </li>
-<li><p>Choose a service plan for your service instance. By default, the Lite plan is selected for you. For more information about other service plans, see Pricing plans.</p>
+<li><p>Choose a service plan for your service instance. By default, the Lite plan is selected for you. The Lite plan is good enough to continue the lab.</p>
+<p>      <a href="images/logging-plan.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/logging-plan.png" alt="">
+     </a></p>
+<blockquote>
+<p>The service plan that you choose for an IBM Log Analysis with LogDNA instance defines the number of days that data is stored and retained in LogDNA. For example, if you choose the Free plan, data is not stored at all. However, if you choose the 7 day plan, data is stored for 7 days and you have access to it through the LogDNA Web UI.</p>
+</blockquote>
 </li>
-<li><p>To provision the IBM Log Analysis with LogDNA service in the IBM Cloud resource group where you are logged in, click Create. The Observability dashboard opens and shows the details for your service.</p>
+<li><p>Click <strong>Create</strong>. The Observability dashboard opens and shows the details for your service.</p>
 </li>
 </ol>
 <h2 id="configure-the-logdna-agent-on-every-worker-node-in-a-cluster">Configure the LogDNA agent on every worker (node) in a cluster.</h2>

@@ -605,7 +605,9 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
        <img src="images/cloudant-credentials2.png" alt="">
      </a></p>
 </li>
-<li><p>Copy the Credentials from the console to the file credentials.env</p>
+<li><p>Duplicate the file <code>credentials.template.env</code> in the root folder to a new file <code>credentials.env</code></p>
+</li>
+<li><p>Edit the file <code>credentials.env</code> and fill out the value for both CLOUDANT_USERNAME and CLOUDANT_APIKEY from the generated credentials above.</p>
 </li>
 <li><p>Optional: Create an instance of a service using the CLI instead of the Console.</p>
 <pre class="language-"><code class="lang-sh"> ibmcloud resource service-instance-create <span class="token operator">&lt;</span>service_instance_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>service_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>service_plan_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>location<span class="token operator">&gt;</span>
