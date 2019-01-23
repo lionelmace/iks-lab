@@ -1,8 +1,32 @@
-# Installing agent on IBM Kubernetes Service (IKS)
+# Monitoring metrics with Sysdig
 
 Sysdig Platform documentation encompasses everything related to handling the Sysdig agent installation, administration and configuration.
 
-NOTE: These instructions assume that you have provisioned a Sysdig service instance on IBM Cloud, have obtained an ACCESS-KEY and have your KUBECONFIG environment variable pointed to the appropriate cluster.
+## Provision an instance of Monitoring with Sysdig service
+
+1. Go to the [**Observability** category](https://cloud.ibm.com/observe/logging)
+
+    ![](./images/observe-landing.png)
+
+1. Select the category **Monitoring**
+
+1. Click the button **Create logging instance**.
+
+1. Make sure to enter a meaningful name for the service instance such as logdna-YOURINITIAL.
+
+1. Select the resource group that your cluster is in. By default, the Default resource group is set for you.
+
+    ![](./images/logging-creation.png)
+
+1. Choose a service plan for your service instance. By default, the Lite plan is selected for you. The Lite plan is good enough to continue the lab.
+
+    ![](./images/logging-plan.png)
+
+    > The service plan that you choose for an IBM Log Analysis with LogDNA instance defines the number of days that data is stored and retained in LogDNA. For example, if you choose the Free plan, data is not stored at all. However, if you choose the 7 day plan, data is stored for 7 days and you have access to it through the LogDNA Web UI.
+
+1. Click **Create**. The Observability dashboard opens and shows the details for your service.
+
+
 
 ## Install script:
 The following script can be run to configure the Sysdig configuration based on the arguments and deploy it to a kubernetes cluster:
