@@ -24,15 +24,14 @@ In this lab, we will test the **Ingress**.
 1. Select the file `ingress-tls-deploy.yaml` .
 
 1. Replace all the values wrapped in <> with the appropriate values.
-    * <region> would be `eu-de` for Frankfurt (3 changes)
-    * <namespace> would be the private registry `lab_registry` (1 change)
-    * todo-<lastname> to have a unique docker image name (1 change)
-    * <cluster-name> would be `lab-cluster-1` (3 changes).
+    * region would be `eu-de` for Frankfurt (3 changes)
+    * namespace would be the private registry `lab_registry` (1 change)
+    * cluster-name would be `lab-cluster-1` (3 changes).
 
     Your YAML file should look as follows:
     ```yaml
     ---
-    # Application to deploy
+     # Application to deploy
     apiVersion: apps/v1
     kind: Deployment
     metadata:
@@ -85,7 +84,7 @@ In this lab, we will test the **Ingress**.
               serviceName: mytodos
               servicePort: 8080
     ---
-    # Service to expose frontend
+     # Service to expose frontend
     apiVersion: v1
     kind: Service
     metadata:

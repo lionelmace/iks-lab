@@ -47,7 +47,7 @@ Helm is a client/server application :
     cd mytodo/chart/mytodos
     ```
 
-1. Edit the file **local-values.yaml** to change the repository values which includes: the region, the registry namespace, the image name, and the tag (=version).
+1. Edit the file **values.yaml** to change the repository values which includes: the region, the registry namespace, the image name, and the tag (=version).
 
     ```yaml
       # Default values for mytodos.
@@ -58,7 +58,7 @@ Helm is a client/server application :
 
     image:
       repository: registry.<region>.bluemix.net/<namespace>/todo-<lastname>
-      tag: 1.0
+      tag: "1.0"
       pullPolicy: Always
 
      # secret:
@@ -149,7 +149,7 @@ Helm is a client/server application :
     ```
 
     > To run with local values in debug mode: ```
-    helm install . --name mytodos --values=local-values.yaml --debug```
+    helm install . --name mytodos --values=local-values.yaml --dry-run --debug```
 
 ## Delete your deployment
 

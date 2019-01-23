@@ -23,7 +23,11 @@ The toolchain includes:
 
 1. Review the default information for the toolchain settings. Select the region **Frankfurt** and the Resource Group **lab**.
 
+    ![](./images/toolchain-name-param.png)
+
 1. Click Delivery Pipeline.
+
+    ![](./images/toolchain-pipeline-config.png)
 
     * **App name**: Enter the name for your application. The app name must be unique (if you want, you can just use the default value provided).
 
@@ -44,8 +48,6 @@ The toolchain includes:
     ![](./images/toolchain-created.png)
 
 # Explore Delivery Pipeline in your toolchain
-
-
 
 1. Once the toolchain has completed, the application will be available at
     `https://todo.<your-cluster-ingress-domain>`.
