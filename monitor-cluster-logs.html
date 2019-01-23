@@ -580,10 +580,40 @@
                                 <h1 id="logging-with-logdna">Logging with LogDNA</h1>
 <p>IBM Log Analysis with LogDNA is a third-party service that you can include as part of your IBM Cloud architecture to add log management capabilities. IBM Log Analysis with LogDNA is operated by LogDNA in partnership with IBM.</p>
 <p>The service plan that you choose for an IBM Log Analysis with LogDNA instance defines the number of days that data is stored and retained in LogDNA. For example, if you choose the Free plan, data is not stored at all. However, if you choose the 7 day plan, data is stored for 7 days and you have access to it through the LogDNA Web UI.</p>
-<h2 id="view-logs-in-the-logdna-dashboard">View logs in the LogDNA dashboard</h2>
+<p>On the IBM Cloud, to configure cluster-level logging for a Kubernetes cluster, you must provision an instance of the IBM Log Analysis with LogDNA service.</p>
+<h2 id="provision-an-instance-of-log-analysis-with-logdna-service">Provision an instance of Log Analysis with LogDNA service</h2>
 <ol>
 <li><p>In the <a href="https://cloud.ibm.com/observe/logging" target="_blank"><strong>Observability</strong> category, under Logging</a>, locate the LogDNA service instance.</p>
 </li>
+<li><p>Click IBM Log Analysis with LogDNA. The Observability dashboard opens.</p>
+</li>
+<li><p>Select Create instance.</p>
+</li>
+<li><p>Enter a name for the service instance.</p>
+</li>
+<li><p>Select the resource group that your cluster is in. By default, the Default resource group is set for you.</p>
+</li>
+<li><p>Choose a service plan for your service instance. By default, the Lite plan is selected for you. For more information about other service plans, see Pricing plans.</p>
+</li>
+<li><p>To provision the IBM Log Analysis with LogDNA service in the IBM Cloud resource group where you are logged in, click Create. The Observability dashboard opens and shows the details for your service.</p>
+</li>
+</ol>
+<h2 id="configure-the-logdna-agent-on-every-worker-node-in-a-cluster">Configure the LogDNA agent on every worker (node) in a cluster.</h2>
+<h2 id="view-logs-in-the-logdna-dashboard">View logs in the LogDNA dashboard</h2>
+<ol>
+<li><p>Launch the LogDNA dashboard and view logs
+To launch the LogDNA dashboard through the IBM Cloud console, complete the following steps:</p>
+</li>
+<li><p>Log in to your IBM Cloud account External link icon.</p>
+</li>
+<li><p>From the menu Menu icon, select Observability.</p>
+</li>
+<li><p>Select Logging. The list of IBM Log Analysis with LogDNA service instances that are available on IBM Cloud is displayed.</p>
+</li>
+<li><p>Select one instance and click View LogDNA. The LogDNA dashboard opens. Note: With the Free service plan, you can tail your latest logs only. For more information, see Viewing logs.</p>
+</li>
+</ol>
+<ol>
 <li><p>Click <strong>View LogDNA</strong> to open the LogDNA console</p>
 </li>
 <li><p>Use <code>namespace:<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>YOUR_KUBERNETES_NAMESPACE</span><span class="token punctuation">&gt;</span></span></code> to view only the logs of the applications deployed to the specified namespace.</p>
