@@ -600,7 +600,7 @@
 <pre class="language-"><code class="lang-sh"> <span class="token function">cd</span> mytodo/chart/mytodos
 </code></pre>
 </li>
-<li><p>Edit the file <strong>local-values.yaml</strong> to change the repository values which includes: the region, the registry namespace, the image name, and the tag (=version).</p>
+<li><p>Edit the file <strong>values.yaml</strong> to change the repository values which includes: the region, the registry namespace, the image name, and the tag (=version).</p>
 <pre class="language-"><code class="lang-yaml">   <span class="token comment"># Default values for mytodos.</span>
    <span class="token comment"># This is a YAML-formatted file.</span>
    <span class="token comment"># Declare variables to be passed into your templates.</span>
@@ -609,7 +609,7 @@
 
  <span class="token key atrule">image</span><span class="token punctuation">:</span>
    <span class="token key atrule">repository</span><span class="token punctuation">:</span> registry.&lt;region<span class="token punctuation">&gt;</span>.bluemix.net/&lt;namespace<span class="token punctuation">&gt;</span>/todo<span class="token punctuation">-</span>&lt;lastname<span class="token punctuation">&gt;</span>
-   <span class="token key atrule">tag</span><span class="token punctuation">:</span> <span class="token number">1.0</span>
+   <span class="token key atrule">tag</span><span class="token punctuation">:</span> <span class="token string">&quot;1.0&quot;</span>
    <span class="token key atrule">pullPolicy</span><span class="token punctuation">:</span> Always
 
   <span class="token comment"># secret:</span>
@@ -691,7 +691,7 @@
 <li><p>Get the application URL by running these commands:</p>
 <pre class="language-"><code> https://todo.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span>.eu-de.containers.appdomain.cloud/
 </code></pre><blockquote>
-<p>To run with local values in debug mode: <code>helm install . --name mytodos --values=local-values.yaml --debug</code></p>
+<p>To run with local values in debug mode: <code>helm install . --name mytodos --values=local-values.yaml --dry-run --debug</code></p>
 </blockquote>
 </li>
 </ol>
