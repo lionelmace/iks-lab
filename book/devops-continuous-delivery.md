@@ -25,6 +25,10 @@ The toolchain includes:
 
     ![](./images/toolchain-name-param.png)
 
+1. Keep the default options for the git configuration which should like the following:
+
+    ![](./images/toolchain-git.png)
+
 1. Click Delivery Pipeline.
 
     ![](./images/toolchain-pipeline-config.png)
@@ -49,7 +53,56 @@ The toolchain includes:
 
 # Explore Delivery Pipeline in your toolchain
 
-1. Once the toolchain has completed, the application will be available at
-    `https://todo.<your-cluster-ingress-domain>`.
+Explore Delivery Pipeline in your toolchain. The pipeline is automatically triggered on every Git commit push.
 
-The toolchain includes a stage named **UNINSTALL (manual)**. This stage can only be triggered manually and will remove all resources created by the toolchain (app and services).
+A delivery pipeline automates the continuous deployment of a project. In a project's pipeline, sequences of stages retrieve input and run jobs, such as builds, tests, and deployments. You can use a pipeline to facilitate everything that is required for a DevOps project.
+
+1. On the toolchain's Overview page, click **Delivery Pipeline** to see your toolchain as it is being built and deployed. Your pipeline might still be running.
+
+    ![](./images/toolchain-pipeline.png)
+
+1. Review the BUILD stage. On the BUILD stage, click the Configure Stage icon to explore the stage.
+
+    * The **Pre-build check** job checks for mandatory files (the Dockerfile and Helm chart), lints the files, and creates the image registry namespace.
+
+    * The **Build Docker image** job creates the Docker image by using the IBM Cloud Container Registry build service through the bx cr build CLI script. The script stores the output image into the private IBM Cloud Container Registry and copies the Helm chart and other app scripts with the build results into the ARCHIVE_DIR folder.
+
+    * The build scripts also record a few environment variables into a build.properties file.
+
+1. Click **CANCEL** to return to the pipeline.
+
+1. On the BUILD stage, click **View logs and history**. Notice that the stage is building the container and copying the Kubernetes deploy manifest file into build artifacts.
+
+1. On the pipeline's log page, click the **Back** arrow to return to the pipeline page.
+
+1. On the VALIDATE stage, click the **Configure Stage** icon to explore the stage.
+
+    * This toolchain prevents you from deploying unsafe Docker images using IBM Cloud Vulnerability Advisor. This is performed by the pipeline job Vulnerability Advisor which runs the container registry command bx cr va ${PIPELINE_IMAGE_URL}. Notice how the VALIDATE stage is configured to receives the build.properties file from the build result, which will automatically recreate the respective environment properties.
+
+    * When security issues are discovered, a report will be printed in the job log.
+
+    * The **Use the container image from the stage input** check box is selected.
+
+    * The VALIDATE stage is configured to be advisory so that if it fails, it does not block the pipeline. You can change this behavior by selecting the **Stop running this stage if this job fails** check box. 
+
+1. Click **CANCEL** to return to the pipeline.
+
+1. On the VALIDATE stage, click **View logs and history**. This stage runs the Vulnerability Advisor on the image to check for known vulnerabilities. If it finds a vulnerability, the stage fails, preventing the image from being deployed. This safety feature prevents apps with security holes from being deployed. The image has no vulnerabilities, so it passes.
+
+1. On the pipeline's log page, click the **Back** arrow to return to the pipeline page.
+
+1. On the PROD stage, click the **Configure Stage** icon to explore the stage.
+
+    * The "Pre-deploy check" job checks for cluster readiness and namespace existence, configures the cluster namespace, grants access to the private image registry, configures tiller, and checks the Helm releases in the namespace.
+
+    * The "Deploy Helm chart" job sets environment variables and deploys the Helm chart into the Kubernetes cluster.
+
+1. Click **CANCEL** to return to the pipeline.
+
+1. On the PROD stage, click **View logs and history** and then click the **Deploy Helm chart** job. This job deploys the app into the Kubernetes cluster. At the end of the log file, find the link to http://URL.
+
+    ![](./images/toolchain-created.png)
+
+1. On the pipeline's log page, click the **Back** arrow to return to the pipeline page.
+
+1. Browse to http://URL to see the running application.
