@@ -6,7 +6,7 @@ In this section, you will create your own IBM Cloud account, and then get access
 
 1. After the email verification, confirm by logging in to https://cloud.ibm.com
 
-1. Go to [Get Cluster](https://assign-cluster.eu-de.mybluemix.net) web page and enter your IBM ID (the email you used to sign up) and the lab key **academy**. Make sure to keep the region **EU Central** where the clusters have been provisioned.
+1. Go to **[Get Cluster](https://assign-cluster.eu-de.mybluemix.net)** web page and enter your IBM ID (the email you used to sign up) and the lab key **academy**. Make sure to keep the region **EU Central** where the clusters have been provisioned.
 
 1. Submit. You will be added to the Lab account and granted access to a cluster.
 
