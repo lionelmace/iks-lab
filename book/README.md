@@ -24,3 +24,7 @@ In this tutorial, you act as a developper. You configure a custom Kubernetes clu
 This tutorial uses the following runtimes and services:
 * [IBM Cloud Container Registry](https://cloud.ibm.com/containers-kubernetes/launchRegistryView)
 * [IBM Cloud Kubernetes Service](https://cloud.ibm.com/containers-kubernetes/catalog/cluster)
+* [Continuous Delivery](https://cloud.ibm.com/catalog/services/continuous-delivery)
+* [Cloudant](https://cloud.ibm.com/catalog/services/cloudant)
+* [IBM Log Analysis with LogDNA](https://cloud.ibm.com/observe/logging/create)
+* [IBM Cloud Monitoring with Sysdig](https://cloud.ibm.com/observe/monitoring/create)
