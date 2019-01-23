@@ -2,25 +2,33 @@
 
 IBM Log Analysis with LogDNA is a third-party service that you can include as part of your IBM Cloud architecture to add log management capabilities. IBM Log Analysis with LogDNA is operated by LogDNA in partnership with IBM.
 
-The service plan that you choose for an IBM Log Analysis with LogDNA instance defines the number of days that data is stored and retained in LogDNA. For example, if you choose the Free plan, data is not stored at all. However, if you choose the 7 day plan, data is stored for 7 days and you have access to it through the LogDNA Web UI.
-
 On the IBM Cloud, to configure cluster-level logging for a Kubernetes cluster, you must provision an instance of the IBM Log Analysis with LogDNA service.
+
+![](./images/logdna-architecture.png)
 
 ## Provision an instance of Log Analysis with LogDNA service
 
-1. In the [**Observability** category, under Logging](https://cloud.ibm.com/observe/logging), locate the LogDNA service instance.
+1. Go to the [**Observability** category](https://cloud.ibm.com/observe/logging)
 
-1. Click IBM Log Analysis with LogDNA. The Observability dashboard opens.
+    ![](./images/observe-landing.png)
 
-1. Select Create instance.
+1. Select the category **Logging***
 
-1. Enter a name for the service instance.
+1. Click the button **Create logging instance**.
+
+1. Make sure to enter a meaningful name for the service instance such as logdna-YOURLASTNAME
 
 1. Select the resource group that your cluster is in. By default, the Default resource group is set for you.
 
-1. Choose a service plan for your service instance. By default, the Lite plan is selected for you. For more information about other service plans, see Pricing plans.
+    ![](./images/logging-creation.png)
 
-1. To provision the IBM Log Analysis with LogDNA service in the IBM Cloud resource group where you are logged in, click Create. The Observability dashboard opens and shows the details for your service.
+1. Choose a service plan for your service instance. By default, the Lite plan is selected for you. The Lite plan is good enough to continue the lab.
+
+    ![](./images/logging-plan.png)
+
+    > The service plan that you choose for an IBM Log Analysis with LogDNA instance defines the number of days that data is stored and retained in LogDNA. For example, if you choose the Free plan, data is not stored at all. However, if you choose the 7 day plan, data is stored for 7 days and you have access to it through the LogDNA Web UI.
+
+1. Click **Create**. The Observability dashboard opens and shows the details for your service.
 
 ## Configure the LogDNA agent on every worker (node) in a cluster.
 

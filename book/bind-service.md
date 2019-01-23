@@ -24,7 +24,9 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 
     ![](./images/cloudant-credentials2.png)
 
-1. Copy the Credentials from the console to the file credentials.env
+1. Duplicate the file `credentials.template.env` in the root folder to a new file `credentials.env`
+
+1. Edit the file `credentials.env` and fill out the value for both CLOUDANT_USERNAME and CLOUDANT_APIKEY from the generated credentials above.
 
 1. Optional: Create an instance of a service using the CLI instead of the Console.
     ```sh
