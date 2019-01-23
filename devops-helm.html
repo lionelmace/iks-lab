@@ -571,8 +571,6 @@
 <li>Helm client</li>
 <li>Tiller server.</li>
 </ul>
-<p>LMA do we need to configure RBAC?
-<a href="https://github.com/phthom/ContainerOrchestration/blob/master/4-HelmLab.md" target="_blank">https://github.com/phthom/ContainerOrchestration/blob/master/4-HelmLab.md</a></p>
 <h2 id="initialize-helm--tiller">Initialize Helm &amp; Tiller</h2>
 <ol>
 <li><p>Initialize Helm by navigating and running the below command in your cluster</p>
@@ -660,7 +658,7 @@
 </code></pre>
 </li>
 <li><p>To install a Helm chart, run the below command</p>
-<pre class="language-"><code class="lang-sh"> helm <span class="token function">install</span> <span class="token keyword">.</span> --name mytodos
+<pre class="language-"><code class="lang-sh"> helm upgrade mytodos <span class="token keyword">.</span> --install
 </code></pre>
 <p> Results:</p>
 <pre class="language-"><code> NAME:   mytodos
