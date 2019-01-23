@@ -11,7 +11,7 @@
 * [Main command lines](prepare-cli.md)
 * [Get a cluster](prepare-get-cluster.md)
 
-## Lab 1 - Deploy a web app in a Kubernetes cluster
+## Lab 1 - Deploy an app in a Kubernetes cluster
 
 * [View your cluster](view-cluster.md)
 * [Connect to IBM Cloud](connect-to-cloud.md)
@@ -21,7 +21,7 @@
 * [Scale app](scale-app.md)
 * [Optional: Bind a Cloud Service](bind-service.md)
 
-## Lab 2 - Deploy a web app with DevOps and Helm charts
+## Lab 2 - DevOps and Helm charts
 
 * [Deploy with Helm](devops-helm.md)
 * [Deploy with Continuous Delivery](devops-continuous-delivery.md)

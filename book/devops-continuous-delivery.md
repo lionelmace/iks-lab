@@ -39,7 +39,7 @@ The toolchain includes:
 
     * **Cluster Namespace**: It is a best practice to use explicit namespaces in clusters to separate deployed resources. For instance, we use ‘prod’ to denote a prod environment within this cluster. Later in the tutorial, we will add a ‘staging’ environment within the same cluster. You can leave this setting at its default 'prod' value.
 
-1. Click Create. After a few moments, your new toolchain's Overview page opens.
+1. Click **Create**. After a few moments, your new toolchain's Overview page opens.
 
     ![](./images/toolchain-created.png)
 
