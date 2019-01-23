@@ -2,13 +2,13 @@
 
 For this lab, a hosted shell is provided for you with all the necessary tools. Use this web shell to perform the tasks in this lab. If you are having problems with this web shell, you can use a local docker container and follow the instructions here instead.
 
-1. Using Chrome or Firefox, go to the [Cloud Shell](https://ibmcloud-workshop.ng.bluemix.net/) and login using the Login button.
+1. Using Chrome or Firefox, go to the [**Cloud Shell**](https://ibmcloud-workshop.ng.bluemix.net/) and login using the Login button.
 
 1. Passcode is `ibmcl0ud`
 
 1. Click on the Terminal icon to launch your web shell.
 
-    ![](./images/cloud-shell.png)
+    ![](./images/cloudshell-account.png)
 
 # Connect to IBM Cloud
 
