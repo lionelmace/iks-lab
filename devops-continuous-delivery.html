@@ -587,6 +587,11 @@
        <img src="images/toolchain-name-param.png" alt="">
      </a></p>
 </li>
+<li><p>Keep the default options for the git configuration which should like the following:</p>
+<p>      <a href="images/toolchain-git.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/toolchain-git.png" alt="">
+     </a></p>
+</li>
 <li><p>Click Delivery Pipeline.</p>
 <p>      <a href="images/toolchain-pipeline-config.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/toolchain-pipeline-config.png" alt="">
@@ -615,11 +620,68 @@
 </li>
 </ol>
 <h1 id="explore-delivery-pipeline-in-your-toolchain">Explore Delivery Pipeline in your toolchain</h1>
+<p>Explore Delivery Pipeline in your toolchain. The pipeline is automatically triggered on every Git commit push.</p>
+<p>A delivery pipeline automates the continuous deployment of a project. In a project&apos;s pipeline, sequences of stages retrieve input and run jobs, such as builds, tests, and deployments. You can use a pipeline to facilitate everything that is required for a DevOps project.</p>
 <ol>
-<li>Once the toolchain has completed, the application will be available at
- <code>https://todo.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>your-cluster-ingress-domain</span><span class="token punctuation">&gt;</span></span></code>.</li>
+<li><p>On the toolchain&apos;s Overview page, click <strong>Delivery Pipeline</strong> to see your toolchain as it is being built and deployed. Your pipeline might still be running.</p>
+<p>      <a href="images/toolchain-pipeline.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/toolchain-pipeline.png" alt="">
+     </a></p>
+</li>
+<li><p>Review the BUILD stage. On the BUILD stage, click the Configure Stage icon to explore the stage.</p>
+<ul>
+<li><p>The <strong>Pre-build check</strong> job checks for mandatory files (the Dockerfile and Helm chart), lints the files, and creates the image registry namespace.</p>
+</li>
+<li><p>The <strong>Build Docker image</strong> job creates the Docker image by using the IBM Cloud Container Registry build service through the bx cr build CLI script. The script stores the output image into the private IBM Cloud Container Registry and copies the Helm chart and other app scripts with the build results into the ARCHIVE_DIR folder.</p>
+</li>
+<li><p>The build scripts also record a few environment variables into a build.properties file.</p>
+</li>
+</ul>
+</li>
+<li><p>Click <strong>CANCEL</strong> to return to the pipeline.</p>
+</li>
+<li><p>On the BUILD stage, click <strong>View logs and history</strong>. Notice that the stage is building the container and copying the Kubernetes deploy manifest file into build artifacts.</p>
+</li>
+<li><p>On the pipeline&apos;s log page, click the <strong>Back</strong> arrow to return to the pipeline page.</p>
+</li>
+<li><p>On the VALIDATE stage, click the <strong>Configure Stage</strong> icon to explore the stage.</p>
+<ul>
+<li><p>This toolchain prevents you from deploying unsafe Docker images using IBM Cloud Vulnerability Advisor. This is performed by the pipeline job Vulnerability Advisor which runs the container registry command bx cr va ${PIPELINE_IMAGE_URL}. Notice how the VALIDATE stage is configured to receives the build.properties file from the build result, which will automatically recreate the respective environment properties.</p>
+</li>
+<li><p>When security issues are discovered, a report will be printed in the job log.</p>
+</li>
+<li><p>The <strong>Use the container image from the stage input</strong> check box is selected.</p>
+</li>
+<li><p>The VALIDATE stage is configured to be advisory so that if it fails, it does not block the pipeline. You can change this behavior by selecting the <strong>Stop running this stage if this job fails</strong> check box. </p>
+</li>
+</ul>
+</li>
+<li><p>Click <strong>CANCEL</strong> to return to the pipeline.</p>
+</li>
+<li><p>On the VALIDATE stage, click <strong>View logs and history</strong>. This stage runs the Vulnerability Advisor on the image to check for known vulnerabilities. If it finds a vulnerability, the stage fails, preventing the image from being deployed. This safety feature prevents apps with security holes from being deployed. The image has no vulnerabilities, so it passes.</p>
+</li>
+<li><p>On the pipeline&apos;s log page, click the <strong>Back</strong> arrow to return to the pipeline page.</p>
+</li>
+<li><p>On the PROD stage, click the <strong>Configure Stage</strong> icon to explore the stage.</p>
+<ul>
+<li><p>The &quot;Pre-deploy check&quot; job checks for cluster readiness and namespace existence, configures the cluster namespace, grants access to the private image registry, configures tiller, and checks the Helm releases in the namespace.</p>
+</li>
+<li><p>The &quot;Deploy Helm chart&quot; job sets environment variables and deploys the Helm chart into the Kubernetes cluster.</p>
+</li>
+</ul>
+</li>
+<li><p>Click <strong>CANCEL</strong> to return to the pipeline.</p>
+</li>
+<li><p>On the PROD stage, click <strong>View logs and history</strong> and then click the <strong>Deploy Helm chart</strong> job. This job deploys the app into the Kubernetes cluster. At the end of the log file, find the link to <a href="http://URL" target="_blank">http://URL</a>.</p>
+<p>      <a href="images/toolchain-created.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/toolchain-created.png" alt="">
+     </a></p>
+</li>
+<li><p>On the pipeline&apos;s log page, click the <strong>Back</strong> arrow to return to the pipeline page.</p>
+</li>
+<li><p>Browse to <a href="http://URL" target="_blank">http://URL</a> to see the running application.</p>
+</li>
 </ol>
-<p>The toolchain includes a stage named <strong>UNINSTALL (manual)</strong>. This stage can only be triggered manually and will remove all resources created by the toolchain (app and services).</p>
 
                                 
                                 </section>
