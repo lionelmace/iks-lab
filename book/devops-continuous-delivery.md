@@ -25,7 +25,7 @@ The toolchain includes:
 
     ![](./images/toolchain-name-param.png)
 
-1. Keep the default options for the git configuration which should like the following:
+1. Keep the default options for the git configuration. This should like the following:
 
     ![](./images/toolchain-git.png)
 

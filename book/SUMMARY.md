@@ -28,8 +28,9 @@
 
 ## Lab 3 - Monitor your cluster
 
-* [Cluster Logs](cluster-logs.md)
-* [Monitoring your cluster](monitoring.md)
+* [Kubernetes Dashboard](monitor-kube-dashboard)
+* [Cluster Logs](monitor-cluster-logs.md)
+* [Monitoring your cluster](monitor-cluster-metrics.md)
 
 ## Advanced
 * [Create a cluster with CLI](appendix-create-cluster-cli.md)
