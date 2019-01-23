@@ -4,7 +4,7 @@ Sysdig Platform documentation encompasses everything related to handling the Sys
 
 ## Provision an instance of Monitoring with Sysdig service
 
-1. Go to the [**Observability** category](https://cloud.ibm.com/observe/logging)
+1. Go to the [**Observability** category](https://cloud.ibm.com/observe)
 
     ![](./images/observe-landing.png)
 
