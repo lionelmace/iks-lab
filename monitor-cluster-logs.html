@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Monitoring your cluster · IBM Cloud Kubernetes Service Lab</title>
+        <title>Cluster Logs · IBM Cloud Kubernetes Service Lab</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -81,10 +81,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="appendix-create-cluster-cli.html" />
+    <link rel="next" href="monitor-cluster-metrics.html" />
     
     
-    <link rel="prev" href="cluster-logs.html" />
+    <link rel="prev" href="monitor-kube-dashboard" />
     
 
     </head>
@@ -353,12 +353,27 @@
         
         
     
-        <li class="chapter " data-level="5.1" data-path="cluster-logs.html">
+        <li class="chapter " data-level="5.1" data-path="monitor-kube-dashboard">
             
-                <a href="cluster-logs.html">
+                <span>
             
                     
                         <b>5.1.</b>
+                    
+                    Kubernetes Dashboard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="5.2" data-path="monitor-cluster-logs.html">
+            
+                <a href="monitor-cluster-logs.html">
+            
+                    
+                        <b>5.2.</b>
                     
                     Cluster Logs
             
@@ -368,12 +383,12 @@
             
         </li>
     
-        <li class="chapter active" data-level="5.2" data-path="monitoring.html">
+        <li class="chapter " data-level="5.3" data-path="monitor-cluster-metrics.html">
             
-                <a href="monitoring.html">
+                <a href="monitor-cluster-metrics.html">
             
                     
-                        <b>5.2.</b>
+                        <b>5.3.</b>
                     
                     Monitoring your cluster
             
@@ -547,7 +562,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Monitoring your cluster</a>
+        <a href="." >Cluster Logs</a>
     </h1>
 </div>
 
@@ -562,63 +577,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="installing-agent-on-ibm-kubernetes-service-iks">Installing agent on IBM Kubernetes Service (IKS)</h1>
-<p>Sysdig Platform documentation encompasses everything related to handling the Sysdig agent installation, administration and configuration.</p>
-<p>NOTE: These instructions assume that you have provisioned a Sysdig service instance on IBM Cloud, have obtained an ACCESS-KEY and have your KUBECONFIG environment variable pointed to the appropriate cluster.</p>
-<h2 id="install-script">Install script:</h2>
-<p>The following script can be run to configure the Sysdig configuration based on the arguments and deploy it to a kubernetes cluster:</p>
-<pre class="language-"><code>curl -sL https://raw.githubusercontent.com/draios/sysdig-cloud-scripts/master/agent_deploy/IBMCloud-Kubernetes-Service/install-agent-k8s.sh | bash -s -- -a <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ACCESS-KEY</span><span class="token punctuation">&gt;</span></span> -c <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>SYSDIG-ENDPOINT</span><span class="token punctuation">&gt;</span></span> -t <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TAGS</span><span class="token punctuation">&gt;</span></span>
-</code></pre><h2 id="manual-installation">Manual Installation:</h2>
-<ol>
-<li><p>Download the required yaml files from the following links to a directory:</p>
-<ul>
-<li>sysdig-agent-clusterrole.yaml</li>
-<li>sysdig-agent-configmap.yaml</li>
-<li>sysdig-agent-daemonset-v2.yaml</li>
-</ul>
-</li>
-<li><p>Create a service account called sysdig-agent that will be used to monitor the kubernetes cluster:</p>
-<pre class="language-"><code> kubectl create serviceaccount sysdig-agent
-</code></pre></li>
-<li><p>User your ACCESS-KEY to create a secret for the cluster:</p>
-<pre class="language-"><code> kubectl create secret generic sysdig-agent --from-literal=access-key=<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ACCESS-KEY</span><span class="token punctuation">&gt;</span></span>
-</code></pre></li>
-<li><p>Use the <strong>sysdig-agent-clusterrole.yaml</strong> to create a clusterrole and clusterrolebinding:</p>
-<pre class="language-"><code> kubectl apply -f /tmp/sysdig-agent-clusterrole.yaml
- kubectl create clusterrolebinding sysdig-agent --clusterrole=sysdig-agent --serviceaccount=default:sysdig-agent
-</code></pre></li>
-<li><p>Use an editor to open the <strong>sysdig-agent-configmap.yaml</strong> file. Add the following REQUIRED params:</p>
-<ul>
-<li><strong>collector</strong> - This should be URL that the agent should be sending it metrics to e.g. us-south.monitoring.test.cloud.ibm.com</li>
-<li><strong>ssl</strong> - This needs to be set true</li>
-<li><strong>ssl_verfiy_certificate</strong> - This needs to be set to false</li>
-<li><strong>new_k8s</strong> - This needs to be set to true to capture kube state metrics
-You may also add an OPTIONAL entry for tags. An example yaml would look like this:<pre class="language-"><code class="lang-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
-<span class="token key atrule">kind</span><span class="token punctuation">:</span> ConfigMap
-<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-  <span class="token key atrule">name</span><span class="token punctuation">:</span> sysdig<span class="token punctuation">-</span>agent
-<span class="token key atrule">data</span><span class="token punctuation">:</span>
-  <span class="token key atrule">dragent.yaml</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
-      ### Agent tags
-      tags: linux:ubuntu,dept:dev,local:nyc
-      collector: us-south.monitoring.test.cloud.ibm.com
-      ssl: true
-      ssl_verify_certificate: false
-      new_k8s: true</span>
-</code></pre>
-</li>
-</ul>
-</li>
-<li><p>Apply the config map to the cluster:</p>
-<pre class="language-"><code> kubectl apply -f sysdig-agent-configmap.yaml
-</code></pre></li>
-<li><p>Finally, apply the daemonset to deploy the Sysdig agent to cluster:</p>
-<pre class="language-"><code> kubectl apply -f sysdig-agent-daemonset-v2.yaml
-</code></pre></li>
-</ol>
-<h2 id="navigating-sysdig-ui">Navigating Sysdig UI</h2>
-<p>Sysdig Monitor is part of Sysdig&#x2019;s container intelligence platform. Sysdig uses a unified platform to deliver security, monitoring, and forensics in a container and microservices-friendly architecture.</p>
-<p>Once the agent has started sending metrics to Sysdig for your environment, you can use the Sysdig Monitor UI to view and analyze that data.</p>
+                                <h1 id="lma-add-logdna-tutorial">LMA: Add LogDNA tutorial</h1>
 
                                 
                                 </section>
@@ -646,12 +605,12 @@ You may also add an OPTIONAL entry for tags. An example yaml would look like thi
 
             
                 
-                <a href="cluster-logs.html" class="navigation navigation-prev " aria-label="Previous page: Cluster Logs">
+                <a href="monitor-kube-dashboard" class="navigation navigation-prev " aria-label="Previous page: Kubernetes Dashboard">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="appendix-create-cluster-cli.html" class="navigation navigation-next " aria-label="Next page: Create a cluster with CLI">
+                <a href="monitor-cluster-metrics.html" class="navigation navigation-next " aria-label="Next page: Monitoring your cluster">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -662,7 +621,7 @@ You may also add an OPTIONAL entry for tags. An example yaml would look like thi
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Monitoring your cluster","level":"5.2","depth":1,"next":{"title":"Create a cluster with CLI","level":"6.1","depth":1,"path":"appendix-create-cluster-cli.md","ref":"appendix-create-cluster-cli.md","articles":[]},"previous":{"title":"Cluster Logs","level":"5.1","depth":1,"path":"cluster-logs.md","ref":"cluster-logs.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"monitoring.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Cluster Logs","level":"5.2","depth":1,"next":{"title":"Monitoring your cluster","level":"5.3","depth":1,"path":"monitor-cluster-metrics.md","ref":"monitor-cluster-metrics.md","articles":[]},"previous":{"title":"Kubernetes Dashboard","level":"5.1","depth":1,"path":"monitor-kube-dashboard","ref":"monitor-kube-dashboard","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"monitor-cluster-logs.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
