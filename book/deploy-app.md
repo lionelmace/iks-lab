@@ -23,7 +23,11 @@ In this lab, we will test the **Ingress**.
 
 1. Select the file `ingress-tls-deploy.yaml` .
 
-1. Set the region (3 changes), the namespace of your private registry (1 change), the docker image name (1 change) and the cluster name (3 changes).
+1. Replace all the values wrapped in <> with the appropriate values.
+    * <region> would be `eu-de` for Frankfurt (3 changes)
+    * <namespace> would be the private registry `lab_registry` (1 change)
+    * todo-<lastname> to have a unique docker image name (1 change)
+    * <cluster-name> would be `lab-cluster-1` (3 changes).
 
     Your YAML file should look as follows:
     ```yaml

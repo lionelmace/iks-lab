@@ -10,10 +10,6 @@ Helm is a client/server application :
 * Helm client
 * Tiller server.
 
-LMA do we need to configure RBAC?
-https://github.com/phthom/ContainerOrchestration/blob/master/4-HelmLab.md
-
-
 ## Initialize Helm & Tiller
 
 1. Initialize Helm by navigating and running the below command in your cluster
@@ -112,7 +108,7 @@ https://github.com/phthom/ContainerOrchestration/blob/master/4-HelmLab.md
 
 1. To install a Helm chart, run the below command
     ```sh
-    helm install . --name mytodos
+    helm upgrade mytodos . --install
     ```
 
     Results:
