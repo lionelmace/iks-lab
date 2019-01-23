@@ -42,17 +42,17 @@ For this lab, a hosted shell is provided for you with all the necessary tools. U
 
 You need to target a Resource Group (RG) to view your cluster or to add a service (e.g. Cloudant Database later. Access to the group and the resources within it are managed by using Identity and Access Management (IAM). 
 
-1. Target the resource group you have been assigned to: LMA
-    `ibmcloud target -g RESOURCE_GROUP_NAME`
-    In this lab, the Resource Group **lab** has been created. Thus, you should run the command:
+1. In this lab, the Resource Group **lab** has been created. Select this resource group.
     ```sh
     ibmcloud target -g lab
     ```
 
-1. Verify you can see your cluster LMA
+1. Verify you can see your cluster.
     ```sh
     ibmcloud ks clusters
     ```
+    Output
+    ![](./images/cli-cluster-list.png)
 
 1. Retrieve the cluster configuration by setting MYCLUSTER environment variable to your cluster name:
     ```sh
@@ -69,8 +69,5 @@ You need to target a Resource Group (RG) to view your cluster or to add a servic
     kubectl cluster-info
     ```
     The output should look like:
-    >
-    Kubernetes master is running at https://c2.eu-de.containers.cloud.ibm.com:23689
-    Heapster is running at https://c2.eu-de.containers.cloud.ibm.com:23689/api/v1/namespaces/kube-system/services/heapster/proxy
-    KubeDNS is running at https://c2.eu-de.containers.cloud.ibm.com:23689/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
-    kubernetes-dashboard is running at https://c2.eu-de.containers.cloud.ibm.com:23689/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
+    ![](./images/cli-cluster-info.png)
+

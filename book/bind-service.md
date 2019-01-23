@@ -24,7 +24,7 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 
     ![](./images/cloudant-credentials2.png)
 
-1. Copy the Credentials from the console to the file credentials.env  LMA
+1. Copy the Credentials from the console to the file credentials.env
 
 1. Optional: Create an instance of a service using the CLI instead of the Console.
     ```sh
@@ -34,7 +34,6 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
     ```
     ibmcloud resource service-instance-create todo-cloudant cloudant lite eu-de
     ```
-    > Warning: Kubernetes Secrets do not accept underscore in the service instance name. LMA true?
 
     > To create an instance of a service which do not support RG, use the following command: `
     ibmcloud service create <service_name> <service_plan> <service_instance_name>

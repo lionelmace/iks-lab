@@ -139,9 +139,7 @@ To create a cluster, you have two options either a Lite cluster or a Standard on
 
 1. Connect to the Kubernetes Cluster. Use the kubectl command to check that you are connected:
 
-    `kubectl get nodes`
-
-    You should see a list of worker nodes as follows: LMA
+    ```kubectl get nodes```
 
 
 ## Access the cluster via Kubernetes CLI and Dashboard
