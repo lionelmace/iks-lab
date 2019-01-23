@@ -32,6 +32,18 @@ On the IBM Cloud, to configure cluster-level logging for a Kubernetes cluster, y
 
 ## Configure the LogDNA agent on every worker (node) in a cluster.
 
+To configure your Kubernetes cluster to send logs to your IBM Log Analysis with LogDNA instance, you must install a logdna-agent pod on each node of your cluster. The LogDNA agent reads log files from the pod where it is installed, and forwards the log data to your LogDNA instance.
+
+1. Click **Edit log sources**
+
+    ![](./images/logging-configure.png)
+
+1. From the terminal, run the two commands given in the following screen. This will automatically install a logdna-agent pod on each node of your cluster.
+
+    ![](./images/logdna-agents.png)
+
+    
+
 ## View logs in the LogDNA dashboard
 
 1. Launch the LogDNA dashboard and view logs
