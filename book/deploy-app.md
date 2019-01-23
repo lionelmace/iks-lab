@@ -24,9 +24,7 @@ In this lab, we will test the **Ingress**.
 1. Select the file `ingress-tls-deploy.yaml` .
 
 1. Replace all the values wrapped in <> with the appropriate values.
-    * region would be `eu-de` for Frankfurt (3 changes)
-    * namespace would be the private registry `lab_registry` (1 change)
-    * cluster-name would be `lab-cluster-1` (3 changes).
+Region would be `eu-de` for Frankfurt (3 changes). Namespace would be the private registry `lab_registry` (1 change). Cluster-name would be `lab-cluster-1` (3 changes).
 
     Your YAML file should look as follows:
     ```yaml
