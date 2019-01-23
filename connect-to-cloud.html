@@ -618,15 +618,17 @@
 <h1 id="target-your-resource-group">Target your Resource Group</h1>
 <p>You need to target a Resource Group (RG) to view your cluster or to add a service (e.g. Cloudant Database later. Access to the group and the resources within it are managed by using Identity and Access Management (IAM). </p>
 <ol>
-<li><p>Target the resource group you have been assigned to: LMA
- <code>ibmcloud target -g RESOURCE_GROUP_NAME</code>
- In this lab, the Resource Group <strong>lab</strong> has been created. Thus, you should run the command:</p>
+<li><p>In this lab, the Resource Group <strong>lab</strong> has been created. Select this resource group.</p>
 <pre class="language-"><code class="lang-sh"> ibmcloud target -g lab
 </code></pre>
 </li>
-<li><p>Verify you can see your cluster LMA</p>
+<li><p>Verify you can see your cluster.</p>
 <pre class="language-"><code class="lang-sh"> ibmcloud ks clusters
 </code></pre>
+<p> Output
+      <a href="images/cli-cluster-list.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/cli-cluster-list.png" alt="">
+     </a></p>
 </li>
 <li><p>Retrieve the cluster configuration by setting MYCLUSTER environment variable to your cluster name:</p>
 <pre class="language-"><code class="lang-sh"> ibmcloud ks cluster-config MY_CLUSTER_NAME
@@ -640,11 +642,9 @@
 <pre class="language-"><code class="lang-sh"> kubectl cluster-info
 </code></pre>
 <p> The output should look like:
- &gt;
- Kubernetes master is running at <a href="https://c2.eu-de.containers.cloud.ibm.com:23689" target="_blank">https://c2.eu-de.containers.cloud.ibm.com:23689</a>
- Heapster is running at <a href="https://c2.eu-de.containers.cloud.ibm.com:23689/api/v1/namespaces/kube-system/services/heapster/proxy" target="_blank">https://c2.eu-de.containers.cloud.ibm.com:23689/api/v1/namespaces/kube-system/services/heapster/proxy</a>
- KubeDNS is running at <a href="https://c2.eu-de.containers.cloud.ibm.com:23689/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy" target="_blank">https://c2.eu-de.containers.cloud.ibm.com:23689/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy</a>
- kubernetes-dashboard is running at <a href="https://c2.eu-de.containers.cloud.ibm.com:23689/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy" target="_blank">https://c2.eu-de.containers.cloud.ibm.com:23689/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy</a></p>
+      <a href="images/cli-cluster-info.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/cli-cluster-info.png" alt="">
+     </a></p>
 </li>
 </ol>
 

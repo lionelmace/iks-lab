@@ -605,7 +605,7 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
        <img src="images/cloudant-credentials2.png" alt="">
      </a></p>
 </li>
-<li><p>Copy the Credentials from the console to the file credentials.env  LMA</p>
+<li><p>Copy the Credentials from the console to the file credentials.env</p>
 </li>
 <li><p>Optional: Create an instance of a service using the CLI instead of the Console.</p>
 <pre class="language-"><code class="lang-sh"> ibmcloud resource service-instance-create <span class="token operator">&lt;</span>service_instance_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>service_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>service_plan_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>location<span class="token operator">&gt;</span>
@@ -613,7 +613,6 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 <p> Example:</p>
 <pre class="language-"><code> ibmcloud resource service-instance-create todo-cloudant cloudant lite eu-de
 </code></pre><blockquote>
-<p>Warning: Kubernetes Secrets do not accept underscore in the service instance name. LMA true?</p>
 <p>To create an instance of a service which do not support RG, use the following command: `
  ibmcloud service create <service_name> <service_plan> <service_instance_name></service_instance_name></service_plan></service_name></p>
 </blockquote>
