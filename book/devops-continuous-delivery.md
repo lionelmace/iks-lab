@@ -15,7 +15,7 @@ The toolchain includes:
 
 # Create a Toolchain
 
-1. Open the creation page for the toolchain by clicking [Create toolchain](https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master)
+1. Open the creation page for the toolchain by clicking **[Create toolchain](https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master)**
 
 1. The diagram of the toolchain shows each tool integration in its lifecycle phase in the toolchain.
 

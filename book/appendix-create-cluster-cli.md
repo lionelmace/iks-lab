@@ -165,4 +165,4 @@ To create a cluster, you have two options either a Lite cluster or a Standard on
 
 1. Open the Kubernetes dashboard: <a href="http://localhost:8001/ui" target="_blank">http://localhost:8001/ui</a>
 
-    ![](./images/kubedashboard.png)
+    ![](./images/kubernetes-dashboard.png)
