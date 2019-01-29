@@ -16,9 +16,9 @@ On the IBM Cloud, to configure cluster-level logging for a Kubernetes cluster, y
 
 1. Click the button **Create logging instance**.
 
-1. Make sure to enter a meaningful name for the service instance such as logdna-YOURINITIAL.
+1. Make sure to enter a meaningful name for the service instance such as logdna-<yourinitial>.
 
-1. Select the resource group that your cluster is in. By default, the Default resource group is set for you.
+1. Select the Resource Group. To better govern your services, it is recommended to use the same Resource Group than the one your cluster is in.
 
     ![](./images/logging-creation.png)
 
@@ -28,21 +28,27 @@ On the IBM Cloud, to configure cluster-level logging for a Kubernetes cluster, y
 
 1. Click **Create**. The Observability dashboard opens and shows the details for your service.
 
-## Configure the LogDNA agent on every worker (node) in a cluster.
+## Configure the LogDNA agent on a cluster.
 
-To configure your Kubernetes cluster to send logs to your IBM Log Analysis with LogDNA instance, you must install a logdna-agent pod on each node of your cluster. The LogDNA agent reads log files from the pod where it is installed, and forwards the log data to your LogDNA instance.
+To configure your Kubernetes cluster to send logs to your IBM Log Analysis with LogDNA instance, you must install a `logdna-agent` pod on each node of your cluster. The LogDNA agent reads log files from the pod where it is installed, and forwards the log data to your LogDNA instance.
 
 1. Click **Edit log sources**
 
     ![](./images/logging-configure.png)
 
-1. From the terminal, run the two commands in the order they are displayed like in the page below. This will automatically install a logdna-agent pod on each node of your cluster.
+1. Select **Kubernetes**.
 
     ![](./images/logdna-agents.png)
-    
-    > The first command creates a Kubernetes secret to store your logDNA ingestion key for your service instance. The LogDNA ingestion key is used to open a secure web socket to the logDNA ingestion server and to authenticate the logging agent with the IBM Log Analysis with LogDNA service.
 
-    > The second command creates a Kubernetes daemon set to deploy the LogDNA agent on every worker node of your Kubernetes cluster. The LogDNA agent collects logs with the extension *.log and extensionsless files that are stored in the /var/log directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the IBM Log Analysis with LogDNA service.
+1. Copy the first command and run it in your terminal. In this step, you create a Kubernetes secret to store your logDNA ingestion key for your service instance. The LogDNA ingestion key is used to open a secure web socket to the logDNA ingestion server and to authenticate the logging agent with the logging service. The command looks as follows:
+    ```sh
+    kubectl create secret generic logdna-agent-key --from-literal=logdna-agent-key=<logDNA_ingestion_key>
+    ```
+
+1.  d.	Copy the second command and run it in your termina. In this step, you create a Kubernetes daemon set to deploy the LogDNA agent on every worker node of your Kubernetes cluster. The LogDNA agent collects logs with the extension *.log and extensionsless files that are stored in the /var/log directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the IBM Log Analysis with LogDNA service. The command looks as follows:
+    ```sh
+    kubectl create -f https://repo.logdna.com/ibm/prod/logdna-agent-ds-us-south.yaml
+    ```
 
 1. Verify that the LogDNA agent is deployed successfully.
     ```sh
@@ -53,6 +59,19 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
     ![](./images/logdna-pods.png)
 
     > The deployment is successful when you see one or more LogDNA pods. The number of LogDNA pods equals the number of worker nodes in your cluster. All pods must be in a Running state.
+
+1. To check that the secret containing the access key has been created, you can run the following command:
+    ```sh
+    kubectl get secrets
+    ```
+
+> What logs can you expect to see?
+•	Stdout and stderr logs from all containers
+•	Application logs
+•	Worker (node) logs
+
+By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the logging service.
+
 
 ## View logs in the LogDNA dashboard
 
