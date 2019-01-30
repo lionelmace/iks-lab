@@ -40,12 +40,12 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
 
     ![](./images/logdna-agents.png)
 
-1. Copy the first command and run it in your terminal. In this step, you create a Kubernetes secret to store your logDNA ingestion key for your service instance. The LogDNA ingestion key is used to open a secure web socket to the logDNA ingestion server and to authenticate the logging agent with the logging service. The command looks as follows:
+1. Copy the first command and run it in your terminal. In this step, you create a Kubernetes secret to store your logDNA ingestion key for your service instance. The LogDNA ingestion key is used to open a secure web socket to the logDNA ingestion server and to authenticate the logging agent with the logging service. Make sure to replace the ingestion before running the command.
     ```sh
     kubectl create secret generic logdna-agent-key --from-literal=logdna-agent-key=<logDNA_ingestion_key>
     ```
 
-1.  d.	Copy the second command and run it in your termina. In this step, you create a Kubernetes daemon set to deploy the LogDNA agent on every worker node of your Kubernetes cluster. The LogDNA agent collects logs with the extension *.log and extensionsless files that are stored in the /var/log directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the IBM Log Analysis with LogDNA service. The command looks as follows:
+1. Copy the second command and run it in your terminal. In this step, you create a Kubernetes daemon set to deploy the LogDNA agent on every worker node of your Kubernetes cluster.
     ```sh
     kubectl create -f https://repo.logdna.com/ibm/prod/logdna-agent-ds-us-south.yaml
     ```
@@ -56,7 +56,9 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
     ```
     Output:
 
-    ![](./images/logdna-pods.png)
+    NAME                      READY     STATUS    RESTARTS   AGE
+    logdna-agent-hlhtz        1/1       Running   0          5m
+    logdna-agent-nmxv2        1/1       Running   0          5m
 
     > The deployment is successful when you see one or more LogDNA pods. The number of LogDNA pods equals the number of worker nodes in your cluster. All pods must be in a Running state.
 
@@ -66,11 +68,12 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
     ```
 
 > What logs can you expect to see?
-•	Stdout and stderr logs from all containers
-•	Application logs
-•	Worker (node) logs
+> •	Stdout and stderr logs from all containers
+> •	Application logs
+> •	Worker (node) logs
+> •	Extensionsless files stored in the /var/log directory of your pod
 
-By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the logging service.
+> By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the logging service.
 
 
 ## View logs in the LogDNA dashboard
