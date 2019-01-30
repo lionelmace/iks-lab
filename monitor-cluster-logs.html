@@ -634,12 +634,12 @@
 <pre class="language-"><code class="lang-sh"> kubectl get pods
 </code></pre>
 <p> Output:</p>
-<p> NAME                      READY     STATUS    RESTARTS   AGE
- logdna-agent-hlhtz        1/1       Running   0          5m
- logdna-agent-nmxv2        1/1       Running   0          5m</p>
 <blockquote>
-<p>The deployment is successful when you see one or more LogDNA pods. The number of LogDNA pods equals the number of worker nodes in your cluster. All pods must be in a Running state.</p>
+<p>NAME                      READY     STATUS    RESTARTS   AGE
+logdna-agent-hlhtz        1/1       Running   0          5m
+logdna-agent-nmxv2        1/1       Running   0          5m</p>
 </blockquote>
+<p> The deployment is successful when you see one or more LogDNA pods. The number of LogDNA pods equals the number of worker nodes in your cluster. All pods must be in a Running state.</p>
 </li>
 <li><p>To check that the secret containing the access key has been created, you can run the following command:</p>
 <pre class="language-"><code class="lang-sh"> kubectl get secrets
