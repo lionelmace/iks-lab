@@ -622,21 +622,21 @@
        <img src="images/logdna-agents.png" alt="">
      </a></p>
 </li>
-<li><p>Copy the first command and run it in your terminal. In this step, you create a Kubernetes secret to store your logDNA ingestion key for your service instance. The LogDNA ingestion key is used to open a secure web socket to the logDNA ingestion server and to authenticate the logging agent with the logging service. The command looks as follows:</p>
+<li><p>Copy the first command and run it in your terminal. In this step, you create a Kubernetes secret to store your logDNA ingestion key for your service instance. The LogDNA ingestion key is used to open a secure web socket to the logDNA ingestion server and to authenticate the logging agent with the logging service. Make sure to replace the ingestion before running the command.</p>
 <pre class="language-"><code class="lang-sh"> kubectl create secret generic logdna-agent-key --from-literal<span class="token operator">=</span>logdna-agent-key<span class="token operator">=</span><span class="token operator">&lt;</span>logDNA_ingestion_key<span class="token operator">&gt;</span>
 </code></pre>
 </li>
-<li><p>d.    Copy the second command and run it in your termina. In this step, you create a Kubernetes daemon set to deploy the LogDNA agent on every worker node of your Kubernetes cluster. The LogDNA agent collects logs with the extension *.log and extensionsless files that are stored in the /var/log directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the IBM Log Analysis with LogDNA service. The command looks as follows:</p>
-<pre class="language-"><code class="lang-sh">kubectl create -f https://repo.logdna.com/ibm/prod/logdna-agent-ds-us-south.yaml
+<li><p>Copy the second command and run it in your terminal. In this step, you create a Kubernetes daemon set to deploy the LogDNA agent on every worker node of your Kubernetes cluster.</p>
+<pre class="language-"><code class="lang-sh"> kubectl create -f https://repo.logdna.com/ibm/prod/logdna-agent-ds-us-south.yaml
 </code></pre>
 </li>
 <li><p>Verify that the LogDNA agent is deployed successfully.</p>
 <pre class="language-"><code class="lang-sh"> kubectl get pods
 </code></pre>
 <p> Output:</p>
-<p>      <a href="images/logdna-pods.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/logdna-pods.png" alt="">
-     </a></p>
+<p> NAME                      READY     STATUS    RESTARTS   AGE
+ logdna-agent-hlhtz        1/1       Running   0          5m
+ logdna-agent-nmxv2        1/1       Running   0          5m</p>
 <blockquote>
 <p>The deployment is successful when you see one or more LogDNA pods. The number of LogDNA pods equals the number of worker nodes in your cluster. All pods must be in a Running state.</p>
 </blockquote>
@@ -650,9 +650,10 @@
 <p>What logs can you expect to see?
 &#x2022;    Stdout and stderr logs from all containers
 &#x2022;    Application logs
-&#x2022;    Worker (node) logs</p>
-</blockquote>
+&#x2022;    Worker (node) logs
+&#x2022;    Extensionsless files stored in the /var/log directory of your pod</p>
 <p>By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the logging service.</p>
+</blockquote>
 <h2 id="view-logs-in-the-logdna-dashboard">View logs in the LogDNA dashboard</h2>
 <ol>
 <li><p>At the bottom on the page, click <strong>View LogDNA</strong> to open the LogDNA console</p>
