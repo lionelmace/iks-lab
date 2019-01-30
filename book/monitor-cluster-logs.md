@@ -56,11 +56,11 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
     ```
     Output:
 
-    NAME                      READY     STATUS    RESTARTS   AGE
-    logdna-agent-hlhtz        1/1       Running   0          5m
-    logdna-agent-nmxv2        1/1       Running   0          5m
+    > NAME                      READY     STATUS    RESTARTS   AGE
+    > logdna-agent-hlhtz        1/1       Running   0          5m
+    > logdna-agent-nmxv2        1/1       Running   0          5m
 
-    > The deployment is successful when you see one or more LogDNA pods. The number of LogDNA pods equals the number of worker nodes in your cluster. All pods must be in a Running state.
+    The deployment is successful when you see one or more LogDNA pods. The number of LogDNA pods equals the number of worker nodes in your cluster. All pods must be in a Running state.
 
 1. To check that the secret containing the access key has been created, you can run the following command:
     ```sh
