@@ -57,7 +57,7 @@ Helm is a client/server application :
     replicaCount: 3
 
     image:
-      repository: registry.<region>.bluemix.net/<namespace>/todo-<lastname>
+      repository: <region>.icr.io/<namespace>/todo-<lastname>
       tag: "1.0"
       pullPolicy: Always
 

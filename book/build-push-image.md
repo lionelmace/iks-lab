@@ -13,31 +13,38 @@ Before you can run the application on the cluster, you first need to push the Do
     ```sh
     ibmcloud cr namespace-list
     ```
-    You should get a namespace called **lab_registry**
+    You should get a namespace called **lab-registry**
 
 1. Build a Docker image. Make sure to replace the value region and namespace
     ```sh
-    docker build . -t registry.<region>.bluemix.net/<namespace>/todo-<lastname>:1.0
+    docker build . -t <region>.icr.io/<namespace>/todo-<lastname>:1.0
     ```
     > Region is `eu-de` for the Frankfurt datacenter.
 
+    LMA: Changer lastname par your initial
+
 1. Push the image to your private image registry.
     ```sh
-    docker push registry.<region>.bluemix.net/<namespace>/todo-<lastname>:1.0
+    docker push <region>.icr.io/<namespace>/todo-<lastname>:1.0
     ```
 
-    > If you get the error `unauthorized: authentication required`, run the command `ibmcloud cr login`
+1. If you get the error `unauthorized: authentication required`, run the command
+    ```sh
+    ibmcloud cr login
+    ```
+
+    LMA Some users forgot push. Replaced by ibmcloud cr build
 
 1. Verify that the image was successfully added to your registry in your namespace
     ```sh
-    ibmcloud cr images --restrict <namespace>
+    ibmcloud cr images
     ```
     Output:
     ```
     Listing images...
 
     REPOSITORY                                  NAMESPACE   TAG       DIGEST         CREATED        SIZE     VULNERABILITY STATUS
-    registry.eu-de.bluemix.net/lab_registry/todo-mace   namespace   1   0d90cb732881   1 minute ago   264 MB   OK
+    de.icr.io/lab-registry/todo-mace   namespace   1   0d90cb732881   1 minute ago   264 MB   OK
     ``` 
 
 1. The image is also visible in the IBM Cloud Console. Go to the [Container Registry](https://cloud.ibm.com/containers-kubernetes/registry/main/start).

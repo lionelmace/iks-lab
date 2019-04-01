@@ -80,7 +80,7 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
 
 1. At the bottom on the page, click **View LogDNA** to open the LogDNA console
 
-1. Use `namespace:<YOUR_KUBERNETES_NAMESPACE>` to view only the logs of the applications deployed to the specified namespace.
+1. Since namespace is a field that LogDNA collects, you can use the search function to filter your namespace. Use `namespace:name` to view only the logs of the applications deployed to the specified namespace.
 
     > Note: With the Free service plan, you can tail your latest logs only.
 

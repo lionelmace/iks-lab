@@ -24,7 +24,7 @@ In this lab, we will test the **Ingress**.
 1. Select the file `ingress-tls-deploy.yaml` .
 
 1. Replace all the values wrapped in <> with the appropriate values.
-Region would be `eu-de` for Frankfurt (3 changes). Namespace would be the private registry `lab_registry` (1 change). Cluster-name would be `lab-cluster-1` (3 changes).
+Region would be `eu-de` for Frankfurt (3 changes). Namespace would be the private registry `lab-registry` (1 change). Cluster-name would be `lab-cluster-1` (3 changes).
 
     Your YAML file should look as follows:
     ```yaml
@@ -47,7 +47,7 @@ Region would be `eu-de` for Frankfurt (3 changes). Namespace would be the privat
         spec:
           containers:
           - name: mytodos
-            image: registry.<region>.bluemix.net/<namespace>/todo-<lastname>:1.0
+            image: <region>.icr.io/<namespace>/todo-<lastname>:1.0
             imagePullPolicy: Always
             resources:
               requests:

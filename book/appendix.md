@@ -110,7 +110,7 @@ In order to isolate the applications you deploy in the cluster, you may want to 
         - name: private-registry-secret
         containers:
         - name: mytodos
-            image: registry.eu-de.bluemix.net/mace/mytodos:1
+            image: <region>.icr.io/mace/mytodos:1
             imagePullPolicy: Always
         ...
     ```
