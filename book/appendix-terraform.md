@@ -1,4 +1,6 @@
-# Provisioning with Terraform
+# Deploy the solution using Terraform
+
+![](./images/terraform-color.png)
 
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
@@ -6,21 +8,34 @@ In this tutorial, you will use a sample configuration to provision a **Kubernete
 
 ## Install Terraform and the IBM Cloud provider for Terraform
 
-https://cloud.ibm.com/docs/tutorials/plan-create-update-deployments.html#install-terraform-and-the-ibm-cloud-provider-for-terraform
+1. Download and install Terraform for your system. [https://learn.hashicorp.com/terraform/getting-started/install.html](https://learn.hashicorp.com/terraform/getting-started/install.html)
 
-https://github.com/IBM-Cloud/terraform-provider-ibm/releases/tag/v0.14.0
+1. Check Terraform installation by running **terraform** in your terminal or command prompt window. You should see a list of **Common commands**.
 
-1. Download and install Terraform for your system.
+1. Download the appropriate IBM Cloud Provider plugin for your system and extract the archive. [https://github.com/IBM-Cloud/terraform-provider-ibm/releases](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
 
-1. Download the Terraform binary for the IBM Cloud provider. To setup Terraform with IBM Cloud provider, refer to this link
+1. To setup Terraform with IBM Cloud provider, refer to this [link](https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#setup)
 
-1. Create a .terraformrc file in your home directory that points to the Terraform binary. In the following example, /opt/provider/terraform-provider-ibm is the route to the directory.
+1. Create a .terraformrc file in your home directory that points to the Terraform binary. In the following example, $HOME/.terraform.d/plugins is the route to the directory.
 
     ```
     # ~/.terraformrc
     providers {
-    ibm = "/opt/provider/terraform-provider-ibm"
+      ibm = "$HOME/.terraform.d/plugins/terraform-provider-ibm_v0.15.1"
     }
+    ```
+    Note: Update the provider version according to the release you use.
+
+1. Terraform must initialize the provider before it can be used. Run the command:
+    ```tf
+    terraform init
+    ```
+
+## Set Platform API key
+
+1. Go to the terraform folder
+    ```
+    cd terraform
     ```
 
 1. Verify the terraform provider is installed
@@ -33,19 +48,12 @@ https://github.com/IBM-Cloud/terraform-provider-ibm/releases/tag/v0.14.0
     └── provider.ibm
     ```
 
-## Set Platform API key
-
 1. Copy terraform/credentials.tfvars.tmpl to terraform/credentials.tfvars by running the below command
     ```
     cp terraform/credentials.tfvars.tmpl terraform/credentials.tfvars
     ```
 
 1. Edit terraform/credentials.tfvars and set the value for ibmcloud_api_key to the Platform API key you obtained.
-
-1. Initialize terraform
-    ```
-    terraform init
-    ```
 
 1. To provision the cluster, the terraform needs your Infrastructure API. To do so, go to [https://cloud.ibm.com/iam#/users](https://cloud.ibm.com/iam#/users)
 
@@ -67,3 +75,7 @@ https://github.com/IBM-Cloud/terraform-provider-ibm/releases/tag/v0.14.0
     ```
     terraform destroy
     ```
+
+## Resources
+
+    * [Deploy a LAMP stack using Terraform](https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#setup)
