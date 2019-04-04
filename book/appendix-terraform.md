@@ -26,10 +26,6 @@ In this tutorial, you will use a sample configuration to provision a **Kubernete
     ```
     Note: Update the provider version according to the release you use.
 
-1. Terraform must initialize the provider before it can be used. Run the command:
-    ```tf
-    terraform init
-    ```
 
 ## Set Platform API key
 
@@ -38,9 +34,14 @@ In this tutorial, you will use a sample configuration to provision a **Kubernete
     cd terraform
     ```
 
+1. Terraform must initialize the provider before it can be used.
+    ```tf
+    terraform init
+    ```
+
 1. Verify the terraform provider is installed
 
-    ```terraform providers````
+    ```terraform providers```
 
     Output:
     ```
@@ -64,11 +65,12 @@ In this tutorial, you will use a sample configuration to provision a **Kubernete
 1. Select the **Classic infrastructure API key** - To see your classic infrastructure API key details, select Details in the Options menu.
 
 
-## Provision a 
+## Provision a Kubernetes cluster
 
 1. Start provisioning
     ```
     terraform apply
+    terraform apply -target=ibm_container_cluster.cluster
     ```
 
 1. Clean up
@@ -78,4 +80,7 @@ In this tutorial, you will use a sample configuration to provision a **Kubernete
 
 ## Resources
 
-    * [Deploy a LAMP stack using Terraform](https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#setup)
+For additional resources pay close attention to the following:
+
+- [Tutorial: Deploy a LAMP stack using Terraform](https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#setup)
+- [Tutorial: Plan, create and update deployment environments](https://cloud.ibm.com/docs/tutorials/plan-create-update-deployments.html#plan-create-and-update-deployment-environments)
