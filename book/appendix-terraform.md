@@ -35,13 +35,14 @@ In this tutorial, you will use a sample configuration to provision a **Kubernete
     ```
 
 1. Terraform must initialize the provider before it can be used.
-    ```tf
+    ```
     terraform init
     ```
 
 1. Verify the terraform provider is installed
-
-    ```terraform providers```
+    ```
+    terraform providers
+    ```
 
     Output:
     ```
