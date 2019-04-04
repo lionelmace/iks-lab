@@ -600,18 +600,18 @@
  }
 </code></pre><p> Note: Update the provider version according to the release you use.</p>
 </li>
-<li><p>Terraform must initialize the provider before it can be used. Run the command:</p>
-<pre class="language-"><code class="lang-tf"> terraform init
-</code></pre>
-</li>
 </ol>
 <h2 id="set-platform-api-key">Set Platform API key</h2>
 <ol>
 <li><p>Go to the terraform folder</p>
 <pre class="language-"><code> cd terraform
 </code></pre></li>
+<li><p>Terraform must initialize the provider before it can be used.</p>
+<pre class="language-"><code class="lang-tf"> terraform init
+</code></pre>
+</li>
 <li><p>Verify the terraform provider is installed</p>
-<p> ```terraform providers````</p>
+<p> <code>terraform providers</code></p>
 <p> Output:</p>
 <pre class="language-"><code> .
  &#x2514;&#x2500;&#x2500; provider.ibm
@@ -630,18 +630,23 @@
 <li><p>Select the <strong>Classic infrastructure API key</strong> - To see your classic infrastructure API key details, select Details in the Options menu.</p>
 </li>
 </ol>
-<h2 id="provision-a">Provision a</h2>
+<h2 id="provision-a-kubernetes-cluster">Provision a Kubernetes cluster</h2>
 <ol>
 <li><p>Start provisioning</p>
 <pre class="language-"><code> terraform apply
+ terraform apply -target=ibm_container_cluster.cluster
 </code></pre></li>
 <li><p>Clean up</p>
 <pre class="language-"><code> terraform destroy
 </code></pre></li>
 </ol>
 <h2 id="resources">Resources</h2>
-<pre class="language-"><code>* [Deploy a LAMP stack using Terraform](https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#setup)
-</code></pre>
+<p>For additional resources pay close attention to the following:</p>
+<ul>
+<li><a href="https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#setup" target="_blank">Tutorial: Deploy a LAMP stack using Terraform</a></li>
+<li><a href="https://cloud.ibm.com/docs/tutorials/plan-create-update-deployments.html#plan-create-and-update-deployment-environments" target="_blank">Tutorial: Plan, create and update deployment environments</a></li>
+</ul>
+
                                 
                                 </section>
                             
