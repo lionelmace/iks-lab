@@ -6,7 +6,7 @@
 
 In this tutorial, you will use a sample configuration to provision a **Kubernetes cluster**, and, a **Postgres** database. Finish by deleting all of the resources created by the configuration.
 
-## Install Terraform and the IBM Cloud provider for Terraform
+## Install Terraform and the IBM Cloud provider
 
 1. Download and install Terraform for your system. [https://learn.hashicorp.com/terraform/getting-started/install.html](https://learn.hashicorp.com/terraform/getting-started/install.html)
 
@@ -68,10 +68,21 @@ In this tutorial, you will use a sample configuration to provision a **Kubernete
 
 ## Provision a Kubernetes cluster
 
+1. Perform a dry run to show what infrastructure terraform intends to create
+    ```
+    terraform plan
+    ```
+    > You can activate debug log by running: *export TF_LOG=debug*
+
 1. Start provisioning
     ```
     terraform apply
     terraform apply -target=ibm_container_cluster.cluster
+    ```
+
+1. Once provisioned, reads and outputs a Terraform state or plan file in a human-readable form.
+    ```
+    terraform show
     ```
 
 1. Clean up
