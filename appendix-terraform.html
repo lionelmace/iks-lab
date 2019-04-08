@@ -583,7 +583,7 @@
      </a></p>
 <p><a href="https://www.terraform.io/" target="_blank">Terraform</a> enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.</p>
 <p>In this tutorial, you will use a sample configuration to provision a <strong>Kubernetes cluster</strong>, and, a <strong>Postgres</strong> database. Finish by deleting all of the resources created by the configuration.</p>
-<h2 id="install-terraform-and-the-ibm-cloud-provider-for-terraform">Install Terraform and the IBM Cloud provider for Terraform</h2>
+<h2 id="install-terraform-and-the-ibm-cloud-provider">Install Terraform and the IBM Cloud provider</h2>
 <ol>
 <li><p>Download and install Terraform for your system. <a href="https://learn.hashicorp.com/terraform/getting-started/install.html" target="_blank">https://learn.hashicorp.com/terraform/getting-started/install.html</a></p>
 </li>
@@ -631,9 +631,18 @@
 </ol>
 <h2 id="provision-a-kubernetes-cluster">Provision a Kubernetes cluster</h2>
 <ol>
+<li><p>Perform a dry run to show what infrastructure terraform intends to create</p>
+<pre class="language-"><code> terraform plan
+</code></pre><blockquote>
+<p>You can activate debug log by running: <em>export TF_LOG=debug</em></p>
+</blockquote>
+</li>
 <li><p>Start provisioning</p>
 <pre class="language-"><code> terraform apply
  terraform apply -target=ibm_container_cluster.cluster
+</code></pre></li>
+<li><p>Once provisioned, reads and outputs a Terraform state or plan file in a human-readable form.</p>
+<pre class="language-"><code> terraform show
 </code></pre></li>
 <li><p>Clean up</p>
 <pre class="language-"><code> terraform destroy
