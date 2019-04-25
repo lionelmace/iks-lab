@@ -602,17 +602,21 @@
 <p>      <a href="images/sysdig-plan.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/sysdig-plan.png" alt="">
      </a></p>
-<blockquote>
-<p>The service plan that you choose for an IBM Log Analysis with LogDNA instance defines the number of days that data is stored and retained in LogDNA. For example, if you choose the Free plan, data is not stored at all. However, if you choose the 7 day plan, data is stored for 7 days and you have access to it through the LogDNA Web UI.</p>
-</blockquote>
 </li>
 <li><p>Click <strong>Create</strong>. The Observability dashboard opens and shows the details for your service.</p>
 </li>
 </ol>
-<h2 id="install-script">Install script:</h2>
-<p>The following script can be run to configure the Sysdig configuration based on the arguments and deploy it to a kubernetes cluster:</p>
-<pre class="language-"><code>curl -sL https://raw.githubusercontent.com/draios/sysdig-cloud-scripts/master/agent_deploy/IBMCloud-Kubernetes-Service/install-agent-k8s.sh | bash -s -- -a <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ACCESS-KEY</span><span class="token punctuation">&gt;</span></span> -c <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>SYSDIG-ENDPOINT</span><span class="token punctuation">&gt;</span></span> -t <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TAGS</span><span class="token punctuation">&gt;</span></span>
-</code></pre><h2 id="manual-installation">Manual Installation:</h2>
+<h2 id="install-sysdig-agent-to-your-cluster">Install Sysdig Agent to your cluster</h2>
+<ol>
+<li><p>Click <strong>Edit sources</strong></p>
+<p>      <a href="images/sysdig-edit.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/sysdig-edit.png" alt="">
+     </a></p>
+</li>
+<li><p>On this page, run for the curl command at the bottom of the page:</p>
+</li>
+</ol>
+<h2 id="manual-installation">Manual Installation:</h2>
 <ol>
 <li><p>Download the required yaml files from the following links to a directory:</p>
 <ul>
