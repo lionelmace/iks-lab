@@ -32,9 +32,32 @@ Once the agent has started sending metrics to Sysdig for your environment, you c
 
     ![](./images/sysdig-edit.png)
 
-1. On this page, run for the curl command at the bottom of the page:
+1. On this page, run for the curl command at the bottom of the page.
 
+1. If the installation is successfull you should see the following message:
 
+    ```
+    * Detecting operating system
+    * Downloading Sysdig cluster role yaml
+    * Downloading Sysdig config map yaml
+    * Downloading Sysdig daemonset v2 yaml
+    * Creating namespace: ibm-observe
+    * Creating sysdig-agent serviceaccount in namespace: ibm-observe
+    * Creating sysdig-agent clusterrole and binding
+    clusterrole.rbac.authorization.k8s.io/sysdig-agent created
+    * Creating sysdig-agent secret using the ACCESS_KEY provided
+    * Retreiving the IKS Cluster ID and Cluster Name
+    * Setting cluster name as hacluster
+    * Setting ibm.containers-kubernetes.cluster.id 0d75a523aeec4aba831fbff645bfd223
+    * Updating agent configmap and applying to cluster
+    * Setting tags
+    * Setting collector endpoint
+    * Adding additional configuration to dragent.yaml
+    * Enabling Prometheus
+    configmap/sysdig-agent created
+    * Deploying the sysdig agent
+    daemonset.extensions/sysdig-agent created
+    ```
 
 ## Manual Installation:
 
