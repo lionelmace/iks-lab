@@ -24,16 +24,17 @@ Once the agent has started sending metrics to Sysdig for your environment, you c
 
     ![](./images/sysdig-plan.png)
 
-    > The service plan that you choose for an IBM Log Analysis with LogDNA instance defines the number of days that data is stored and retained in LogDNA. For example, if you choose the Free plan, data is not stored at all. However, if you choose the 7 day plan, data is stored for 7 days and you have access to it through the LogDNA Web UI.
-
 1. Click **Create**. The Observability dashboard opens and shows the details for your service.
 
+## Install Sysdig Agent to your cluster
 
-## Install script:
-The following script can be run to configure the Sysdig configuration based on the arguments and deploy it to a kubernetes cluster:
-```
-curl -sL https://raw.githubusercontent.com/draios/sysdig-cloud-scripts/master/agent_deploy/IBMCloud-Kubernetes-Service/install-agent-k8s.sh | bash -s -- -a <ACCESS-KEY> -c <SYSDIG-ENDPOINT> -t <TAGS>
-```
+1. Click **Edit sources**
+
+    ![](./images/sysdig-edit.png)
+
+1. On this page, run for the curl command at the bottom of the page:
+
+
 
 ## Manual Installation:
 
