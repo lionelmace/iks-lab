@@ -37,7 +37,7 @@ The toolchain includes:
 
     * **Container Registry Region**: Select the region you want the docker images to be created into.
 
-    * **Container Registry Namespace**: This is your folder in the global image registry in a region, used to manage your own set of images. It must be a unique name. In this lab, we use **lab-registry**.
+    * **Container Registry Namespace**: This is your folder in the global image registry in a region, used to manage your own set of images. It must be a unique name.
 
     * **IBM Cloud API Key**: Create a new IBM Cloud API Key.
 
