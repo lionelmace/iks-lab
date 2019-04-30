@@ -26,11 +26,17 @@ We will use a web application for managing todos. The front end is written in An
     ```
     Results:
     ```
-    npm WARN mytodo@2.0.0 No repository field.
+    > mytodo@2.0.0 start /Users/mace/Box Sync/Bluemix/technos/temp/mytodo
+    > node server.js
 
-    added 158 packages from 170 contributors and audited 559 packages in 25.3s
-    found 0 vulnerabilities
+    Cannot find module ./vcap-local.json
+    Cannot find credentials.env
+    Using In Memory
+    server starting on http://localhost:8080
     ```
+
+    LMA The console displays error CANNOT - Lab users pensaient que ca marchait pas :-(
+    LMA Rajouter une étape Ctrl-C pour arrete l'app.
 
 1. After your app starts, click on the eye on the top right corner and select the port `8080` 
 

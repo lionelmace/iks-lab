@@ -19,11 +19,13 @@ For this lab, a hosted shell is provided for you with all the necessary tools. U
     ibmcloud login
     ```
 
+1. Select an **Account** and a **Region**.
+
 1. Once logged in you will see the following message:
     ```
     Targeted account IBM's Account (0b123456789) <-> 1594534
 
-    API endpoint:      https://api.ng.bluemix.net
+    API endpoint:      https://cloud.ibm.com
     Region:            eu-de
     User:              your-email-address@company.com
     Account:           IBM's Account (0b123456789) <-> 1594534
@@ -33,10 +35,7 @@ For this lab, a hosted shell is provided for you with all the necessary tools. U
     Space:
     ```
 
-1. By default, you are being logged in the region US South. Switch to the region **EU Central** (eu-de).
-    ```sh
-    ibmcloud target -r eu-de
-    ```
+    > If you need to switch to anoher region such as Frankfurt, run the command **ibmcloud target -r eu-de**.
 
 # Target your Resource Group
 

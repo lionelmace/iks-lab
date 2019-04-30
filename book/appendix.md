@@ -78,7 +78,7 @@ In order to isolate the applications you deploy in the cluster, you may want to 
     ```
 
 1. The new namespace does not contain the secret to access the private container registry. The default namespace has by default this secret to access the registry. If you try to deploy without this step, you will get this error:
-    > Failed to pull image "registry.eu-de.bluemix.net/mace/mytodos:1": rpc error: code = Unknown desc = Error response from daemon: Get https://registry.eu-de.bluemix.net/v2/mace/mytodos/manifests/v1: unauthorized: authentication required
+    > Failed to pull image "de.icr.io/mace/mytodos:1": rpc error: code = Unknown desc = Error response from daemon: Get https://de.icr.io/v2/mace/mytodos/manifests/v1: unauthorized: authentication required
     
     In order to add this registry secret, run the following command:
     ```
@@ -86,7 +86,7 @@ In order to isolate the applications you deploy in the cluster, you may want to 
     ```
     For example:
     ```
-    kubectl --namespace mytodos create secret docker-registry private-registry-secret --docker-server=registry.eu-de.bluemix.net --docker-password=<IBMCLOUD_API_KEY> --docker-username=iamapikey --docker-email=a@b.com
+    kubectl --namespace mytodos create secret docker-registry private-registry-secret --docker-server=de.icr.io --docker-password=<IBMCLOUD_API_KEY> --docker-username=iamapikey --docker-email=a@b.com
     ```
     > You can generate the api key using the following command:
     ```ibmcloud iam api-key-create IBMCLOUD_API_KEY```
@@ -110,7 +110,7 @@ In order to isolate the applications you deploy in the cluster, you may want to 
         - name: private-registry-secret
         containers:
         - name: mytodos
-            image: <region>.icr.io/mace/mytodos:1
+            image: <region>.icr.io/<namespace>/mytodos:1
             imagePullPolicy: Always
         ...
     ```

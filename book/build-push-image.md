@@ -26,12 +26,7 @@ Before you can run the application on the cluster, you first need to push the Do
     docker push <region>.icr.io/<namespace>/todo-<lastname>:1.0
     ```
 
-1. If you get the error `unauthorized: authentication required`, run the command
-    ```sh
-    ibmcloud cr login
-    ```
-
-    LMA Some users forgot push. Replaced by ibmcloud cr build
+    > If you get the error `unauthorized: authentication required`, run the command **ibmcloud cr login**
 
 1. Verify that the image was successfully added to your registry in your namespace
     ```sh

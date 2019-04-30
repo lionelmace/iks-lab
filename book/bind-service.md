@@ -73,14 +73,14 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
     kubectl get secrets
     ```
 
-1. You can view the secret in the Kubernetes Dashboard
+1. You can view the secret in the Kubernetes Dashboard 
 
     ![](./images/k8s-secret.png)
 
 
 ## Redeploy the app
 
-1. Modify the YAML to uncomment the last 3 lines of the Deployment section as of envFrom.
+1. Modify the YAML to uncomment the last 3 lines of the Deployment section as of **envFrom**.
 
     Your YAML file should look as follows:
     ```yaml
@@ -103,7 +103,7 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
         spec:
           containers:
           - name: mytodos
-            image: registry.<region>.bluemix.net/<namespace>/todo-<lastname>:1.0
+            image: <region>.icr.io/<namespace>/todo-<lastname>:1.0
             imagePullPolicy: Always
             resources:
               requests:

@@ -17,6 +17,8 @@ The toolchain includes:
 
 1. Open the creation page for the toolchain by clicking **[Create toolchain](https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master)**
 
+    > LMA How to know who is owner of the toolchain.
+
 1. The diagram of the toolchain shows each tool integration in its lifecycle phase in the toolchain.
 
     ![](./images/toolchain-landing.png)
@@ -37,7 +39,7 @@ The toolchain includes:
 
     * **Container Registry Region**: Select the region you want the docker images to be created into.
 
-    * **Container Registry Namespace**: This is your folder in the global image registry in a region, used to manage your own set of images. It must be a unique name. In this lab, we use **lab_registry**.
+    * **Container Registry Namespace**: This is your folder in the global image registry in a region, used to manage your own set of images. It must be a unique name. In this lab, we use **lab-registry**.
 
     * **IBM Cloud API Key**: Create a new IBM Cloud API Key.
 
