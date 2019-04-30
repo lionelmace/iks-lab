@@ -4,7 +4,7 @@ To create a cluster, you have two options either a Lite cluster or a Standard on
 
 + A **Lite cluster** is a free cluster comes with a single worker node to deploy container pods upon. A worker node is the compute host, typically a virtual machine, that your apps run on. Go to Step *Create a Lite cluster*
 
-+ A **Standard cluster** is a production-ready cluster with as many worker nodes as you want. A Standard cluster requires requires a IBM Cloud Infrastructure (former SoftLayer) account. Go to Step *Create a Standard cluster*.
++ A **Standard cluster** is a production-ready cluster with as many worker nodes as you want. A Standard cluster requires requires a IBM Cloud Infrastructure account. Go to Step *Create a Standard cluster*.
 
 ## Create a Lite cluster
 
