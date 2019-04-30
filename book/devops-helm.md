@@ -106,7 +106,13 @@ Helm is a client/server application :
     affinity: {}
     ```
 
-1. To install a Helm chart, run the below command
+1. Helm runs with "default" service account. You should provide permissions to it to be able to install package
+    ```
+    kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
+    ```
+    > Failing to run this command you will get the following error: `Error: UPGRADE FAILED: configmaps is forbidden`
+
+1. Install a Helm chart
     ```sh
     helm upgrade mytodos . --install
     ```
@@ -138,7 +144,7 @@ Helm is a client/server application :
     mytodos-86884779d9-qxnt2  0/1    ContainerCreating  0         0s
     ```
 
-1. To get the status of the helm deployement
+1. Get the status of the helm deployment
     ```
     helm status mytodos
     ```
