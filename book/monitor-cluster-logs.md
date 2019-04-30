@@ -8,31 +8,31 @@ On the IBM Cloud, to configure cluster-level logging for a Kubernetes cluster, y
 
 ## Provision an instance of Log Analysis with LogDNA service
 
-1. Go to the [**Observability** category](https://cloud.ibm.com/observe)
+1. Navigate to the [**Observability**](https://cloud.ibm.com/observe) page
 
     ![](./images/observe-landing.png)
 
-1. Select the category **Logging**
+1. Under **Logging**, click **Create instance**.
 
-1. Click the button **Create logging instance**.
+1. Provide a unique **Service name** such as logdna-your-initial.
 
-1. Make sure to enter a meaningful name for the service instance such as logdna-<yourinitial>.
-
-1. Select the Resource Group. To better govern your services, it is recommended to use the same Resource Group than the one your cluster is in.
+1. Choose a **region/location** and select a **resource group**.
 
     ![](./images/logging-creation.png)
 
-1. Choose a service plan for your service instance. By default, the Lite plan is selected for you. The Lite plan is good enough to continue the lab.
+    > To better govern your services, it is recommended to use the same Resource Group than the one your cluster is in.
+
+1. Select **Lite** as your plan and click **Create**.
 
     ![](./images/logging-plan.png)
 
-1. Click **Create**. The Observability dashboard opens and shows the details for your service.
+1. The Observability dashboard opens and shows the details for your service.
 
-## Configure the LogDNA agent on a cluster.
+## Configure the cluster to send logs to your LogDNA instance.
 
 To configure your Kubernetes cluster to send logs to your IBM Log Analysis with LogDNA instance, you must install a `logdna-agent` pod on each node of your cluster. The LogDNA agent reads log files from the pod where it is installed, and forwards the log data to your LogDNA instance.
 
-1. Click **Edit log sources**
+1. Click on **Edit log sources** next to the service which you created earlier.
 
     ![](./images/logging-configure.png)
 
@@ -40,15 +40,11 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
 
     ![](./images/logdna-agents.png)
 
-1. Copy the first command and run it in your terminal. In this step, you create a Kubernetes secret to store your logDNA ingestion key for your service instance. The LogDNA ingestion key is used to open a secure web socket to the logDNA ingestion server and to authenticate the logging agent with the logging service. Make sure to replace the ingestion before running the command.
-    ```sh
-    kubectl create secret generic logdna-agent-key --from-literal=logdna-agent-key=<logDNA_ingestion_key>
-    ```
+1. Copy and run the first command on a terminal where you have set the KUBECONFIG environment variable to create a kubernetes secret with the LogDNA ingestion key for your service instance.
 
-1. Copy the second command and run it in your terminal. In this step, you create a Kubernetes daemon set to deploy the LogDNA agent on every worker node of your Kubernetes cluster.
-    ```sh
-    kubectl create -f https://repo.logdna.com/ibm/prod/logdna-agent-ds-us-south.yaml
-    ```
+    In this step, you create a Kubernetes secret to store your logDNA ingestion key for your service instance. The LogDNA ingestion key is used to open a secure web socket to the logDNA ingestion server and to authenticate the logging agent with the logging service.
+
+1. Copy and run the second command to create a Kubernetes daemon set to deploy the LogDNA agent on every worker node of your Kubernetes cluster.
 
 1. Verify that the LogDNA agent is deployed successfully.
     ```sh
@@ -56,9 +52,7 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
     ```
     Output:
 
-    > NAME                      READY     STATUS    RESTARTS   AGE
-    > logdna-agent-hlhtz        1/1       Running   0          5m
-    > logdna-agent-nmxv2        1/1       Running   0          5m
+    ![](./images/logdna-agent-pods.png)
 
     The deployment is successful when you see one or more LogDNA pods. The number of LogDNA pods equals the number of worker nodes in your cluster. All pods must be in a Running state.
 
