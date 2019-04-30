@@ -672,7 +672,13 @@
  <span class="token key atrule">affinity</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 </code></pre>
 </li>
-<li><p>To install a Helm chart, run the below command</p>
+<li><p>Helm runs with &quot;default&quot; service account. You should provide permissions to it to be able to install package</p>
+<pre class="language-"><code> kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
+</code></pre><blockquote>
+<p>Failing to run this command you will get the following error: <code>Error: UPGRADE FAILED: configmaps is forbidden</code></p>
+</blockquote>
+</li>
+<li><p>Install a Helm chart</p>
 <pre class="language-"><code class="lang-sh"> helm upgrade mytodos <span class="token keyword">.</span> --install
 </code></pre>
 <p> Results:</p>
@@ -700,7 +706,7 @@
  mytodos-86884779d9-jzzpt  0/1    ContainerCreating  0         0s
  mytodos-86884779d9-qxnt2  0/1    ContainerCreating  0         0s
 </code></pre></li>
-<li><p>To get the status of the helm deployement</p>
+<li><p>Get the status of the helm deployment</p>
 <pre class="language-"><code> helm status mytodos
 </code></pre></li>
 <li><p>Get the application URL by running these commands:</p>
