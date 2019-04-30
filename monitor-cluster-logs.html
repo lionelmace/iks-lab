@@ -585,34 +585,35 @@
      </a></p>
 <h2 id="provision-an-instance-of-log-analysis-with-logdna-service">Provision an instance of Log Analysis with LogDNA service</h2>
 <ol>
-<li><p>Go to the <a href="https://cloud.ibm.com/observe" target="_blank"><strong>Observability</strong> category</a></p>
+<li><p>Navigate to the <a href="https://cloud.ibm.com/observe" target="_blank"><strong>Observability</strong></a> page</p>
 <p>      <a href="images/observe-landing.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/observe-landing.png" alt="">
      </a></p>
 </li>
-<li><p>Select the category <strong>Logging</strong></p>
+<li><p>Under <strong>Logging</strong>, click <strong>Create instance</strong>.</p>
 </li>
-<li><p>Click the button <strong>Create logging instance</strong>.</p>
+<li><p>Provide a unique <strong>Service name</strong> such as logdna-your-initial.</p>
 </li>
-<li><p>Make sure to enter a meaningful name for the service instance such as logdna-<yourinitial>.</yourinitial></p>
-</li>
-<li><p>Select the Resource Group. To better govern your services, it is recommended to use the same Resource Group than the one your cluster is in.</p>
+<li><p>Choose a <strong>region/location</strong> and select a <strong>resource group</strong>.</p>
 <p>      <a href="images/logging-creation.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/logging-creation.png" alt="">
      </a></p>
+<blockquote>
+<p>To better govern your services, it is recommended to use the same Resource Group than the one your cluster is in.</p>
+</blockquote>
 </li>
-<li><p>Choose a service plan for your service instance. By default, the Lite plan is selected for you. The Lite plan is good enough to continue the lab.</p>
+<li><p>Select <strong>Lite</strong> as your plan and click <strong>Create</strong>.</p>
 <p>      <a href="images/logging-plan.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/logging-plan.png" alt="">
      </a></p>
 </li>
-<li><p>Click <strong>Create</strong>. The Observability dashboard opens and shows the details for your service.</p>
+<li><p>The Observability dashboard opens and shows the details for your service.</p>
 </li>
 </ol>
-<h2 id="configure-the-logdna-agent-on-a-cluster">Configure the LogDNA agent on a cluster.</h2>
+<h2 id="configure-the-cluster-to-send-logs-to-your-logdna-instance">Configure the cluster to send logs to your LogDNA instance.</h2>
 <p>To configure your Kubernetes cluster to send logs to your IBM Log Analysis with LogDNA instance, you must install a <code>logdna-agent</code> pod on each node of your cluster. The LogDNA agent reads log files from the pod where it is installed, and forwards the log data to your LogDNA instance.</p>
 <ol>
-<li><p>Click <strong>Edit log sources</strong></p>
+<li><p>Click on <strong>Edit log sources</strong> next to the service which you created earlier.</p>
 <p>      <a href="images/logging-configure.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/logging-configure.png" alt="">
      </a></p>
@@ -622,23 +623,18 @@
        <img src="images/logdna-agents.png" alt="">
      </a></p>
 </li>
-<li><p>Copy the first command and run it in your terminal. In this step, you create a Kubernetes secret to store your logDNA ingestion key for your service instance. The LogDNA ingestion key is used to open a secure web socket to the logDNA ingestion server and to authenticate the logging agent with the logging service. Make sure to replace the ingestion before running the command.</p>
-<pre class="language-"><code class="lang-sh"> kubectl create secret generic logdna-agent-key --from-literal<span class="token operator">=</span>logdna-agent-key<span class="token operator">=</span><span class="token operator">&lt;</span>logDNA_ingestion_key<span class="token operator">&gt;</span>
-</code></pre>
+<li><p>Copy and run the first command on a terminal where you have set the KUBECONFIG environment variable to create a kubernetes secret with the LogDNA ingestion key for your service instance.</p>
+<p> In this step, you create a Kubernetes secret to store your logDNA ingestion key for your service instance. The LogDNA ingestion key is used to open a secure web socket to the logDNA ingestion server and to authenticate the logging agent with the logging service.</p>
 </li>
-<li><p>Copy the second command and run it in your terminal. In this step, you create a Kubernetes daemon set to deploy the LogDNA agent on every worker node of your Kubernetes cluster.</p>
-<pre class="language-"><code class="lang-sh"> kubectl create -f https://repo.logdna.com/ibm/prod/logdna-agent-ds-us-south.yaml
-</code></pre>
+<li><p>Copy and run the second command to create a Kubernetes daemon set to deploy the LogDNA agent on every worker node of your Kubernetes cluster.</p>
 </li>
 <li><p>Verify that the LogDNA agent is deployed successfully.</p>
 <pre class="language-"><code class="lang-sh"> kubectl get pods
 </code></pre>
 <p> Output:</p>
-<blockquote>
-<p>NAME                      READY     STATUS    RESTARTS   AGE
-logdna-agent-hlhtz        1/1       Running   0          5m
-logdna-agent-nmxv2        1/1       Running   0          5m</p>
-</blockquote>
+<p>      <a href="images/logdna-agent-pods.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/logdna-agent-pods.png" alt="">
+     </a></p>
 <p> The deployment is successful when you see one or more LogDNA pods. The number of LogDNA pods equals the number of worker nodes in your cluster. All pods must be in a Running state.</p>
 </li>
 <li><p>To check that the secret containing the access key has been created, you can run the following command:</p>
