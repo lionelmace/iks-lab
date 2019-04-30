@@ -46,6 +46,8 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
 
 1. Copy and run the second command to create a Kubernetes daemon set to deploy the LogDNA agent on every worker node of your Kubernetes cluster.
 
+    The LogDNA agent collects logs with the extension *.log and extensionless files that are stored in the /var/log directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the IBM Log Analysis with LogDNA service.
+
 1. Verify that the LogDNA agent is deployed successfully.
     ```sh
     kubectl get pods
@@ -61,18 +63,10 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
     kubectl get secrets
     ```
 
-> What logs can you expect to see?
-> •	Stdout and stderr logs from all containers
-> •	Application logs
-> •	Worker (node) logs
-> •	Extensionsless files stored in the /var/log directory of your pod
-
-> By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the logging service.
-
 
 ## View logs in the LogDNA dashboard
 
-1. At the bottom on the page, click **View LogDNA** to open the LogDNA console
+1. After you configure a log source, launch the LogDNA UI by clicking **View LogDNA**. It may take a few minutes before you start seeing logs.
 
 1. Since namespace is a field that LogDNA collects, you can use the search function to filter your namespace. Use `namespace:name` to view only the logs of the applications deployed to the specified namespace.
 
@@ -82,6 +76,8 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
 
     ![LogDNA dashboard](./images/logdna-console.png)
 
-{% hint style='tip' %}
-Find more about IBM Log Analysis with LogDNA in the [IBM Cloud documentation](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA/index.html#getting-started).
-{% endhint %}
+## Resources
+
+For additional resources pay close attention to the following:
+
+* More about IBM Log Analysis with LogDNA in the [IBM Cloud documentation](https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA/index.html#getting-started).
