@@ -17,11 +17,9 @@ Before you can run the application on the cluster, you first need to push the Do
 
 1. Build a Docker image. Make sure to replace the value region and namespace
     ```sh
-    docker build . -t <region>.icr.io/<namespace>/todo-<lastname>:1.0
+    docker build . -t <region>.icr.io/<namespace>/todo-<your-initial>:1.0
     ```
-    > Region is `eu-de` for the Frankfurt datacenter.
-
-    LMA: Changer lastname par your initial
+    > Region is `de` for the Frankfurt datacenter.
 
 1. Push the image to your private image registry.
     ```sh
