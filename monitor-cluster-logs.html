@@ -627,6 +627,7 @@
 <p> In this step, you create a Kubernetes secret to store your logDNA ingestion key for your service instance. The LogDNA ingestion key is used to open a secure web socket to the logDNA ingestion server and to authenticate the logging agent with the logging service.</p>
 </li>
 <li><p>Copy and run the second command to create a Kubernetes daemon set to deploy the LogDNA agent on every worker node of your Kubernetes cluster.</p>
+<p> The LogDNA agent collects logs with the extension *.log and extensionless files that are stored in the /var/log directory of your pod. By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the IBM Log Analysis with LogDNA service.</p>
 </li>
 <li><p>Verify that the LogDNA agent is deployed successfully.</p>
 <pre class="language-"><code class="lang-sh"> kubectl get pods
@@ -642,17 +643,9 @@
 </code></pre>
 </li>
 </ol>
-<blockquote>
-<p>What logs can you expect to see?
-&#x2022;    Stdout and stderr logs from all containers
-&#x2022;    Application logs
-&#x2022;    Worker (node) logs
-&#x2022;    Extensionsless files stored in the /var/log directory of your pod</p>
-<p>By default, logs are collected from all namespaces, including kube-system, and automatically forwarded to the logging service.</p>
-</blockquote>
 <h2 id="view-logs-in-the-logdna-dashboard">View logs in the LogDNA dashboard</h2>
 <ol>
-<li><p>At the bottom on the page, click <strong>View LogDNA</strong> to open the LogDNA console</p>
+<li><p>After you configure a log source, launch the LogDNA UI by clicking <strong>View LogDNA</strong>. It may take a few minutes before you start seeing logs.</p>
 </li>
 <li><p>Since namespace is a field that LogDNA collects, you can use the search function to filter your namespace. Use <code>namespace:name</code> to view only the logs of the applications deployed to the specified namespace.</p>
 <blockquote>
@@ -665,8 +658,11 @@
      </a></p>
 </li>
 </ol>
-<p><div class="alert alert-success hints-alert"><div class="hints-icon"><i class="fa fa-mortar-board"></i></div><div class="hints-container"><p>Find more about IBM Log Analysis with LogDNA in the <a href="https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA/index.html#getting-started" target="_blank">IBM Cloud documentation</a>.</p>
-</div></div></p>
+<h2 id="resources">Resources</h2>
+<p>For additional resources pay close attention to the following:</p>
+<ul>
+<li>More about IBM Log Analysis with LogDNA in the <a href="https://cloud.ibm.com/docs/services/Log-Analysis-with-LogDNA/index.html#getting-started" target="_blank">IBM Cloud documentation</a>.</li>
+</ul>
 
                                 
                                 </section>
