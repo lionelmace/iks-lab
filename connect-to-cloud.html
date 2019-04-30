@@ -598,10 +598,12 @@
 <pre class="language-"><code class="lang-sh"> ibmcloud login
 </code></pre>
 </li>
+<li><p>Select an <strong>Account</strong> and a <strong>Region</strong>.</p>
+</li>
 <li><p>Once logged in you will see the following message:</p>
 <pre class="language-"><code> Targeted account IBM&apos;s Account (0b123456789) <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>-</span><span class="token punctuation">&gt;</span></span> 1594534
 
- API endpoint:      https://api.ng.bluemix.net
+ API endpoint:      https://cloud.ibm.com
  Region:            eu-de
  User:              your-email-address@company.com
  Account:           IBM&apos;s Account (0b123456789) <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>-</span><span class="token punctuation">&gt;</span></span> 1594534
@@ -609,10 +611,9 @@
  CF API endpoint:
  Org:
  Space:
-</code></pre></li>
-<li><p>By default, you are being logged in the region US South. Switch to the region <strong>EU Central</strong> (eu-de).</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud target -r eu-de
-</code></pre>
+</code></pre><blockquote>
+<p>If you need to switch to anoher region such as Frankfurt, run the command <strong>ibmcloud target -r eu-de</strong>.</p>
+</blockquote>
 </li>
 </ol>
 <h1 id="target-your-resource-group">Target your Resource Group</h1>

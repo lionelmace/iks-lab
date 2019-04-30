@@ -600,11 +600,16 @@
 <pre class="language-"><code class="lang-sh"> <span class="token function">npm</span> start
 </code></pre>
 <p> Results:</p>
-<pre class="language-"><code> npm WARN mytodo@2.0.0 No repository field.
+<pre class="language-"><code> &gt; mytodo@2.0.0 start /Users/mace/Box Sync/Bluemix/technos/temp/mytodo
+ &gt; node server.js
 
- added 158 packages from 170 contributors and audited 559 packages in 25.3s
- found 0 vulnerabilities
-</code></pre></li>
+ Cannot find module ./vcap-local.json
+ Cannot find credentials.env
+ Using In Memory
+ server starting on http://localhost:8080
+</code></pre><p> LMA The console displays error CANNOT - Lab users pensaient que ca marchait pas :-(
+ LMA Rajouter une &#xE9;tape Ctrl-C pour arrete l&apos;app.</p>
+</li>
 <li><p>After your app starts, click on the eye on the top right corner and select the port <code>8080</code> </p>
 <p>      <a href="images/app-launch-port.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/app-launch-port.png" alt="">

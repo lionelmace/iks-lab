@@ -632,12 +632,12 @@ ibmcloud iam user-policy-create xxx.xxx@fr.ibm.com \
 </code></pre></li>
 <li><p>The new namespace does not contain the secret to access the private container registry. The default namespace has by default this secret to access the registry. If you try to deploy without this step, you will get this error:</p>
 <blockquote>
-<p>Failed to pull image &quot;registry.eu-de.bluemix.net/mace/mytodos:1&quot;: rpc error: code = Unknown desc = Error response from daemon: Get <a href="https://registry.eu-de.bluemix.net/v2/mace/mytodos/manifests/v1" target="_blank">https://registry.eu-de.bluemix.net/v2/mace/mytodos/manifests/v1</a>: unauthorized: authentication required</p>
+<p>Failed to pull image &quot;de.icr.io/mace/mytodos:1&quot;: rpc error: code = Unknown desc = Error response from daemon: Get <a href="https://de.icr.io/v2/mace/mytodos/manifests/v1" target="_blank">https://de.icr.io/v2/mace/mytodos/manifests/v1</a>: unauthorized: authentication required</p>
 </blockquote>
 <p> In order to add this registry secret, run the following command:</p>
 <pre class="language-"><code> kubectl --namespace <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>CLUSTER_NAMESPACE</span><span class="token punctuation">&gt;</span></span> create secret docker-registry <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>IMAGE_REGISTRY_SECRET_NAME</span><span class="token punctuation">&gt;</span></span> --docker-server=<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>REGISTRY_URL</span><span class="token punctuation">&gt;</span></span> --docker-password=<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>IBMCLOUD_API_KEY</span><span class="token punctuation">&gt;</span></span> --docker-username=iamapikey --docker-email=a@b.com
 </code></pre><p> For example:</p>
-<pre class="language-"><code> kubectl --namespace mytodos create secret docker-registry private-registry-secret --docker-server=registry.eu-de.bluemix.net --docker-password=<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>IBMCLOUD_API_KEY</span><span class="token punctuation">&gt;</span></span> --docker-username=iamapikey --docker-email=a@b.com
+<pre class="language-"><code> kubectl --namespace mytodos create secret docker-registry private-registry-secret --docker-server=de.icr.io --docker-password=<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>IBMCLOUD_API_KEY</span><span class="token punctuation">&gt;</span></span> --docker-username=iamapikey --docker-email=a@b.com
 </code></pre><blockquote>
 <p>You can generate the api key using the following command:
  <code>ibmcloud iam api-key-create IBMCLOUD_API_KEY</code></p>
@@ -661,7 +661,7 @@ ibmcloud iam user-policy-create xxx.xxx@fr.ibm.com \
      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> private<span class="token punctuation">-</span>registry<span class="token punctuation">-</span>secret
      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodos
-         <span class="token key atrule">image</span><span class="token punctuation">:</span> &lt;region<span class="token punctuation">&gt;</span>.icr.io/mace/mytodos<span class="token punctuation">:</span><span class="token number">1</span>
+         <span class="token key atrule">image</span><span class="token punctuation">:</span> &lt;region<span class="token punctuation">&gt;</span>.icr.io/&lt;namespace<span class="token punctuation">&gt;</span>/mytodos<span class="token punctuation">:</span><span class="token number">1</span>
          <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> Always
      <span class="token punctuation">...</span>
 </code></pre>

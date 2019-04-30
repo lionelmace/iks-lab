@@ -602,11 +602,9 @@
 <li><p>Push the image to your private image registry.</p>
 <pre class="language-"><code class="lang-sh"> docker push <span class="token operator">&lt;</span>region<span class="token operator">&gt;</span>.icr.io/<span class="token operator">&lt;</span>namespace<span class="token operator">&gt;</span>/todo-<span class="token operator">&lt;</span>lastname<span class="token operator">&gt;</span>:1.0
 </code></pre>
-</li>
-<li><p>If you get the error <code>unauthorized: authentication required</code>, run the command</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud cr login
-</code></pre>
-<p> LMA Some users forgot push. Replaced by ibmcloud cr build</p>
+<blockquote>
+<p>If you get the error <code>unauthorized: authentication required</code>, run the command <strong>ibmcloud cr login</strong></p>
+</blockquote>
 </li>
 <li><p>Verify that the image was successfully added to your registry in your namespace</p>
 <pre class="language-"><code class="lang-sh"> ibmcloud cr images
