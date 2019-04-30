@@ -4,7 +4,7 @@ For this lab, a hosted shell is provided for you with all the necessary tools. U
 
 1. Using Chrome or Firefox, go to the [**Cloud Shell**](https://cloudshell-console-k8sw1.us-south.cf.cloud.ibm.com) and login using the Login button.
 
-1. Passcode will be provided during the training.
+1. **Passcode** will be provided during the training.
 
 1. Click on the Terminal icon to launch your web shell.
 
@@ -12,7 +12,7 @@ For this lab, a hosted shell is provided for you with all the necessary tools. U
 
 # Connect to IBM Cloud
 
-1. Select the account **Lionel Mace's Account**.  LMA with your email !!!
+1. Select your cloud account or the one provided by the trainer.
 
 1. Login to IBM Cloud
     ```sh
