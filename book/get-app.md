@@ -35,7 +35,7 @@ We will use a web application for managing todos. The front end is written in An
     server starting on http://localhost:8080
     ```
 
-1. After your app starts, click on the eye on the top right corner and select the port `8080` 
+1. After your app starts, click on the eye on the top right corner and select the port **8080** 
 
     ![](images/app-launch-port.png)
 
