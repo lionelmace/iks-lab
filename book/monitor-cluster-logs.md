@@ -14,7 +14,7 @@ On the IBM Cloud, to configure cluster-level logging for a Kubernetes cluster, y
 
 1. Under **Logging**, click **Create instance**.
 
-1. Provide a unique **Service name** such as logdna-your-initial.
+1. Provide a unique **Service name** such as `logdna-<lastname>`.
 
 1. Choose a **region/location** and select a **resource group**.
 
