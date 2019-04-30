@@ -35,9 +35,6 @@ We will use a web application for managing todos. The front end is written in An
     server starting on http://localhost:8080
     ```
 
-    LMA The console displays error CANNOT - Lab users pensaient que ca marchait pas :-(
-    LMA Rajouter une étape Ctrl-C pour arrete l'app.
-
 1. After your app starts, click on the eye on the top right corner and select the port `8080` 
 
     ![](images/app-launch-port.png)
@@ -46,3 +43,7 @@ We will use a web application for managing todos. The front end is written in An
 1. This should open a page as follows:
 
     ![](images/app-running-locally.png)
+
+1. Type a new todo to validate. This todo is being stored in memory. Thus restarting the app will delete any todo.
+
+1. Finally, you can stop the app using `Ctrl+C`.
