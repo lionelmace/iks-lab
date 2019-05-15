@@ -76,9 +76,6 @@ Helm is a client/server application :
       annotations:
         # Force the use of https if the request is http
         ingress.bluemix.net/redirect-to-https: "True"
-        # Activate App ID for Authentication
-        # Requires the existence of an App Id service bound to the cluster
-        # ingress.bluemix.net/appid-auth: "bindSecret=binding-app-id-20180705 namespace=default requestType=web serviceName=mytodos"
     path: /
     hosts:
         - todo.<cluster-name>.<region>.containers.appdomain.cloud
