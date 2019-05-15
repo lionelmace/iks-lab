@@ -20,6 +20,7 @@
 * [Deploy app](deploy-app.md)
 * [Scale app](scale-app.md)
 * [Optional: Bind a Cloud Service](bind-service.md)
+* [Clean up](clean-up.md)
 
 ## Lab 2 - DevOps and Helm charts
 

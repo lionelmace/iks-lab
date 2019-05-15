@@ -15,7 +15,7 @@ In this lab, we will test the **Ingress**.
 
     ![](./images/cloudshell-ide-shortcut.png)
 
-1. Open the project **mytodos** you cloned before. Select Files on the left hand side, then Open Workspace and search for the downloaded project
+1. Open the project **mytodos** you cloned before. Select **File** on the left hand side, then **Open Workspace** and search for the downloaded project
 
     ![](./images/cloudshell-ide-open.png)
 

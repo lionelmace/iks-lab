@@ -58,10 +58,7 @@ You need to target a Resource Group (RG) to view your cluster or to add a servic
     ibmcloud ks cluster-config MY_CLUSTER_NAME
     ```
 
-1. Copy and paste the displayed set command to set the KUBECONFIG environment variable as directed. You should have something like this:
-    ```
-    export KUBECONFIG=/Users/mace/.bluemix/plugins/container-service/clusters/lab-cluster-1/kube-config-fra02-lab-cluster-1-cluster.yml
-    ```
+1. Copy and paste the displayed set command to set the KUBECONFIG environment variable as directed. 
 
 1. To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:
     ```sh
