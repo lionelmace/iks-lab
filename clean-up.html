@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Get and run the app locally · IBM Cloud Kubernetes Service Lab</title>
+        <title>Clean up · IBM Cloud Kubernetes Service Lab</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -81,10 +81,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="build-push-image.html" />
+    <link rel="next" href="devops-helm.html" />
     
     
-    <link rel="prev" href="connect-to-cloud.html" />
+    <link rel="prev" href="bind-service.html" />
     
 
     </head>
@@ -234,7 +234,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="3.3" data-path="get-app.html">
+        <li class="chapter " data-level="3.3" data-path="get-app.html">
             
                 <a href="get-app.html">
             
@@ -309,7 +309,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3.8" data-path="clean-up.html">
+        <li class="chapter active" data-level="3.8" data-path="clean-up.html">
             
                 <a href="clean-up.html">
             
@@ -562,7 +562,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Get and run the app locally</a>
+        <a href="." >Clean up</a>
     </h1>
 </div>
 
@@ -577,50 +577,10 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="get-and-build-the-application-code">Get and build the application code</h1>
-<p>We will use a web application for managing todos. The front end is written in Angular and the reminders are being stored in a in-memory database. All run on Node.js.</p>
+                                <h1 id="clean-up-the-environment">Clean up the environment</h1>
 <ol>
-<li><p>Clone the source code for the Todo web app.</p>
-<pre class="language-"><code class="lang-sh"> <span class="token function">git</span> clone https://github.com/lionelmace/mytodo
+<li>Delete the deployment and the services<pre class="language-"><code class="lang-sh"> kubectl delete -f ingress-tls-deploy.yaml
 </code></pre>
-<p> This command creates a directory of your project locally on your disk.</p>
-</li>
-<li><p>Change to the directory of the checkout</p>
-<pre class="language-"><code class="lang-sh"> <span class="token function">cd</span> mytodo
-</code></pre>
-</li>
-<li><p>Get the node.js dependencies for this project</p>
-<pre class="language-"><code class="lang-sh"> <span class="token function">npm</span> <span class="token function">install</span>
-</code></pre>
-</li>
-</ol>
-<h1 id="run-the-application-locally">Run the application locally</h1>
-<ol>
-<li><p>Run the application locally</p>
-<pre class="language-"><code class="lang-sh"> <span class="token function">npm</span> start
-</code></pre>
-<p> Results:</p>
-<pre class="language-"><code> &gt; mytodo@2.0.0 start /Users/mace/Box Sync/Bluemix/technos/temp/mytodo
- &gt; node server.js
-
- Cannot find module ./vcap-local.json
- Cannot find credentials.env
- Using In Memory
- server starting on http://localhost:8080
-</code></pre></li>
-<li><p>After your app starts, click on the eye on the top right corner and select the port <strong>8080</strong> </p>
-<p>      <a href="images/app-launch-port.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/app-launch-port.png" alt="">
-     </a></p>
-</li>
-<li><p>This should open a page as follows:</p>
-<p>      <a href="images/app-running-locally.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/app-running-locally.png" alt="">
-     </a></p>
-</li>
-<li><p>Type a new todo to validate. This todo is being stored in memory. Thus restarting the app will delete any todo.</p>
-</li>
-<li><p>Finally, you can stop the app using <code>Ctrl+C</code>.</p>
 </li>
 </ol>
 
@@ -650,12 +610,12 @@
 
             
                 
-                <a href="connect-to-cloud.html" class="navigation navigation-prev " aria-label="Previous page: Connect to IBM Cloud">
+                <a href="bind-service.html" class="navigation navigation-prev " aria-label="Previous page: Optional: Bind a Cloud Service">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="build-push-image.html" class="navigation navigation-next " aria-label="Next page: Build and Push image">
+                <a href="devops-helm.html" class="navigation navigation-next " aria-label="Next page: Deploy with Helm">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -666,7 +626,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Get and run the app locally","level":"3.3","depth":1,"next":{"title":"Build and Push image","level":"3.4","depth":1,"path":"build-push-image.md","ref":"build-push-image.md","articles":[]},"previous":{"title":"Connect to IBM Cloud","level":"3.2","depth":1,"path":"connect-to-cloud.md","ref":"connect-to-cloud.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"get-app.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Clean up","level":"3.8","depth":1,"next":{"title":"Deploy with Helm","level":"4.1","depth":1,"path":"devops-helm.md","ref":"devops-helm.md","articles":[]},"previous":{"title":"Optional: Bind a Cloud Service","level":"3.7","depth":1,"path":"bind-service.md","ref":"bind-service.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"clean-up.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
