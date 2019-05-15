@@ -39,7 +39,6 @@ We will use a web application for managing todos. The front end is written in An
 
     ![](images/app-launch-port.png)
 
-
 1. This should open a page as follows:
 
     ![](images/app-running-locally.png)
