@@ -642,9 +642,6 @@
    <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
      <span class="token comment"># Force the use of https if the request is http</span>
      <span class="token key atrule">ingress.bluemix.net/redirect-to-https</span><span class="token punctuation">:</span> <span class="token string">&quot;True&quot;</span>
-     <span class="token comment"># Activate App ID for Authentication</span>
-     <span class="token comment"># Requires the existence of an App Id service bound to the cluster</span>
-     <span class="token comment"># ingress.bluemix.net/appid-auth: &quot;bindSecret=binding-app-id-20180705 namespace=default requestType=web serviceName=mytodos&quot;</span>
  <span class="token key atrule">path</span><span class="token punctuation">:</span> /
  <span class="token key atrule">hosts</span><span class="token punctuation">:</span>
      <span class="token punctuation">-</span> todo.&lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>.&lt;region<span class="token punctuation">&gt;</span>.containers.appdomain.cloud
