@@ -13,7 +13,7 @@ Before you can run the application on the cluster, you first need to push the Do
     ```sh
     ibmcloud cr namespace-list
     ```
-    You should get a namespace called **lab-users**
+    You should get a namespace called **lab-registry**
 
 1. Build a Docker image. Make sure to replace the value region and namespace
     ```sh
