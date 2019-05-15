@@ -10,7 +10,7 @@ In this section, you will create your own IBM Cloud account, and then get access
 
 ## Get a Kubernetes cluster
 
-1. Go to **[Get Cluster](https://assign-cluster.eu-de.mybluemix.net)** web page and enter your IBM ID (the email you used to sign up) and the lab key given by the trainer. Make sure to keep the region **Frankfurt** where the clusters have been provisioned.
+1. Go to **[Get Cluster](https://assign-cluster.eu-de.mybluemix.net)** web page and enter your IBM ID (the email you used to sign up) and the lab key given by the trainer. Make sure to select the region where the cluster has been provisioned.
 
     ![](./images/request-cluster.png)
 

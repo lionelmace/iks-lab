@@ -23,8 +23,11 @@ In this lab, we will test the **Ingress**.
 
 1. Select the file `ingress-tls-deploy.yaml` .
 
-1. Replace all the values wrapped in <> with the appropriate values.
-Region would be `eu-de` for Frankfurt (3 changes). Namespace would be the private registry `lab-users` (1 change). Cluster-name would be `lab-cluster-1` (3 changes).
+1. Replace all the values wrapped in <...> with the appropriate values:
+    * registry-region    such as `de` for Frankfurt
+    * registry-namespace such as `lab-registry`
+    * cluster-name       such as `eu-de` for Frankfurt
+    * cluster-name       such as `lab-cluster-1`
 
     Your YAML file should look as follows:
     ```yaml
@@ -47,7 +50,7 @@ Region would be `eu-de` for Frankfurt (3 changes). Namespace would be the privat
         spec:
           containers:
           - name: mytodos
-            image: <region>.icr.io/<namespace>/todo-<lastname>:1.0
+            image: <registry-region>.icr.io/<registry-namespace>/todo-<lastname>:1.0
             imagePullPolicy: Always
             resources:
               requests:
@@ -71,10 +74,10 @@ Region would be `eu-de` for Frankfurt (3 changes). Namespace would be the privat
     spec:
       tls:
       - hosts:
-        - <cluster-name>.<region>.containers.appdomain.cloud
+        - <cluster-name>.<cloud-region>.containers.appdomain.cloud
         secretName: <cluster-name>
       rules:
-      - host: <cluster-name>.<region>.containers.appdomain.cloud
+      - host: <cluster-name>.<cloud-region>.containers.appdomain.cloud
         http:
           paths:
           - path: /todo/
