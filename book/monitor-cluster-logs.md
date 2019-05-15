@@ -72,6 +72,11 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
 
     > Note: With the Free service plan, you can tail your latest logs only.
 
+1. If your app is still running you can create a new todo with the Web UI or using curl
+    ```
+    curl -d '{"text":"newlog"}' -H "Content-Type: application/json" -X POST https://<cluster-name>.<region>.containers.appdomain.cloud/todo/api/todos
+    ```
+
 1. As you go through the next steps, keep an eye on the LogDNA console for new log statements coming from your apps deployed in this namespace.
 
     ![LogDNA dashboard](./images/logdna-console.png)
