@@ -4,10 +4,10 @@
 
 1. Select the resource group and the location assigned to you.
 
-    ![](./images/iks-clusters.png)
-
 1. Locate your cluster in the list.
 
+    ![](./images/iks-clusters.png)
+    
 1. Select the cluster.
 
 The **Overview** page provides critical information about your cluster like:

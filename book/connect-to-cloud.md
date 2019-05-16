@@ -2,9 +2,9 @@
 
 For this lab, a hosted shell is provided for you with all the necessary tools. Use this web shell to perform the tasks in this lab. If you are having problems with this web shell, you can use a local docker container and follow the instructions here instead.
 
-1. Using Chrome or Firefox, go to the [**Cloud Shell**](https://cloudshell-console-ikslab.us-south.cf.cloud.ibm.com/) and login using the Login button.
+1. Using Chrome or Firefox, go to the [**Cloud Shell**](https://cloudshell-console-ikslab.us-south.cf.cloud.ibm.com/).
 
-1. **Passcode** will be provided during the training.
+1. Login using your IBMid email and **Passcode** that has been given during the training.
 
 1. Click on the Terminal icon to launch your web shell.
 
