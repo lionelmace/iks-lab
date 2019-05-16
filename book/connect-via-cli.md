@@ -1,4 +1,4 @@
-# Connect to your cluster using the Cloud Shell
+# Connect to your cluster via CLI
 
 For this lab, a hosted shell is provided for you with all the necessary tools. Use this web shell to perform the tasks in this lab. If you are having problems with this web shell, you can use a local docker container and follow the instructions here instead.
 
