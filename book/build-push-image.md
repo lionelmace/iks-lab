@@ -1,6 +1,6 @@
 # Build and push the application to the IBM Cloud Container Registry
 
-Before you can run the application on the cluster, you first need to push the Docker image to the IBM Cloud private container registry.
+Before you can deploy the application on the cluster, you first need to push the Docker image to the IBM Cloud private container registry.
 
 1. Log in to the private **Container Registry** of IBM Cloud. Only required if you haven't `ibmcloud login` before.
 
