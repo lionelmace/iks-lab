@@ -14,12 +14,13 @@
 ## Lab 1 - Deploy an app in a Kubernetes cluster
 
 * [View your cluster](view-cluster.md)
+* [Access the Kubernetes Dashboard](kube-dashboard.md)
 * [Connect to IBM Cloud](connect-to-cloud.md)
 * [Get and run the app locally](get-app.md)
 * [Build and Push image](build-push-image.md)
 * [Deploy app](deploy-app.md)
 * [Scale app](scale-app.md)
-* [Optional: Bind a Cloud Service](bind-service.md)
+* [Optional: Connect to a database](connect-database.md)
 * [Clean up](clean-up.md)
 
 ## Lab 2 - DevOps and Helm charts
@@ -29,7 +30,6 @@
 
 ## Lab 3 - Monitor your cluster
 
-* [Kubernetes Dashboard](monitor-kube-dashboard.md)
 * [Cluster Logs](monitor-cluster-logs.md)
 * [Monitoring your cluster](monitor-cluster-metrics.md)
 

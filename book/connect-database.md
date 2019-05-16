@@ -1,4 +1,4 @@
-# Use a Kubernetes Secret to connect to a IBM Cloud Service
+# Use a Kubernetes Secret to connect to a managed Database service.
 
 The initial version of the application uses an in-memory database to store the todo. Yet, the web application can be configured to store the todo in either a Cloudant or a Mongo DBaaS.
 We will use a Cloudant DB to demonstrate how to connnect the web app to the  Cloudant service using the Kubernetes Secret.
@@ -36,10 +36,6 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
     ```
     ibmcloud resource service-instance-create todo-cloudant cloudant lite eu-de
     ```
-
-    > To create an instance of a service which do not support RG, use the following command: `
-    ibmcloud service create <service_name> <service_plan> <service_instance_name>
-
 
 1. Optional: Verify you see the new instance created using the CLI
     ```sh

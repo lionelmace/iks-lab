@@ -66,7 +66,9 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
 
 ## View logs in the LogDNA dashboard
 
-1. After you configure a log source, launch the LogDNA UI by clicking **View LogDNA**. It may take a few minutes before you start seeing logs.
+1. After you configure a log source, launch the LogDNA UI by clicking **View LogDNA**.
+
+    {% hint style='info' %} This might take a few minutes before you start seeing logs. {% endhint %}
 
 1. Since namespace is a field that LogDNA collects, you can use the search function to filter your namespace. Use `namespace:name` to view only the logs of the applications deployed to the specified namespace.
 
