@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Kubernetes Dashboard · IBM Cloud Kubernetes Service Lab</title>
+        <title>Optional: Connect to a database · IBM Cloud Kubernetes Service Lab</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -81,10 +81,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="monitor-cluster-logs.html" />
+    <link rel="next" href="clean-up.html" />
     
     
-    <link rel="prev" href="devops-continuous-delivery.html" />
+    <link rel="prev" href="scale-app.html" />
     
 
     </head>
@@ -219,12 +219,27 @@
             
         </li>
     
-        <li class="chapter " data-level="3.2" data-path="connect-to-cloud.html">
+        <li class="chapter " data-level="3.2" data-path="kube-dashboard.html">
+            
+                <a href="kube-dashboard.html">
+            
+                    
+                        <b>3.2.</b>
+                    
+                    Access the Kubernetes Dashboard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="connect-to-cloud.html">
             
                 <a href="connect-to-cloud.html">
             
                     
-                        <b>3.2.</b>
+                        <b>3.3.</b>
                     
                     Connect to IBM Cloud
             
@@ -234,12 +249,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.3" data-path="get-app.html">
+        <li class="chapter " data-level="3.4" data-path="get-app.html">
             
                 <a href="get-app.html">
             
                     
-                        <b>3.3.</b>
+                        <b>3.4.</b>
                     
                     Get and run the app locally
             
@@ -249,12 +264,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.4" data-path="build-push-image.html">
+        <li class="chapter " data-level="3.5" data-path="build-push-image.html">
             
                 <a href="build-push-image.html">
             
                     
-                        <b>3.4.</b>
+                        <b>3.5.</b>
                     
                     Build and Push image
             
@@ -264,12 +279,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.5" data-path="deploy-app.html">
+        <li class="chapter " data-level="3.6" data-path="deploy-app.html">
             
                 <a href="deploy-app.html">
             
                     
-                        <b>3.5.</b>
+                        <b>3.6.</b>
                     
                     Deploy app
             
@@ -279,12 +294,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.6" data-path="scale-app.html">
+        <li class="chapter " data-level="3.7" data-path="scale-app.html">
             
                 <a href="scale-app.html">
             
                     
-                        <b>3.6.</b>
+                        <b>3.7.</b>
                     
                     Scale app
             
@@ -294,14 +309,14 @@
             
         </li>
     
-        <li class="chapter " data-level="3.7" data-path="bind-service.html">
+        <li class="chapter active" data-level="3.8" data-path="connect-database.html">
             
-                <a href="bind-service.html">
+                <a href="connect-database.html">
             
                     
-                        <b>3.7.</b>
+                        <b>3.8.</b>
                     
-                    Optional: Bind a Cloud Service
+                    Optional: Connect to a database
             
                 </a>
             
@@ -309,12 +324,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.8" data-path="clean-up.html">
+        <li class="chapter " data-level="3.9" data-path="clean-up.html">
             
                 <a href="clean-up.html">
             
                     
-                        <b>3.8.</b>
+                        <b>3.9.</b>
                     
                     Clean up
             
@@ -368,27 +383,12 @@
         
         
     
-        <li class="chapter active" data-level="5.1" data-path="monitor-kube-dashboard.html">
-            
-                <a href="monitor-kube-dashboard.html">
-            
-                    
-                        <b>5.1.</b>
-                    
-                    Kubernetes Dashboard
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="5.2" data-path="monitor-cluster-logs.html">
+        <li class="chapter " data-level="5.1" data-path="monitor-cluster-logs.html">
             
                 <a href="monitor-cluster-logs.html">
             
                     
-                        <b>5.2.</b>
+                        <b>5.1.</b>
                     
                     Cluster Logs
             
@@ -398,12 +398,12 @@
             
         </li>
     
-        <li class="chapter " data-level="5.3" data-path="monitor-cluster-metrics.html">
+        <li class="chapter " data-level="5.2" data-path="monitor-cluster-metrics.html">
             
                 <a href="monitor-cluster-metrics.html">
             
                     
-                        <b>5.3.</b>
+                        <b>5.2.</b>
                     
                     Monitoring your cluster
             
@@ -562,7 +562,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Kubernetes Dashboard</a>
+        <a href="." >Optional: Connect to a database</a>
     </h1>
 </div>
 
@@ -577,19 +577,118 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="kubernetes-dashboard">Kubernetes Dashboard</h1>
+                                <h1 id="use-a-kubernetes-secret-to-connect-to-a-managed-database-service">Use a Kubernetes Secret to connect to a managed Database service.</h1>
+<p>The initial version of the application uses an in-memory database to store the todo. Yet, the web application can be configured to store the todo in either a Cloudant or a Mongo DBaaS.
+We will use a Cloudant DB to demonstrate how to connnect the web app to the  Cloudant service using the Kubernetes Secret.</p>
+<h2 id="create-an-instance-of-cloudant-and-its-credentials">Create an instance of Cloudant and its credentials</h2>
 <ol>
-<li><p>To check the health of your application, navigate to <a href="https://cloud.ibm.com/containers-kubernetes/clusters" target="_blank">Clusters</a> to see a list of clusters and click on the cluster you were assigned to.</p>
+<li><p>Go to the <a href="https://cloud.ibm.com/catalog" target="_blank">Cloud Services Catalog</a> </p>
+<blockquote>
+<p>To see all the available services in the catalog using the cli:
+ <code>ibmcloud catalog service-marketplace</code></p>
+</blockquote>
 </li>
-<li><p>Click <strong>Kubernetes Dashboard</strong> to launch the dashboard in a new tab.
-     <a href="images/monitor-launch-dashboard.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/monitor-launch-dashboard.png" alt="">
+<li><p>Select the service <strong>Cloudant</strong></p>
+</li>
+<li><p>Create an instance of the service with the plan <strong>Lite</strong></p>
+<p>      <a href="images/cloudant-create.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/cloudant-create.png" alt="">
      </a></p>
 </li>
-<li><p>Select <strong>Nodes</strong> on the left pane, click the <strong>Name</strong> of the nodes and see the <strong>Allocation Resources</strong> to see the health of your nodes.
-     <a href="images/kubernetes-dashboard.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/kubernetes-dashboard.png" alt="">
+<li><p>Create the credentials to access the service.</p>
+<p>      <a href="images/cloudant-credentials.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/cloudant-credentials.png" alt="">
      </a></p>
+</li>
+<li><p>Click New Credentials and keep all the default options</p>
+<p>      <a href="images/cloudant-credentials2.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/cloudant-credentials2.png" alt="">
+     </a></p>
+</li>
+<li><p>Duplicate the file <code>credentials.template.env</code> in the root folder to a new file <code>credentials.env</code></p>
+</li>
+<li><p>Edit the file <code>credentials.env</code> and fill out the value for both CLOUDANT_USERNAME and CLOUDANT_APIKEY from the generated credentials above.</p>
+</li>
+<li><p>Optional: Create an instance of a service using the CLI instead of the Console.</p>
+<pre class="language-"><code class="lang-sh"> ibmcloud resource service-instance-create <span class="token operator">&lt;</span>service_instance_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>service_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>service_plan_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>location<span class="token operator">&gt;</span>
+</code></pre>
+<p> Example:</p>
+<pre class="language-"><code> ibmcloud resource service-instance-create todo-cloudant cloudant lite eu-de
+</code></pre></li>
+<li><p>Optional: Verify you see the new instance created using the CLI</p>
+<pre class="language-"><code class="lang-sh"> ibmcloud resource service-instances
+</code></pre>
+</li>
+</ol>
+<h2 id="create-the-kubernetes-secret">Create the Kubernetes Secret</h2>
+<ol>
+<li><p>Unless you have created a new namespace, we will use the namespace <strong>default</strong> in this lab. To find the list of Kubernetes namespaces:</p>
+<pre class="language-"><code class="lang-sh"> kubectl get namespaces
+</code></pre>
+<p> Output:</p>
+<pre class="language-"><code> NAME          STATUS    AGE
+ default       Active    7d
+ ibm-system    Active    7d
+ kube-system   Active    7d
+</code></pre></li>
+<li><p>Create the secret used by the application to obtain service credentials:</p>
+<pre class="language-"><code class="lang-sh"> kubectl create secret generic database-credentials --from-env-file<span class="token operator">=</span>/path/to/credentials.env
+</code></pre>
+<p> Result:</p>
+<blockquote>
+<p>secret/database-credentials created</p>
+</blockquote>
+</li>
+<li><p>Control that your secret was successfully created</p>
+<pre class="language-"><code class="lang-sh"> kubectl get secrets
+</code></pre>
+</li>
+<li><p>You can view the secret in the Kubernetes Dashboard </p>
+<p>      <a href="images/k8s-secret.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/k8s-secret.png" alt="">
+     </a></p>
+</li>
+</ol>
+<h2 id="redeploy-the-app">Redeploy the app</h2>
+<ol>
+<li><p>Modify the YAML to uncomment the last 3 lines of the Deployment section as of <strong>envFrom</strong>.</p>
+<p> Your YAML file should look as follows:</p>
+<pre class="language-"><code class="lang-yaml"> <span class="token punctuation">---</span>
+ <span class="token comment"># Application to deploy</span>
+ <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+ <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
+ <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodos
+ <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+   <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">2 </span><span class="token comment"># tells deployment to run 2 pods matching the template</span>
+   <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+     <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+       <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodos
+   <span class="token key atrule">template</span><span class="token punctuation">:</span>   <span class="token comment"># create pods using pod definition in this template</span>
+     <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+       <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+         <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodos
+         <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
+     <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+       <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+       <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodos
+         <span class="token key atrule">image</span><span class="token punctuation">:</span> &lt;region<span class="token punctuation">&gt;</span>.icr.io/&lt;namespace<span class="token punctuation">&gt;</span>/todo<span class="token punctuation">-</span>&lt;lastname<span class="token punctuation">&gt;</span><span class="token punctuation">:</span><span class="token number">1.0</span>
+         <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> Always
+         <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+           <span class="token key atrule">requests</span><span class="token punctuation">:</span>
+             <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 250m     <span class="token comment"># 250 millicores = 1/4 core</span>
+             <span class="token key atrule">memory</span><span class="token punctuation">:</span> 128Mi <span class="token comment"># 128 MB</span>
+           <span class="token key atrule">limits</span><span class="token punctuation">:</span>
+             <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 500m
+             <span class="token key atrule">memory</span><span class="token punctuation">:</span> 384Mi
+         <span class="token key atrule">envFrom</span><span class="token punctuation">:</span>
+         <span class="token punctuation">-</span> <span class="token key atrule">secretRef</span><span class="token punctuation">:</span>
+             <span class="token key atrule">name</span><span class="token punctuation">:</span> database<span class="token punctuation">-</span>credentials
+</code></pre>
+</li>
+<li><p>Redeploy the application with this new configuration</p>
+<pre class="language-"><code class="lang-sh"> kubectl apply -f ingress-tls-deploy.yaml
+</code></pre>
 </li>
 </ol>
 
@@ -619,12 +718,12 @@
 
             
                 
-                <a href="devops-continuous-delivery.html" class="navigation navigation-prev " aria-label="Previous page: Deploy with Continuous Delivery">
+                <a href="scale-app.html" class="navigation navigation-prev " aria-label="Previous page: Scale app">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="monitor-cluster-logs.html" class="navigation navigation-next " aria-label="Next page: Cluster Logs">
+                <a href="clean-up.html" class="navigation navigation-next " aria-label="Next page: Clean up">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -635,7 +734,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Kubernetes Dashboard","level":"5.1","depth":1,"next":{"title":"Cluster Logs","level":"5.2","depth":1,"path":"monitor-cluster-logs.md","ref":"monitor-cluster-logs.md","articles":[]},"previous":{"title":"Deploy with Continuous Delivery","level":"4.2","depth":1,"path":"devops-continuous-delivery.md","ref":"devops-continuous-delivery.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"monitor-kube-dashboard.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Optional: Connect to a database","level":"3.8","depth":1,"next":{"title":"Clean up","level":"3.9","depth":1,"path":"clean-up.md","ref":"clean-up.md","articles":[]},"previous":{"title":"Scale app","level":"3.7","depth":1,"path":"scale-app.md","ref":"scale-app.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"connect-database.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

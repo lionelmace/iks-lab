@@ -84,7 +84,7 @@
     <link rel="next" href="monitor-cluster-metrics.html" />
     
     
-    <link rel="prev" href="monitor-kube-dashboard.html" />
+    <link rel="prev" href="devops-continuous-delivery.html" />
     
 
     </head>
@@ -219,12 +219,27 @@
             
         </li>
     
-        <li class="chapter " data-level="3.2" data-path="connect-to-cloud.html">
+        <li class="chapter " data-level="3.2" data-path="kube-dashboard.html">
+            
+                <a href="kube-dashboard.html">
+            
+                    
+                        <b>3.2.</b>
+                    
+                    Access the Kubernetes Dashboard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="connect-to-cloud.html">
             
                 <a href="connect-to-cloud.html">
             
                     
-                        <b>3.2.</b>
+                        <b>3.3.</b>
                     
                     Connect to IBM Cloud
             
@@ -234,12 +249,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.3" data-path="get-app.html">
+        <li class="chapter " data-level="3.4" data-path="get-app.html">
             
                 <a href="get-app.html">
             
                     
-                        <b>3.3.</b>
+                        <b>3.4.</b>
                     
                     Get and run the app locally
             
@@ -249,12 +264,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.4" data-path="build-push-image.html">
+        <li class="chapter " data-level="3.5" data-path="build-push-image.html">
             
                 <a href="build-push-image.html">
             
                     
-                        <b>3.4.</b>
+                        <b>3.5.</b>
                     
                     Build and Push image
             
@@ -264,12 +279,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.5" data-path="deploy-app.html">
+        <li class="chapter " data-level="3.6" data-path="deploy-app.html">
             
                 <a href="deploy-app.html">
             
                     
-                        <b>3.5.</b>
+                        <b>3.6.</b>
                     
                     Deploy app
             
@@ -279,12 +294,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.6" data-path="scale-app.html">
+        <li class="chapter " data-level="3.7" data-path="scale-app.html">
             
                 <a href="scale-app.html">
             
                     
-                        <b>3.6.</b>
+                        <b>3.7.</b>
                     
                     Scale app
             
@@ -294,14 +309,14 @@
             
         </li>
     
-        <li class="chapter " data-level="3.7" data-path="bind-service.html">
+        <li class="chapter " data-level="3.8" data-path="connect-database.html">
             
-                <a href="bind-service.html">
+                <a href="connect-database.html">
             
                     
-                        <b>3.7.</b>
+                        <b>3.8.</b>
                     
-                    Optional: Bind a Cloud Service
+                    Optional: Connect to a database
             
                 </a>
             
@@ -309,12 +324,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.8" data-path="clean-up.html">
+        <li class="chapter " data-level="3.9" data-path="clean-up.html">
             
                 <a href="clean-up.html">
             
                     
-                        <b>3.8.</b>
+                        <b>3.9.</b>
                     
                     Clean up
             
@@ -368,27 +383,12 @@
         
         
     
-        <li class="chapter " data-level="5.1" data-path="monitor-kube-dashboard.html">
-            
-                <a href="monitor-kube-dashboard.html">
-            
-                    
-                        <b>5.1.</b>
-                    
-                    Kubernetes Dashboard
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="5.2" data-path="monitor-cluster-logs.html">
+        <li class="chapter active" data-level="5.1" data-path="monitor-cluster-logs.html">
             
                 <a href="monitor-cluster-logs.html">
             
                     
-                        <b>5.2.</b>
+                        <b>5.1.</b>
                     
                     Cluster Logs
             
@@ -398,12 +398,12 @@
             
         </li>
     
-        <li class="chapter " data-level="5.3" data-path="monitor-cluster-metrics.html">
+        <li class="chapter " data-level="5.2" data-path="monitor-cluster-metrics.html">
             
                 <a href="monitor-cluster-metrics.html">
             
                     
-                        <b>5.3.</b>
+                        <b>5.2.</b>
                     
                     Monitoring your cluster
             
@@ -645,7 +645,9 @@
 </ol>
 <h2 id="view-logs-in-the-logdna-dashboard">View logs in the LogDNA dashboard</h2>
 <ol>
-<li><p>After you configure a log source, launch the LogDNA UI by clicking <strong>View LogDNA</strong>. It may take a few minutes before you start seeing logs.</p>
+<li><p>After you configure a log source, launch the LogDNA UI by clicking <strong>View LogDNA</strong>.</p>
+<p> <div class="alert alert-info hints-alert"><div class="hints-icon"><i class="fa fa-info-circle"></i></div><div class="hints-container"><p> This might take a few minutes before you start seeing logs. </p>
+</div></div></p>
 </li>
 <li><p>Since namespace is a field that LogDNA collects, you can use the search function to filter your namespace. Use <code>namespace:name</code> to view only the logs of the applications deployed to the specified namespace.</p>
 <blockquote>
@@ -693,7 +695,7 @@
 
             
                 
-                <a href="monitor-kube-dashboard.html" class="navigation navigation-prev " aria-label="Previous page: Kubernetes Dashboard">
+                <a href="devops-continuous-delivery.html" class="navigation navigation-prev " aria-label="Previous page: Deploy with Continuous Delivery">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
@@ -709,7 +711,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Cluster Logs","level":"5.2","depth":1,"next":{"title":"Monitoring your cluster","level":"5.3","depth":1,"path":"monitor-cluster-metrics.md","ref":"monitor-cluster-metrics.md","articles":[]},"previous":{"title":"Kubernetes Dashboard","level":"5.1","depth":1,"path":"monitor-kube-dashboard.md","ref":"monitor-kube-dashboard.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"monitor-cluster-logs.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Cluster Logs","level":"5.1","depth":1,"next":{"title":"Monitoring your cluster","level":"5.2","depth":1,"path":"monitor-cluster-metrics.md","ref":"monitor-cluster-metrics.md","articles":[]},"previous":{"title":"Deploy with Continuous Delivery","level":"4.2","depth":1,"path":"devops-continuous-delivery.md","ref":"devops-continuous-delivery.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"monitor-cluster-logs.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
