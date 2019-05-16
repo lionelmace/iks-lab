@@ -15,7 +15,7 @@
 
 * [View your cluster](view-cluster.md)
 * [Access the Kubernetes Dashboard](kube-dashboard.md)
-* [Connect to IBM Cloud](connect-to-cloud.md)
+* [Connect via CLI](connect-via-cli.md)
 * [Get and run the app locally](get-app.md)
 * [Build and Push image](build-push-image.md)
 * [Deploy app](deploy-app.md)
