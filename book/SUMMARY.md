@@ -14,7 +14,7 @@
 ## Lab 1 - Deploy an app in a Kubernetes cluster
 
 * [View your cluster](view-cluster.md)
-* [Access the Kubernetes Dashboard](kube-dashboard.md)
+* [Kubernetes Dashboard](kube-dashboard.md)
 * [Connect via CLI](connect-via-cli.md)
 * [Get and run the app locally](get-app.md)
 * [Build and Push image](build-push-image.md)
