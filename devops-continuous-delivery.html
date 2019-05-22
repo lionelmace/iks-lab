@@ -710,6 +710,15 @@
 <li><p>Browse to the given url to see the running application. The url should look similar to this <a href="https://todo.lab-cluster-2.eu-de.containers.appdomain.cloud/" target="_blank">https://todo.lab-cluster-2.eu-de.containers.appdomain.cloud/</a>.</p>
 </li>
 </ol>
+<h1 id="troubleshooting-your-pipeline">Troubleshooting your pipeline</h1>
+<ol>
+<li><p>If you face the following error in the step <strong>Pre-deploy check 1</strong></p>
+<pre class="language-"><code> CHECKING HELM releases in this namespace: prod
+Error: configmaps is forbidden: User &quot;system:serviceaccount:kube-system:default&quot; cannot list resource &quot;configmaps&quot; in API group &quot;&quot; in the namespace &quot;kube-system&quot;
+</code></pre><p> Set the right permissions to be able to install package</p>
+<pre class="language-"><code> kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
+</code></pre></li>
+</ol>
 
                                 
                                 </section>
