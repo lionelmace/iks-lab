@@ -705,14 +705,19 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 <pre class="language-"><code class="lang-sh"> kubectl apply -f ingress-tls-deploy.yaml
 </code></pre>
 </li>
-<li><p>If you create a new todo in the web app, you will see this new item in the Cloudant Dashboard.
-      <a href="images/cloudant-dashboard-launch.png" rel="grouped" title="" target="_self" class="fancybox">
+<li><p>Create a new todo in the web app.</p>
+<p>      <a href="images/webapp-db.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/webapp-db.png" alt="">
+     </a></p>
+</li>
+<li><p>Check the Cloudant Dashboard to validate this new todo has been persisted in the DB</p>
+<p>      <a href="images/cloudant-dashboard-launch.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/cloudant-dashboard-launch.png" alt="">
-     </a>
-      <a href="images/cloudant-dashboard-database.png" rel="grouped" title="" target="_self" class="fancybox">
+     </a></p>
+<p>      <a href="images/cloudant-dashboard-database.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/cloudant-dashboard-database.png" alt="">
-     </a>
-      <a href="images/cloudant-dashboard-record.png" rel="grouped" title="" target="_self" class="fancybox">
+     </a></p>
+<p>      <a href="images/cloudant-dashboard-record.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/cloudant-dashboard-record.png" alt="">
      </a></p>
 </li>
