@@ -20,15 +20,15 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 
     ![](./images/cloudant-credentials.png)
 
-1. Click New Credentials and keep all the default options
+1. Click **New Credentials** and keep all the default options
 
     ![](./images/cloudant-credentials2.png)
 
 1. Duplicate the file `credentials.template.env` in the root folder to a new file `credentials.env`
 
-1. Edit the file `credentials.env` and fill out the value for both CLOUDANT_USERNAME and CLOUDANT_APIKEY from the generated credentials above.
+1. Edit the file `credentials.env` and fill out the value for both CLOUDANT_USERNAME and CLOUDANT_APIKEY from the generated credentials above. Make sure you uncomment those 2 lines
 
-1. Optional: Create an instance of a service using the CLI instead of the Console.
+1. **Optional**: Create an instance of a service using the CLI instead of the Console.
     ```sh
     ibmcloud resource service-instance-create <service_instance_name> <service_name> <service_plan_name> <location>
     ```
@@ -37,7 +37,7 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
     ibmcloud resource service-instance-create todo-cloudant cloudant lite eu-de
     ```
 
-1. Optional: Verify you see the new instance created using the CLI
+1. **Optional**: Verify you see the new instance created using the CLI
     ```sh
     ibmcloud resource service-instances
     ```
@@ -59,7 +59,7 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 1. Create the secret used by the application to obtain service credentials:
 
     ```sh
-    kubectl create secret generic database-credentials --from-env-file=/path/to/credentials.env
+    kubectl create secret generic database-credentials --from-env-file=credentials.env
     ```
     Result:
     > secret/database-credentials created
