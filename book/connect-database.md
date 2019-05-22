@@ -122,10 +122,10 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 
     ![](./images/webapp-db.png)
 
-1. Check the Cloudant Dashboard to validate this new todo has been persisted in the DB
+1. Check the Cloudant Dashboard to validate this new todo has been persisted in the DB.
 
     ![](./images/cloudant-dashboard-launch.png)
 
-    ![](./images/cloudant-dashboard-database.png)
+    ![](./images/cloudant-db.png)
 
-    ![](./images/cloudant-dashboard-record.png)
+    ![](./images/cloudant-record.png)
