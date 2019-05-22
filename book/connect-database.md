@@ -113,7 +113,12 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
                 name: database-credentials
     ```
 
-1. Redeploy the application with this new configuration
+1. Update the application with this new configuration
     ```sh
     kubectl apply -f ingress-tls-deploy.yaml
     ```
+
+1. If you create a new todo in the web app, you will see this new item in the Cloudant Dashboard.
+    ![](./images/cloudant-dashboard-launch.png)
+    ![](./images/cloudant-dashboard-database.png)
+    ![](./images/cloudant-dashboard-record.png)
