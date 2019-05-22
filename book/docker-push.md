@@ -1,4 +1,4 @@
-# Build and push the application to the IBM Cloud Container Registry
+# Push the docker image to the IBM Cloud Container Registry
 
 Before you can deploy the application on the cluster, you first need to push the Docker image to the IBM Cloud private container registry.
 
@@ -15,13 +15,7 @@ Before you can deploy the application on the cluster, you first need to push the
     ```
     You should get a namespace called **lab-registry**
 
-1. Build a Docker image. Make sure to replace the value region and namespace
-    ```sh
-    docker build . -t <region>.icr.io/<namespace>/todo-<lastname>:1.0
-    ```
-    > Region is **de** for the Frankfurt datacenter.
-
-1. Push the image to your private image registry.
+1. **Push** the image to your private image registry.
     ```sh
     docker push <region>.icr.io/<namespace>/todo-<lastname>:1.0
     ```
