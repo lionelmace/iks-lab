@@ -118,7 +118,14 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
     kubectl apply -f ingress-tls-deploy.yaml
     ```
 
-1. If you create a new todo in the web app, you will see this new item in the Cloudant Dashboard.
+1. Create a new todo in the web app.
+
+    ![](./images/webapp-db.png)
+
+1. Check the Cloudant Dashboard to validate this new todo has been persisted in the DB
+
     ![](./images/cloudant-dashboard-launch.png)
+
     ![](./images/cloudant-dashboard-database.png)
+
     ![](./images/cloudant-dashboard-record.png)
