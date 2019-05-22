@@ -628,7 +628,10 @@
        <img src="images/sysdig-edit.png" alt="">
      </a></p>
 </li>
-<li><p>On this page, run for the curl command at the bottom of the page.</p>
+<li><p>Run the following command to install the agent.</p>
+<p>      <a href="images/sysdig-install.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/sysdig-install.png" alt="">
+     </a></p>
 </li>
 <li><p>If the installation is successfull you should see the following message:</p>
 <pre class="language-"><code> * Detecting operating system
@@ -652,55 +655,11 @@
  * Deploying the sysdig agent
  daemonset.extensions/sysdig-agent created
 </code></pre></li>
+<li><p><strong>Optional</strong> Alternatively, you may deploy the Sysdig agent manually by following the instructions <a href="https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig/config_agent.html#kube_manually" target="_blank">here</a>.</p>
+</li>
 </ol>
-<h2 id="manual-installation">Manual Installation:</h2>
-<ol>
-<li><p>Download the required yaml files from the following links to a directory:</p>
-<ul>
-<li>sysdig-agent-clusterrole.yaml</li>
-<li>sysdig-agent-configmap.yaml</li>
-<li>sysdig-agent-daemonset-v2.yaml</li>
-</ul>
-</li>
-<li><p>Create a service account called sysdig-agent that will be used to monitor the kubernetes cluster:</p>
-<pre class="language-"><code> kubectl create serviceaccount sysdig-agent
-</code></pre></li>
-<li><p>User your ACCESS-KEY to create a secret for the cluster:</p>
-<pre class="language-"><code> kubectl create secret generic sysdig-agent --from-literal=access-key=<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ACCESS-KEY</span><span class="token punctuation">&gt;</span></span>
-</code></pre></li>
-<li><p>Use the <strong>sysdig-agent-clusterrole.yaml</strong> to create a clusterrole and clusterrolebinding:</p>
-<pre class="language-"><code> kubectl apply -f /tmp/sysdig-agent-clusterrole.yaml
- kubectl create clusterrolebinding sysdig-agent --clusterrole=sysdig-agent --serviceaccount=default:sysdig-agent
-</code></pre></li>
-<li><p>Use an editor to open the <strong>sysdig-agent-configmap.yaml</strong> file. Add the following REQUIRED params:</p>
-<ul>
-<li><strong>collector</strong> - This should be URL that the agent should be sending it metrics to e.g. us-south.monitoring.test.cloud.ibm.com</li>
-<li><strong>ssl</strong> - This needs to be set true</li>
-<li><strong>ssl_verfiy_certificate</strong> - This needs to be set to false</li>
-<li><strong>new_k8s</strong> - This needs to be set to true to capture kube state metrics
-You may also add an OPTIONAL entry for tags. An example yaml would look like this:<pre class="language-"><code class="lang-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
-<span class="token key atrule">kind</span><span class="token punctuation">:</span> ConfigMap
-<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-  <span class="token key atrule">name</span><span class="token punctuation">:</span> sysdig<span class="token punctuation">-</span>agent
-<span class="token key atrule">data</span><span class="token punctuation">:</span>
-  <span class="token key atrule">dragent.yaml</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
-      ### Agent tags
-      tags: linux:ubuntu,dept:dev,local:nyc
-      collector: us-south.monitoring.test.cloud.ibm.com
-      ssl: true
-      ssl_verify_certificate: false
-      new_k8s: true</span>
-</code></pre>
-</li>
-</ul>
-</li>
-<li><p>Apply the config map to the cluster:</p>
-<pre class="language-"><code> kubectl apply -f sysdig-agent-configmap.yaml
-</code></pre></li>
-<li><p>Finally, apply the daemonset to deploy the Sysdig agent to cluster:</p>
-<pre class="language-"><code> kubectl apply -f sysdig-agent-daemonset-v2.yaml
-</code></pre></li>
-</ol>
+<h2 id="view-sysdig">View Sysdig</h2>
+<p>1. </p>
 
                                 
                                 </section>
