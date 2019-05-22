@@ -104,3 +104,16 @@ A delivery pipeline automates the continuous deployment of a project. In a proje
     ![](./images/toolchain-pipeline-deploy.png)
 
 1. Browse to the given url to see the running application. The url should look similar to this https://todo.lab-cluster-2.eu-de.containers.appdomain.cloud/.
+
+# Troubleshooting your pipeline
+
+1. If you face the following error in the step **Pre-deploy check 1**
+    ```
+    CHECKING HELM releases in this namespace: prod
+Error: configmaps is forbidden: User "system:serviceaccount:kube-system:default" cannot list resource "configmaps" in API group "" in the namespace "kube-system"
+    ```
+
+    Set the right permissions to be able to install package
+    ```
+    kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
+    ```
