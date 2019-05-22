@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Build and Push image · IBM Cloud Kubernetes Service Lab</title>
+        <title>Build docker image · IBM Cloud Kubernetes Service Lab</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -81,7 +81,7 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="deploy-app.html" />
+    <link rel="next" href="docker-push.html" />
     
     
     <link rel="prev" href="get-app.html" />
@@ -264,14 +264,14 @@
             
         </li>
     
-        <li class="chapter active" data-level="3.5" data-path="build-push-image.html">
+        <li class="chapter active" data-level="3.5" data-path="docker-build.html">
             
-                <a href="build-push-image.html">
+                <a href="docker-build.html">
             
                     
                         <b>3.5.</b>
                     
-                    Build and Push image
+                    Build docker image
             
                 </a>
             
@@ -279,12 +279,27 @@
             
         </li>
     
-        <li class="chapter " data-level="3.6" data-path="deploy-app.html">
+        <li class="chapter " data-level="3.6" data-path="docker-push.html">
+            
+                <a href="docker-push.html">
+            
+                    
+                        <b>3.6.</b>
+                    
+                    Push docker image
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.7" data-path="deploy-app.html">
             
                 <a href="deploy-app.html">
             
                     
-                        <b>3.6.</b>
+                        <b>3.7.</b>
                     
                     Deploy app
             
@@ -294,12 +309,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.7" data-path="scale-app.html">
+        <li class="chapter " data-level="3.8" data-path="scale-app.html">
             
                 <a href="scale-app.html">
             
                     
-                        <b>3.7.</b>
+                        <b>3.8.</b>
                     
                     Scale app
             
@@ -309,12 +324,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.8" data-path="connect-database.html">
+        <li class="chapter " data-level="3.9" data-path="connect-database.html">
             
                 <a href="connect-database.html">
             
                     
-                        <b>3.8.</b>
+                        <b>3.9.</b>
                     
                     Optional: Connect to a database
             
@@ -324,12 +339,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.9" data-path="clean-up.html">
+        <li class="chapter " data-level="3.10" data-path="clean-up.html">
             
                 <a href="clean-up.html">
             
                     
-                        <b>3.9.</b>
+                        <b>3.10.</b>
                     
                     Clean up
             
@@ -562,7 +577,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Build and Push image</a>
+        <a href="." >Build docker image</a>
     </h1>
 </div>
 
@@ -577,49 +592,24 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="build-and-push-the-application-to-the-ibm-cloud-container-registry">Build and push the application to the IBM Cloud Container Registry</h1>
-<p>Before you can deploy the application on the cluster, you first need to push the Docker image to the IBM Cloud private container registry.</p>
+                                <h1 id="build-the-docker-image-with-your-application-code">Build the docker image with your application code</h1>
+<p>Before you can deploy the application on the cluster, you first need to build the Docker image.</p>
 <ol>
-<li><p>Log in to the private <strong>Container Registry</strong> of IBM Cloud. Only required if you haven&apos;t <code>ibmcloud login</code> before.</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud cr login
-</code></pre>
-<blockquote>
-<p><code>ibmcloud cr login</code> is a wrapper for <code>docker login</code> , it is only needed to log your local docker daemon into the registry, which enables you to push/pull images.</p>
-</blockquote>
-</li>
-<li><p>Retrieve the namespace for the image registry that was created for you.</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud cr namespace-list
-</code></pre>
-<p> You should get a namespace called <strong>lab-registry</strong></p>
-</li>
-<li><p>Build a Docker image. Make sure to replace the value region and namespace</p>
+<li><p><strong>Build</strong> a Docker image. Make sure to replace the value region and namespace</p>
 <pre class="language-"><code class="lang-sh"> docker build <span class="token keyword">.</span> -t <span class="token operator">&lt;</span>region<span class="token operator">&gt;</span>.icr.io/<span class="token operator">&lt;</span>namespace<span class="token operator">&gt;</span>/todo-<span class="token operator">&lt;</span>lastname<span class="token operator">&gt;</span>:1.0
 </code></pre>
 <blockquote>
 <p>Region is <strong>de</strong> for the Frankfurt datacenter.</p>
 </blockquote>
 </li>
-<li><p>Push the image to your private image registry.</p>
-<pre class="language-"><code class="lang-sh"> docker push <span class="token operator">&lt;</span>region<span class="token operator">&gt;</span>.icr.io/<span class="token operator">&lt;</span>namespace<span class="token operator">&gt;</span>/todo-<span class="token operator">&lt;</span>lastname<span class="token operator">&gt;</span>:1.0
-</code></pre>
-<blockquote>
-<p>If you get the error <code>unauthorized: authentication required</code>, run the command <strong>ibmcloud cr login</strong></p>
-</blockquote>
-</li>
-<li><p>Verify that the image was successfully added to your registry in your namespace</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud cr images
+<li><p>Verify that the image was successfully added to your local docker registry</p>
+<pre class="language-"><code class="lang-sh"> docker images
 </code></pre>
 <p> Output:</p>
-<pre class="language-"><code> Listing images...
-
- REPOSITORY                                  NAMESPACE   TAG       DIGEST         CREATED        SIZE     VULNERABILITY STATUS
- de.icr.io/lab-registry/todo-mace   namespace   1   0d90cb732881   1 minute ago   264 MB   OK
+<pre class="language-"><code> REPOSITORY                         TAG                 IMAGE ID            CREATED             SIZE
+ de.icr.io/lab-registry/todo-mace   1.0                 30bd6bcc47bc        42 minutes ago      124MB
+ node                               11.13.0-alpine      f34bcc2815ed        6 weeks ago         75.4MB
 </code></pre></li>
-<li><p>The image is also visible in the IBM Cloud Console. Go to the <a href="https://cloud.ibm.com/containers-kubernetes/registry/main/start" target="_blank">Container Registry</a>.</p>
-<p>      <a href="images/registry-landing.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/registry-landing.png" alt="">
-     </a></p>
-</li>
 </ol>
 
                                 
@@ -653,7 +643,7 @@
                 </a>
                 
                 
-                <a href="deploy-app.html" class="navigation navigation-next " aria-label="Next page: Deploy app">
+                <a href="docker-push.html" class="navigation navigation-next " aria-label="Next page: Push docker image">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -664,7 +654,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Build and Push image","level":"3.5","depth":1,"next":{"title":"Deploy app","level":"3.6","depth":1,"path":"deploy-app.md","ref":"deploy-app.md","articles":[]},"previous":{"title":"Get and run the app locally","level":"3.4","depth":1,"path":"get-app.md","ref":"get-app.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"build-push-image.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Build docker image","level":"3.5","depth":1,"next":{"title":"Push docker image","level":"3.6","depth":1,"path":"docker-push.md","ref":"docker-push.md","articles":[]},"previous":{"title":"Get and run the app locally","level":"3.4","depth":1,"path":"get-app.md","ref":"get-app.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"docker-build.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
