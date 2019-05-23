@@ -22,6 +22,7 @@
 * [Deploy app](deploy-app.md)
 * [Scale app](scale-app.md)
 * [Optional: Connect to a database](connect-database.md)
+* [Optional: Test the resiliency](test-resiliency.md)
 * [Clean up](clean-up.md)
 
 ## Lab 2 - DevOps and Helm charts
@@ -40,7 +41,6 @@
 * [Weavescope](weavescope.md)
 * [Provisioning with Terraform](appendix-terraform.md)
 * [Appendix](appendix.md)
-* [Test the resiliency](test-resiliency.md)
 
 ## Resources
 * [Resources](resources.md)

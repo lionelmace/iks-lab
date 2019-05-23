@@ -5,18 +5,21 @@
     kubectl get po -o wide -w
     ```
 
-1. Find the IP of the worker node
+1. First, identify the name of the node you wish to drain. You can list all of the nodes and their respective IPs in your cluster with
     ```sh
     kubectl get nodes
     ```
 
-1. Kill the worker node
+1. Next, tell Kubernetes to drain the node:
     ```sh
-    kubectl drain 10.75.4.70 --ignore-daemonsets --delete-local-data
+    kubectl drain <node name> --ignore-daemonsets --delete-local-data
     ```
+
+    {% hint style='info' %} The node name is the private IP address in IKS. {% endhint %}
+
     Output:
     ```
-    node/10.75.4.70 already cordoned
+    node/10.135.52.88 already cordoned
     WARNING: Deleting pods with local storage: kubernetes-dashboard-7d5d4f48c4-pmgp9; Ignoring DaemonSet-managed pods: logdna-agent-lm8v4, calico-node-78rms, ibm-keepalived-watcher-l6vp8, ibm-kube-fluentd-5ghgk, ibm-master-proxy-48ttq
     pod/ibm-storage-watcher-74c46db958-hfz5v evicted
     pod/kubernetes-dashboard-7d5d4f48c4-pmgp9 evicted
@@ -29,15 +32,14 @@
     pod/kube-dns-amd64-5dc4d6b67-clvnh evicted
     ```
 
-1. Check the status of your node. You should see the node has the status `SchedulingDisabled`
+1. Check the status of your node. You should see the status `SchedulingDisabled`
     ```
     NAME           STATUS                     ROLES     AGE       VERSION
     10.123.12.75   Ready                      <none>    48d       v1.11.3+IKS
-    10.135.52.88   Ready                      <none>    48d       v1.11.3+IKS
-    10.75.4.70     Ready,SchedulingDisabled   <none>    48d       v1.11.3+IKS
+    10.135.52.88   Ready,SchedulingDisabled   <none>    48d       v1.11.3+IKS
     ```
 
-1. Re-activate the worker node
+1. Tell Kubernetes that it can resume scheduling new pods onto the node
     ```sh
-    kubectl uncordon 10.75.4.70
+    kubectl uncordon <node name>
     ```
