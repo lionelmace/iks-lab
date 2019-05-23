@@ -81,7 +81,7 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="clean-up.html" />
+    <link rel="next" href="test-resiliency.html" />
     
     
     <link rel="prev" href="scale-app.html" />
@@ -339,12 +339,27 @@
             
         </li>
     
-        <li class="chapter " data-level="3.10" data-path="clean-up.html">
+        <li class="chapter " data-level="3.10" data-path="test-resiliency.html">
+            
+                <a href="test-resiliency.html">
+            
+                    
+                        <b>3.10.</b>
+                    
+                    Optional: Test the resiliency
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.11" data-path="clean-up.html">
             
                 <a href="clean-up.html">
             
                     
-                        <b>3.10.</b>
+                        <b>3.11.</b>
                     
                     Clean up
             
@@ -503,21 +518,6 @@
                         <b>6.5.</b>
                     
                     Appendix
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="6.6" data-path="test-resiliency.html">
-            
-                <a href="test-resiliency.html">
-            
-                    
-                        <b>6.6.</b>
-                    
-                    Test the resiliency
             
                 </a>
             
@@ -754,7 +754,7 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
                 </a>
                 
                 
-                <a href="clean-up.html" class="navigation navigation-next " aria-label="Next page: Clean up">
+                <a href="test-resiliency.html" class="navigation navigation-next " aria-label="Next page: Optional: Test the resiliency">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -765,7 +765,7 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Optional: Connect to a database","level":"3.9","depth":1,"next":{"title":"Clean up","level":"3.10","depth":1,"path":"clean-up.md","ref":"clean-up.md","articles":[]},"previous":{"title":"Scale app","level":"3.8","depth":1,"path":"scale-app.md","ref":"scale-app.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"connect-database.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Optional: Connect to a database","level":"3.9","depth":1,"next":{"title":"Optional: Test the resiliency","level":"3.10","depth":1,"path":"test-resiliency.md","ref":"test-resiliency.md","articles":[]},"previous":{"title":"Scale app","level":"3.8","depth":1,"path":"scale-app.md","ref":"scale-app.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"connect-database.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
