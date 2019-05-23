@@ -1,5 +1,5 @@
 # Main Command Lines
 
-This schema will become handy during the lab to find our which CLI you need to use.
+This diagram is an overview of the main command lines you will be using during the lab.
 
 ![](./images/cli-main-cmds.png)
