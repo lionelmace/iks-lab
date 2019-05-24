@@ -4,7 +4,7 @@ What techniques for general Ingress troubleshooting and debugging can you consid
 
 You publicly exposed your app by creating an Ingress resource for your app in your cluster. However, when you try to connect to your app through the ALB's public IP address or subdomain, the connection fails or times out. The steps in the following sections can help you debug your Ingress setup.
 
-    ![](./images/monitor-debug.png)
+![](./images/monitor-debug.png)
 
 ## Deploy Run Ingress tests in the IBM Cloud Kubernetes Service Diagnostics and Debug Tool
 
