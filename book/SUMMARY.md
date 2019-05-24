@@ -29,6 +29,7 @@
 
 * [Deploy with Helm](devops-helm.md)
 * [Deploy with Continuous Delivery](devops-continuous-delivery.md)
+* [Optional: Troubleshoot and Debug](monitor-debug.md)
 
 ## Lab 3 - Monitor your cluster
 
