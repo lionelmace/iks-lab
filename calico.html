@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Deploy with Continuous Delivery · IBM Cloud Kubernetes Service Lab</title>
+        <title>Controlling traffic with network policies · IBM Cloud Kubernetes Service Lab</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -81,10 +81,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="monitor-debug.html" />
+    <link rel="next" href="appendix.html" />
     
     
-    <link rel="prev" href="devops-helm.html" />
+    <link rel="prev" href="appendix-terraform.html" />
     
 
     </head>
@@ -391,7 +391,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="4.2" data-path="devops-continuous-delivery.html">
+        <li class="chapter " data-level="4.2" data-path="devops-continuous-delivery.html">
             
                 <a href="devops-continuous-delivery.html">
             
@@ -525,7 +525,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6.5" data-path="calico.html">
+        <li class="chapter active" data-level="6.5" data-path="calico.html">
             
                 <a href="calico.html">
             
@@ -607,7 +607,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Deploy with Continuous Delivery</a>
+        <a href="." >Controlling traffic with network policies</a>
     </h1>
 </div>
 
@@ -622,133 +622,71 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="deploy-using-a-continuous-delivery-pipeline">Deploy using a Continuous Delivery Pipeline</h2>
-<p>In this tutorial, you create an open toolchain and use it to deploy the web app, package it into a Docker container, and then deploy the app to a Kubernetes cluster using Helm charts.</p>
-<p>IBM Cloud Continuous Delivery supports Helm functions in the Delivery Pipeline. </p>
-<p>The toolchain used for this tutorial is configured out of the box to perform sanity checks before build or deploy activities, and manages development privacy by using a private image registry and configurable namespaces (both in the container registry and Kubernetes cluster).</p>
-<p>The toolchain includes:</p>
-<ul>
-<li>Git Repos and Issue Tracking for source control and issue tracking.</li>
-<li>Eclipse Orion Web IDE for online editing.</li>
-<li>Vulnerability Advisor to ensure the container we&apos;re deploying is secure.</li>
-<li>Deployment to IBM Cloud Kubernetes with Helm.</li>
-</ul>
-<h1 id="create-a-toolchain">Create a Toolchain</h1>
+                                <h1 id="controlling-traffic-with-network-policies">Controlling traffic with network policies</h1>
+<p>Every Kubernetes cluster is set up with a network plug-in called <a href="https://www.projectcalico.org/" target="_blank">Calico</a>. Default network policies are set up to secure the public network interface of every worker node in IBM&#xAE; Cloud Kubernetes Service.</p>
+<p>If you have unique security requirements or you have a multizone cluster with VLAN spanning enabled, you can use Calico and Kubernetes to create network policies for a cluster. With Kubernetes network policies, you can specify the network traffic that you want to allow or block to and from a pod within a cluster. </p>
+<h2 id="install-and-configure-the-calico-cli">Install and Configure the Calico CLI</h2>
 <ol>
-<li><p>Open the creation page for the toolchain by clicking <strong><a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&amp;branch=master" target="_blank">Create toolchain</a></strong></p>
+<li><p>Include the --admin and --network options with the ibmcloud ks cluster-config command. --admin downloads the keys to access your infrastructure portfolio and run Calico commands on your worker nodes. --network downloads the Calico configuration file to run all Calico commands.</p>
+<pre class="language-"><code>ibmcloud ks cluster-config --cluster <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster_name_or_ID</span><span class="token punctuation">&gt;</span></span> --admin --network
+</code></pre></li>
+<li><p>Create the /etc/calico directory.</p>
+<pre class="language-"><code>  sudo mkdir /etc/calico
+</code></pre></li>
+<li><p>Move the Calico configuration file that you previously downloaded to the directory.</p>
+<pre class="language-"><code> sudo mv /Users/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>user</span><span class="token punctuation">&gt;</span></span>/.bluemix/plugins/container-service/clusters/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster_name</span><span class="token punctuation">&gt;</span></span>-admin/calicoctl.cfg /etc/calico
+</code></pre></li>
+<li><p>On Mac OS, install Calico with Homebrew</p>
+<pre class="language-"><code> brew install calico
+</code></pre></li>
+<li><p>Otherwise, <a href="https://github.com/projectcalico/calicoctl/releases" target="_blank">download the Calico CLI.</a></p>
 </li>
-<li><p>The diagram of the toolchain shows each tool integration in its lifecycle phase in the toolchain.</p>
-<p>      <a href="images/toolchain-landing.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/toolchain-landing.png" alt="">
-     </a></p>
-</li>
-<li><p>Review the default information for the toolchain settings. Select the region <strong>Frankfurt</strong> and the Resource Group <strong>lab</strong>.</p>
-<p>      <a href="images/toolchain-name-param.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/toolchain-name-param.png" alt="">
-     </a></p>
-</li>
-<li><p>Keep the default options for the git configuration. This should like the following:</p>
-<p>      <a href="images/toolchain-git.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/toolchain-git.png" alt="">
-     </a></p>
-</li>
-<li><p>Click Delivery Pipeline.</p>
-<p>      <a href="images/toolchain-pipeline-config.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/toolchain-pipeline-config.png" alt="">
-     </a></p>
-<ul>
-<li><p><strong>App name</strong>: Enter the name for your application. The app name must be unique (if you want, you can just use the default value provided).</p>
-</li>
-<li><p><strong>Container Registry Region</strong>: Select the region you want the docker images to be created into.</p>
-</li>
-<li><p><strong>Container Registry Namespace</strong>: This is your folder in the global image registry in a region, used to manage your own set of images. It must be a unique name.</p>
-</li>
-<li><p><strong>IBM Cloud API Key</strong>: Create a new IBM Cloud API Key.</p>
-</li>
-<li><p><strong>Cluster Region</strong>: Select the region for the target cluster. </p>
-</li>
-<li><p><strong>Cluster Name</strong>: The name of the Kubernetes  cluster that you got assigned. Exemple: <code>lab-cluster-1</code></p>
-</li>
-<li><p><strong>Cluster Namespace</strong>: It is a best practice to use explicit namespaces in clusters to separate deployed resources. For instance, we use &#x2018;prod&#x2019; to denote a prod environment within this cluster. Later in the tutorial, we will add a &#x2018;staging&#x2019; environment within the same cluster. You can leave this setting at its default &apos;prod&apos; value.</p>
-</li>
-</ul>
-</li>
-<li><p>Click <strong>Create</strong>. After a few moments, your new toolchain&apos;s Overview page opens.</p>
-<p>      <a href="images/toolchain-created.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/toolchain-created.png" alt="">
-     </a></p>
-</li>
-</ol>
-<h1 id="explore-delivery-pipeline-in-your-toolchain">Explore Delivery Pipeline in your toolchain</h1>
-<p>Explore Delivery Pipeline in your toolchain. The pipeline is automatically triggered on every Git commit push.</p>
-<p>A delivery pipeline automates the continuous deployment of a project. In a project&apos;s pipeline, sequences of stages retrieve input and run jobs, such as builds, tests, and deployments. You can use a pipeline to facilitate everything that is required for a DevOps project.</p>
-<ol>
-<li><p>On the toolchain&apos;s Overview page, click <strong>Delivery Pipeline</strong> to see your toolchain as it is being built and deployed. Your pipeline might still be running.</p>
-<p>      <a href="images/toolchain-pipeline.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/toolchain-pipeline.png" alt="">
-     </a></p>
-</li>
-<li><p>Review the BUILD stage. On the BUILD stage, click the Configure Stage icon to explore the stage.</p>
-<ul>
-<li><p>The <strong>Pre-build check</strong> job checks for mandatory files (the Dockerfile and Helm chart), lints the files, and creates the image registry namespace.</p>
-</li>
-<li><p>The <strong>Build Docker image</strong> job creates the Docker image by using the IBM Cloud Container Registry build service through the bx cr build CLI script. The script stores the output image into the private IBM Cloud Container Registry and copies the Helm chart and other app scripts with the build results into the ARCHIVE_DIR folder.</p>
-</li>
-<li><p>The build scripts also record a few environment variables into a build.properties file.</p>
-</li>
-</ul>
-</li>
-<li><p>Click <strong>CANCEL</strong> to return to the pipeline.</p>
-</li>
-<li><p>On the BUILD stage, click <strong>View logs and history</strong>. Notice that the stage is building the container and copying the Kubernetes deploy manifest file into build artifacts.</p>
-</li>
-<li><p>On the pipeline&apos;s log page, click the <strong>Back</strong> arrow to return to the pipeline page.</p>
-</li>
-<li><p>On the VALIDATE stage, click the <strong>Configure Stage</strong> icon to explore the stage.</p>
-<ul>
-<li><p>This toolchain prevents you from deploying unsafe Docker images using IBM Cloud Vulnerability Advisor. This is performed by the pipeline job Vulnerability Advisor which runs the container registry command bx cr va ${PIPELINE_IMAGE_URL}. Notice how the VALIDATE stage is configured to receives the build.properties file from the build result, which will automatically recreate the respective environment properties.</p>
-</li>
-<li><p>When security issues are discovered, a report will be printed in the job log.</p>
-</li>
-<li><p>The <strong>Use the container image from the stage input</strong> check box is selected.</p>
-</li>
-<li><p>The VALIDATE stage is configured to be advisory so that if it fails, it does not block the pipeline. You can change this behavior by selecting the <strong>Stop running this stage if this job fails</strong> check box. </p>
-</li>
-</ul>
-</li>
-<li><p>Click <strong>CANCEL</strong> to return to the pipeline.</p>
-</li>
-<li><p>On the VALIDATE stage, click <strong>View logs and history</strong>. This stage runs the Vulnerability Advisor on the image to check for known vulnerabilities. If it finds a vulnerability, the stage fails, preventing the image from being deployed. This safety feature prevents apps with security holes from being deployed. The image has no vulnerabilities, so it passes.</p>
-</li>
-<li><p>On the pipeline&apos;s log page, click the <strong>Back</strong> arrow to return to the pipeline page.</p>
-</li>
-<li><p>On the PROD stage, click the <strong>Configure Stage</strong> icon to explore the stage.</p>
-<ul>
-<li><p>The &quot;Pre-deploy check&quot; job checks for cluster readiness and namespace existence, configures the cluster namespace, grants access to the private image registry, configures tiller, and checks the Helm releases in the namespace.</p>
-</li>
-<li><p>The &quot;Deploy Helm chart&quot; job sets environment variables and deploys the Helm chart into the Kubernetes cluster.</p>
-</li>
-</ul>
-</li>
-<li><p>Click <strong>CANCEL</strong> to return to the pipeline.</p>
-</li>
-<li><p>On the PROD stage, click <strong>View logs and history</strong> and then click the <strong>Deploy Helm chart</strong> job. This job deploys the app into the Kubernetes cluster. At the end of the log file, find the link to the running application.</p>
-<p>      <a href="images/toolchain-pipeline-deploy.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/toolchain-pipeline-deploy.png" alt="">
-     </a></p>
-</li>
-<li><p>Browse to the given url to see the running application. The url should look similar to this <a href="https://todo.lab-cluster-2.eu-de.containers.appdomain.cloud/" target="_blank">https://todo.lab-cluster-2.eu-de.containers.appdomain.cloud/</a>.</p>
-</li>
-</ol>
-<h1 id="troubleshooting-your-pipeline">Troubleshooting your pipeline</h1>
-<ol>
-<li><p>If you face the following error in the step <strong>Pre-deploy check 1</strong></p>
-<pre class="language-"><code> CHECKING HELM releases in this namespace: prod
-Error: configmaps is forbidden: User &quot;system:serviceaccount:kube-system:default&quot; cannot list resource &quot;configmaps&quot; in API group &quot;&quot; in the namespace &quot;kube-system&quot;
-</code></pre><p> Set the right permissions to be able to install package</p>
-<pre class="language-"><code> kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
+<li><p>Verify that the Calico configuration is working correctly.</p>
+<pre class="language-"><code> calicoctl get nodes
 </code></pre></li>
 </ol>
+<h2 id="to-view-network-policies-in-clusters">To view network policies in clusters</h2>
+<ol>
+<li><p>View all of the Calico and Kubernetes network policies that were created for the cluster. This list includes policies that might not be applied to any pods or hosts yet. For a network policy to be enforced, a Kubernetes resource must be found that matches the selector that was defined in the Calico network policy.</p>
+<p> Network policies are scoped to specific namespaces:</p>
+<pre class="language-"><code> calicoctl get NetworkPolicy --all-namespaces -o wide
+</code></pre><p> Global network policies are not scoped to specific namespaces:</p>
+<pre class="language-"><code> calicoctl get GlobalNetworkPolicy -o wide
+</code></pre></li>
+<li><p>View details for a network policy.</p>
+<pre class="language-"><code> calicoctl get NetworkPolicy -o yaml <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>policy_name</span><span class="token punctuation">&gt;</span></span> --namespace <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>policy_namespace</span><span class="token punctuation">&gt;</span></span>
+ `
+</code></pre></li>
+<li><p>View the details of all global network policies for the cluster.</p>
+<pre class="language-"><code class="lang-`"> calicoctl get GlobalNetworkPolicy -o yaml
+</code></pre>
+</li>
+</ol>
+<h2 id="set-a-global-network-policy">Set a Global Network Policy</h2>
+<ol>
+<li>Apply the following Global Network Policy to deny all ingress traffic<pre class="language-"><code class="lang-yml"> <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> projectcalico.org/v3
+ <span class="token key atrule">kind</span><span class="token punctuation">:</span> GlobalNetworkPolicy
+ <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+ <span class="token key atrule">name</span><span class="token punctuation">:</span> cfee<span class="token punctuation">-</span>ingress<span class="token punctuation">-</span>deny<span class="token punctuation">-</span>all
+ <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+ <span class="token key atrule">applyOnForward</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+ <span class="token key atrule">ingress</span><span class="token punctuation">:</span>
+ <span class="token punctuation">-</span> <span class="token key atrule">action</span><span class="token punctuation">:</span> Deny
+     <span class="token key atrule">destination</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+     <span class="token key atrule">source</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+ <span class="token key atrule">order</span><span class="token punctuation">:</span> <span class="token number">3000</span>
+ <span class="token key atrule">selector</span><span class="token punctuation">:</span> ibm.role==&apos;worker_public&apos;
+ <span class="token key atrule">types</span><span class="token punctuation">:</span>
+ <span class="token punctuation">-</span> Ingress
+</code></pre>
+</li>
+</ol>
+<h2 id="resources">Resources</h2>
+<p>For additional resources pay close attention to the following:</p>
+<ul>
+<li><a href="https://cloud.ibm.com/docs/containers?topic=containers-network_policies#cli_install" target="_blank">Controlling traffic with network policies</a></li>
+<li><a href="https://cloud.ibm.com/docs/containers?topic=containers-policy_tutorial#lesson3" target="_blank">Tutorial: Using Calico network policies to block traffic</a></li>
+</ul>
 
                                 
                                 </section>
@@ -776,12 +714,12 @@ Error: configmaps is forbidden: User &quot;system:serviceaccount:kube-system:def
 
             
                 
-                <a href="devops-helm.html" class="navigation navigation-prev " aria-label="Previous page: Deploy with Helm">
+                <a href="appendix-terraform.html" class="navigation navigation-prev " aria-label="Previous page: Provisioning with Terraform">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="monitor-debug.html" class="navigation navigation-next " aria-label="Next page: Optional: Troubleshoot and Debug">
+                <a href="appendix.html" class="navigation navigation-next " aria-label="Next page: Appendix">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -792,7 +730,7 @@ Error: configmaps is forbidden: User &quot;system:serviceaccount:kube-system:def
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Deploy with Continuous Delivery","level":"4.2","depth":1,"next":{"title":"Optional: Troubleshoot and Debug","level":"4.3","depth":1,"path":"monitor-debug.md","ref":"monitor-debug.md","articles":[]},"previous":{"title":"Deploy with Helm","level":"4.1","depth":1,"path":"devops-helm.md","ref":"devops-helm.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"devops-continuous-delivery.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Controlling traffic with network policies","level":"6.5","depth":1,"next":{"title":"Appendix","level":"6.6","depth":1,"path":"appendix.md","ref":"appendix.md","articles":[]},"previous":{"title":"Provisioning with Terraform","level":"6.4","depth":1,"path":"appendix-terraform.md","ref":"appendix-terraform.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"calico.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
