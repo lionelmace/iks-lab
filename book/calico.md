@@ -58,25 +58,92 @@ If you have unique security requirements or you have a multizone cluster with VL
     calicoctl get GlobalNetworkPolicy -o yaml
     ```
 
-## Set a Global Network Policy
+## Block the incoming traffic to the Automatic Load Balancer
 
-1. Apply the following Global Network Policy to deny all ingress traffic
+1. Edit the calico policy in folder **kubernetes/deny-alb-traffic.yml** to replace the ALB IPs.
     ```yml
-    apiVersion: projectcalico.org/v3
-    kind: GlobalNetworkPolicy
-    metadata:
-    name: cfee-ingress-deny-all
-    spec:
-    applyOnForward: true
-    ingress:
-    - action: Deny
-        destination: {}
-        source: {}
-    order: 3000
-    selector: ibm.role=='worker_public'
-    types:
-    - Ingress
+    - apiVersion: projectcalico.org/v3
+      kind: GlobalNetworkPolicy
+      metadata:
+        name: deny-alb-traffic
+      spec:
+        applyOnForward: true
+        preDNAT: true
+        ingress:
+        - action: Deny
+          destination:
+            nets:
+            # (ALB) Automatic Load Balancer (= Ingress Subdomain)
+            # dig <cluster-name>.<region>.containers.appdomain.cloud
+            - <Automatic_Load_Balancer_IP>/32
+            - <Automatic-Load-Balancer_IP>/32
+            - <Automatic_Load_Balancer_IP>/32
+            ports:
+            - 80
+            - 443
+          protocol: TCP
+          source: {}
+        selector: ibm.role == 'worker_public'
+        order: 4000
+        types:
+        - Ingress
     ```
+
+1. Apply this Global Network Policy to deny all ingress traffic.
+    ```
+    calicoctl apply -f deny-alb-traffic.yml
+    ```
+
+1. You should not be access any apps available on your sub domains **containers.appdomain.cloud**.
+
+## Whitelist the incoming traffic from your laptop IP.
+
+1. Find the IP of your laptop.
+
+1. Edit the calico policy in folder **kubernetes/allow-traffic-from-my-ip.yml** to replace the ALB IPs and your laptop IP.
+    ```yml
+    - apiVersion: projectcalico.org/v3
+      kind: GlobalNetworkPolicy
+      metadata:
+        name: allow-traffic-from-my-ip
+      spec:
+        applyOnForward: true
+        preDNAT: true
+        ingress:
+        - action: Allow
+          destination:
+            nets:
+            # (ALB) Automatic Load Balancer (= Ingress Subdomain)
+            # dig <cluster-name>.<region>.containers.appdomain.cloud
+            - <Automatic_Load_Balancer_IP>/32
+            - <Automatic-Load-Balancer_IP>/32
+            - <Automatic_Load_Balancer_IP>/32
+            ports:
+            - 80
+            - 443
+          protocol: TCP
+          source:
+            nets:
+            -  <your-laptop-ip>/32
+        selector: ibm.role == 'worker_public'
+        order: 2000
+        types:
+        - Ingress
+    ```
+
+1. Apply this Global Network Policy to allow the traffic.
+    ```
+    calicoctl apply -f allow-traffic-from-my-ip.yml
+    ```
+
+    {% hint style='info' %} The order of the ALLOW rule is lower than the order of the DENY rule. This is important so that the allow rule gets evaluated first. {% endhint %}
+
+1. Both rules you applied are now listed in the Global network policies of your cluster.
+    ```
+    calicoctl get GlobalNetworkPolicy -o wide
+    ```
+
+1. You should now by able to access any apps available on your sub domains **containers.appdomain.cloud**.
 
 ## Resources
 
