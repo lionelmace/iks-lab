@@ -41,7 +41,7 @@
 * [Create a cluster in the Console](appendix-create-cluster-ui.md)
 * [Weavescope](weavescope.md)
 * [Provisioning with Terraform](appendix-terraform.md)
-* [Controlling traffic with network policies](calico.md)
+* [Control traffic with Calico](calico.md)
 * [Appendix](appendix.md)
 
 ## Resources

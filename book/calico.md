@@ -1,4 +1,4 @@
-# Controlling traffic with network policies
+# Control traffic with Calico network policies
 
 Every Kubernetes cluster is set up with a network plug-in called [Calico](https://www.projectcalico.org/). Default network policies are set up to secure the public network interface of every worker node in IBM® Cloud Kubernetes Service.
 
