@@ -143,7 +143,7 @@ If you have unique security requirements or you have a multizone cluster with VL
     calicoctl get GlobalNetworkPolicy -o wide
     ```
 
-1. You should now by able to access any apps available on your sub domains **containers.appdomain.cloud**.
+1. You should now be able to access any apps available on your sub domains **containers.appdomain.cloud** from your laptop.
 
 ## Resources
 
