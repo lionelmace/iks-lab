@@ -635,7 +635,7 @@
 <li><p>Retrieve the namespace for the image registry that was created for you.</p>
 <pre class="language-"><code class="lang-sh"> ibmcloud cr namespace-list
 </code></pre>
-<p> You should get a namespace called <strong>lab-users-brastilava</strong></p>
+<p> You should get a namespace called <strong>lab-registry</strong></p>
 </li>
 <li><p><strong>Push</strong> the image to your private image registry.</p>
 <pre class="language-"><code class="lang-sh"> docker push <span class="token operator">&lt;</span>region<span class="token operator">&gt;</span>.icr.io/<span class="token operator">&lt;</span>namespace<span class="token operator">&gt;</span>/todo-<span class="token operator">&lt;</span>lastname<span class="token operator">&gt;</span>:1.0
@@ -651,7 +651,7 @@
 <pre class="language-"><code> Listing images...
 
  REPOSITORY                                  NAMESPACE   TAG       DIGEST         CREATED        SIZE     VULNERABILITY STATUS
- de.icr.io/lab-users-brastilava/todo-mace   namespace   1   0d90cb732881   1 minute ago   264 MB   OK
+ de.icr.io/lab-registry/todo-mace   namespace   1   0d90cb732881   1 minute ago   264 MB   OK
 </code></pre></li>
 <li><p>The image is also visible in the IBM Cloud Console. Go to the <a href="https://cloud.ibm.com/containers-kubernetes/registry/main/start" target="_blank">Container Registry</a>.</p>
 <p>      <a href="images/registry-landing.png" rel="grouped" title="" target="_self" class="fancybox">
