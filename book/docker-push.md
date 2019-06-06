@@ -13,7 +13,7 @@ Before you can deploy the application on the cluster, you first need to push the
     ```sh
     ibmcloud cr namespace-list
     ```
-    You should get a namespace called **lab-users-brastilava**
+    You should get a namespace called **lab-registry**
 
 1. **Push** the image to your private image registry.
     ```sh
@@ -31,7 +31,7 @@ Before you can deploy the application on the cluster, you first need to push the
     Listing images...
 
     REPOSITORY                                  NAMESPACE   TAG       DIGEST         CREATED        SIZE     VULNERABILITY STATUS
-    de.icr.io/lab-users-brastilava/todo-mace   namespace   1   0d90cb732881   1 minute ago   264 MB   OK
+    de.icr.io/lab-registry/todo-mace   namespace   1   0d90cb732881   1 minute ago   264 MB   OK
     ``` 
 
 1. The image is also visible in the IBM Cloud Console. Go to the [Container Registry](https://cloud.ibm.com/containers-kubernetes/registry/main/start).
