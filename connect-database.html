@@ -628,10 +628,6 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 <h2 id="create-an-instance-of-cloudant-and-its-credentials">Create an instance of Cloudant and its credentials</h2>
 <ol>
 <li><p>Go to the <a href="https://cloud.ibm.com/catalog" target="_blank">Cloud Services Catalog</a> </p>
-<blockquote>
-<p>To see all the available services in the catalog using the cli:
- <code>ibmcloud catalog service-marketplace</code></p>
-</blockquote>
 </li>
 <li><p>Select the service <strong>Cloudant</strong></p>
 </li>
@@ -653,16 +649,6 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 <li><p>Duplicate the file <code>credentials.template.env</code> in the root folder to a new file <code>credentials.env</code></p>
 </li>
 <li><p>Edit the file <code>credentials.env</code> and fill out the value for both CLOUDANT_USERNAME and CLOUDANT_APIKEY from the generated credentials above. Make sure you uncomment those 2 lines</p>
-</li>
-<li><p><strong>Optional</strong>: Create an instance of a service using the CLI instead of the Console.</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud resource service-instance-create <span class="token operator">&lt;</span>service_instance_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>service_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>service_plan_name<span class="token operator">&gt;</span> <span class="token operator">&lt;</span>location<span class="token operator">&gt;</span>
-</code></pre>
-<p> Example:</p>
-<pre class="language-"><code> ibmcloud resource service-instance-create todo-cloudant cloudant lite eu-de
-</code></pre></li>
-<li><p><strong>Optional</strong>: Verify you see the new instance created using the CLI</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud resource service-instances
-</code></pre>
 </li>
 </ol>
 <h2 id="create-the-kubernetes-secret">Create the Kubernetes Secret</h2>
