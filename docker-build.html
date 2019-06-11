@@ -626,7 +626,7 @@
 <p>Before you can deploy the application on the cluster, you first need to build the Docker image.</p>
 <ol>
 <li><p><strong>Build</strong> a Docker image. Make sure to replace the value region and namespace</p>
-<pre class="language-"><code class="lang-sh"> docker build <span class="token keyword">.</span> -t <span class="token operator">&lt;</span>region<span class="token operator">&gt;</span>.icr.io/<span class="token operator">&lt;</span>namespace<span class="token operator">&gt;</span>/todo-<span class="token operator">&lt;</span>lastname<span class="token operator">&gt;</span>:1.0
+<pre class="language-"><code class="lang-sh"> docker build <span class="token keyword">.</span> -t <span class="token operator">&lt;</span>region<span class="token operator">&gt;</span>.icr.io/lab-registry/todo-<span class="token operator">&lt;</span>lastname<span class="token operator">&gt;</span>:1.0
 </code></pre>
 <blockquote>
 <p>Region is <strong>de</strong> for the Frankfurt datacenter.</p>
@@ -637,7 +637,7 @@
 </code></pre>
 <p> Output:</p>
 <pre class="language-"><code> REPOSITORY                         TAG                 IMAGE ID            CREATED             SIZE
- de.icr.io/lab-users/todo-mace   1.0                 30bd6bcc47bc        42 minutes ago      124MB
+ de.icr.io/lab-registry/todo-mace   1.0                 30bd6bcc47bc        42 minutes ago      124MB
  node                               11.13.0-alpine      f34bcc2815ed        6 weeks ago         75.4MB
 </code></pre></li>
 </ol>
