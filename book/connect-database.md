@@ -7,9 +7,6 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 
 1. Go to the [Cloud Services Catalog](https://cloud.ibm.com/catalog) 
 
-    > To see all the available services in the catalog using the cli:
-    `ibmcloud catalog service-marketplace`
-
 1. Select the service **Cloudant**
 
 1. Create an instance of the service with the plan **Lite**
@@ -27,20 +24,6 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 1. Duplicate the file `credentials.template.env` in the root folder to a new file `credentials.env`
 
 1. Edit the file `credentials.env` and fill out the value for both CLOUDANT_USERNAME and CLOUDANT_APIKEY from the generated credentials above. Make sure you uncomment those 2 lines
-
-1. **Optional**: Create an instance of a service using the CLI instead of the Console.
-    ```sh
-    ibmcloud resource service-instance-create <service_instance_name> <service_name> <service_plan_name> <location>
-    ```
-    Example:
-    ```
-    ibmcloud resource service-instance-create todo-cloudant cloudant lite eu-de
-    ```
-
-1. **Optional**: Verify you see the new instance created using the CLI
-    ```sh
-    ibmcloud resource service-instances
-    ```
 
 ## Create the Kubernetes Secret
 
