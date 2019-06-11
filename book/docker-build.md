@@ -4,7 +4,7 @@ Before you can deploy the application on the cluster, you first need to build th
 
 1. **Build** a Docker image. Make sure to replace the value region and namespace
     ```sh
-    docker build . -t <region>.icr.io/<namespace>/todo-<lastname>:1.0
+    docker build . -t <region>.icr.io/lab-registry/todo-<lastname>:1.0
     ```
     > Region is **de** for the Frankfurt datacenter.
 
@@ -15,6 +15,6 @@ Before you can deploy the application on the cluster, you first need to build th
     Output:
     ```
     REPOSITORY                         TAG                 IMAGE ID            CREATED             SIZE
-    de.icr.io/lab-users/todo-mace   1.0                 30bd6bcc47bc        42 minutes ago      124MB
+    de.icr.io/lab-registry/todo-mace   1.0                 30bd6bcc47bc        42 minutes ago      124MB
     node                               11.13.0-alpine      f34bcc2815ed        6 weeks ago         75.4MB
     ``` 
