@@ -625,7 +625,8 @@
                                 <h1 id="monitoring-metrics-with-sysdig">Monitoring metrics with Sysdig</h1>
 <p>Sysdig Monitor is part of Sysdig&#x2019;s container intelligence platform. Sysdig uses a unified platform to deliver security, monitoring, and forensics in a container and microservices-friendly architecture.</p>
 <p>Once the agent has started sending metrics to Sysdig for your environment, you can use the Sysdig Monitor UI to view and analyze that data.</p>
-<h2 id="provision-an-instance-of-monitoring-with-sysdig-service">Provision an instance of Monitoring with Sysdig service</h2>
+<pre class="language-"><code>![](./images/log-monitor.png)
+</code></pre><h2 id="provision-an-instance-of-monitoring-with-sysdig-service">Provision an instance of Monitoring with Sysdig service</h2>
 <ol>
 <li><p>Go to the <a href="https://cloud.ibm.com/observe" target="_blank"><strong>Observability</strong> category</a></p>
 <p>      <a href="images/observe-landing.png" rel="grouped" title="" target="_self" class="fancybox">
@@ -685,11 +686,47 @@
  * Deploying the sysdig agent
  daemonset.extensions/sysdig-agent created
 </code></pre></li>
-<li><p><strong>Optional</strong> Alternatively, you may deploy the Sysdig agent manually by following the instructions <a href="https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig/config_agent.html#kube_manually" target="_blank">here</a>.</p>
+</ol>
+<h2 id="configure-monitoring-with-sysdig">Configure Monitoring with Sysdig</h2>
+<p>To Configure Sysdig to monitor health and performance of your cluster:</p>
+<ol>
+<li><p>Click <strong>View Sysdig</strong> and you should see the sysdig monitor UI. On the welcome page, click <strong>Next</strong>.</p>
+</li>
+<li><p>Choose <strong>ubernetes</strong> as your installation method under set up environment.</p>
+</li>
+<li><p>Click <strong>Go to Next step</strong> next to the agent configuration success message and click <strong>Let&apos;s Get started</strong> on the next page.</p>
+</li>
+<li><p>Click <strong>Next</strong> and then <strong>Complete onboarding</strong> to see the Explore tab of Sysdig UI.</p>
 </li>
 </ol>
-<h2 id="view-sysdig">View Sysdig</h2>
-<p>1. </p>
+<h2 id="monitor-your-cluster">Monitor your cluster</h2>
+<p>To check the health and performance of your app amd cluster:</p>
+<ol>
+<li><p>Back in the application running at <a href="https://todo.&lt;cluster-name&gt;.eu-de.containers.appdomain.cloud/" target="_blank">https://todo.<cluster-name>.eu-de.containers.appdomain.cloud/</cluster-name></a>, generate several log entries.</p>
+</li>
+<li><p>Expand <cluster-name> on the left pane &gt; expand <strong>default</strong> namespace &gt; click on <strong>app-log-analysis-deployment</strong> to see the Request count, Response Time etc., on the Sysdig monitor wizard.</cluster-name></p>
+</li>
+<li><p>To check the HTTP request-response codes, click on the arrow next to <strong>Kubernetes Pod Health</strong> on the top bar and select <strong>HTTP</strong> under <strong>Applications</strong>. Change the interval to <strong>10 M</strong> on the bottom bar of the Sysdig UI.</p>
+</li>
+<li><p>To monitor the latency of the application,</p>
+<ul>
+<li>From the Explore tab, select <strong>Deployments and Pods</strong>.</li>
+<li>Click the arrow next to HTTP and then Select Metrics &gt; Network.</li>
+<li>Select <strong>net.http.request.time</strong>.</li>
+<li>Select Time: <strong>Sum</strong> and Group: <strong>Average</strong>.</li>
+<li>Click <strong>More options</strong> and then click <strong>Topology</strong> icon.</li>
+<li>Click <strong>Done</strong> and Double click the box to expand the view.</li>
+</ul>
+</li>
+<li><p>To monitor the Kubernetes namespace where the application is running,</p>
+<ul>
+<li>From the Explore tab, select <strong>Deployments and Pods</strong>.</li>
+<li>Click the arrow next to <code>net.http.request.time</code>.</li>
+<li>Select Default Dashboards &gt; Kubernetes.</li>
+<li>Select Kubernetes State &gt; Kubernetes State Overview.</li>
+</ul>
+</li>
+</ol>
 
                                 
                                 </section>
