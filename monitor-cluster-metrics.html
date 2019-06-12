@@ -690,21 +690,29 @@
 <h2 id="configure-monitoring-with-sysdig">Configure Monitoring with Sysdig</h2>
 <p>To Configure Sysdig to monitor health and performance of your cluster:</p>
 <ol>
-<li><p>Click <strong>View Sysdig</strong> and you should see the sysdig monitor UI. On the welcome page, click <strong>Next</strong>.</p>
+<li><p>Click <strong>View Sysdig</strong> and you should see the sysdig monitor UI.</p>
+<p>      <a href="images/sysdig-welcome.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/sysdig-welcome.png" alt="">
+     </a></p>
 </li>
-<li><p>Choose <strong>ubernetes</strong> as your installation method under set up environment.</p>
+<li><p>On the welcome page, click <strong>Next</strong>.</p>
 </li>
-<li><p>Click <strong>Go to Next step</strong> next to the agent configuration success message and click <strong>Let&apos;s Get started</strong> on the next page.</p>
-</li>
-<li><p>Click <strong>Next</strong> and then <strong>Complete onboarding</strong> to see the Explore tab of Sysdig UI.</p>
+<li><p>Click <strong>Complete onboarding</strong> to see the Explore tab of Sysdig UI.</p>
+<p>      <a href="images/sysdig-onboarding.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/sysdig-onboarding.png" alt="">
+     </a></p>
 </li>
 </ol>
 <h2 id="monitor-your-cluster">Monitor your cluster</h2>
 <p>To check the health and performance of your app amd cluster:</p>
 <ol>
-<li><p>Back in the application running at <a href="https://todo.&lt;cluster-name&gt;.eu-de.containers.appdomain.cloud/" target="_blank">https://todo.<cluster-name>.eu-de.containers.appdomain.cloud/</cluster-name></a>, generate several log entries.</p>
-</li>
+<li><p>Back in the application running at the url below, enter several todos.</p>
+<pre class="language-"><code> https://todo.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span>.eu-de.containers.appdomain.cloud/
+</code></pre></li>
 <li><p>Expand <cluster-name> on the left pane &gt; expand <strong>default</strong> namespace &gt; click on <strong>app-log-analysis-deployment</strong> to see the Request count, Response Time etc., on the Sysdig monitor wizard.</cluster-name></p>
+<p>      <a href="images/sysdig-explore.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/sysdig-explore.png" alt="">
+     </a></p>
 </li>
 <li><p>To check the HTTP request-response codes, click on the arrow next to <strong>Kubernetes Pod Health</strong> on the top bar and select <strong>HTTP</strong> under <strong>Applications</strong>. Change the interval to <strong>10 M</strong> on the bottom bar of the Sysdig UI.</p>
 </li>
