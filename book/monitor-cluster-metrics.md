@@ -4,6 +4,8 @@ Sysdig Monitor is part of Sysdig’s container intelligence platform. Sysdig use
 
 Once the agent has started sending metrics to Sysdig for your environment, you can use the Sysdig Monitor UI to view and analyze that data.
 
+    ![](./images/log-monitor.png)
+
 ## Provision an instance of Monitoring with Sysdig service
 
 1. Go to the [**Observability** category](https://cloud.ibm.com/observe)
@@ -61,8 +63,37 @@ Once the agent has started sending metrics to Sysdig for your environment, you c
     daemonset.extensions/sysdig-agent created
     ```
 
-1. **Optional** Alternatively, you may deploy the Sysdig agent manually by following the instructions [here](https://cloud.ibm.com/docs/services/Monitoring-with-Sysdig/config_agent.html#kube_manually).
+## Configure Monitoring with Sysdig
 
-## View Sysdig
+To Configure Sysdig to monitor health and performance of your cluster:
 
-1. 
+1. Click **View Sysdig** and you should see the sysdig monitor UI. On the welcome page, click **Next**.
+
+1. Choose **ubernetes** as your installation method under set up environment.
+
+1. Click **Go to Next step** next to the agent configuration success message and click **Let's Get started** on the next page.
+
+1. Click **Next** and then **Complete onboarding** to see the Explore tab of Sysdig UI.
+
+## Monitor your cluster
+To check the health and performance of your app amd cluster:
+
+1. Back in the application running at [https://todo.<cluster-name>.eu-de.containers.appdomain.cloud/](https://todo.<cluster-name>.eu-de.containers.appdomain.cloud/), generate several log entries.
+
+1. Expand <cluster-name> on the left pane > expand **default** namespace > click on **app-log-analysis-deployment** to see the Request count, Response Time etc., on the Sysdig monitor wizard.
+
+1. To check the HTTP request-response codes, click on the arrow next to **Kubernetes Pod Health** on the top bar and select **HTTP** under **Applications**. Change the interval to **10 M** on the bottom bar of the Sysdig UI.
+
+1. To monitor the latency of the application,
+    * From the Explore tab, select **Deployments and Pods**.
+    * Click the arrow next to HTTP and then Select Metrics > Network.
+    * Select **net.http.request.time**.
+    * Select Time: **Sum** and Group: **Average**.
+    * Click **More options** and then click **Topology** icon.
+    * Click **Done** and Double click the box to expand the view.
+
+1. To monitor the Kubernetes namespace where the application is running,
+    * From the Explore tab, select **Deployments and Pods**.
+    * Click the arrow next to `net.http.request.time`.
+    * Select Default Dashboards > Kubernetes.
+    * Select Kubernetes State > Kubernetes State Overview.
