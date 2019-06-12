@@ -67,20 +67,27 @@ Once the agent has started sending metrics to Sysdig for your environment, you c
 
 To Configure Sysdig to monitor health and performance of your cluster:
 
-1. Click **View Sysdig** and you should see the sysdig monitor UI. On the welcome page, click **Next**.
+1. Click **View Sysdig** and you should see the sysdig monitor UI.
 
-1. Choose **ubernetes** as your installation method under set up environment.
+    ![](./images/sysdig-welcome.png)
 
-1. Click **Go to Next step** next to the agent configuration success message and click **Let's Get started** on the next page.
+1. On the welcome page, click **Next**.
 
-1. Click **Next** and then **Complete onboarding** to see the Explore tab of Sysdig UI.
+1. Click **Complete onboarding** to see the Explore tab of Sysdig UI.
+
+    ![](./images/sysdig-onboarding.png)
 
 ## Monitor your cluster
 To check the health and performance of your app amd cluster:
 
-1. Back in the application running at [https://todo.<cluster-name>.eu-de.containers.appdomain.cloud/](https://todo.<cluster-name>.eu-de.containers.appdomain.cloud/), generate several log entries.
+1. Back in the application running at the url below, enter several todos.
+    ```
+    https://todo.<cluster-name>.eu-de.containers.appdomain.cloud/
+    ```
 
 1. Expand <cluster-name> on the left pane > expand **default** namespace > click on **app-log-analysis-deployment** to see the Request count, Response Time etc., on the Sysdig monitor wizard.
+
+    ![](./images/sysdig-explore.png)
 
 1. To check the HTTP request-response codes, click on the arrow next to **Kubernetes Pod Health** on the top bar and select **HTTP** under **Applications**. Change the interval to **10 M** on the bottom bar of the Sysdig UI.
 
