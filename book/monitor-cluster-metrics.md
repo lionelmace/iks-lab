@@ -4,7 +4,7 @@ Sysdig Monitor is part of Sysdig’s container intelligence platform. Sysdig use
 
 Once the agent has started sending metrics to Sysdig for your environment, you can use the Sysdig Monitor UI to view and analyze that data.
 
-    ![](./images/log-monitor.png)
+![](./images/log-monitor.png)
 
 ## Provision an instance of Monitoring with Sysdig service
 
