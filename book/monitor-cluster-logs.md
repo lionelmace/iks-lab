@@ -1,8 +1,8 @@
 # Logging with LogDNA
 
-IBM Log Analysis with LogDNA is a third-party service that you can include as part of your IBM Cloud architecture to add log management capabilities. IBM Log Analysis with LogDNA is operated by LogDNA in partnership with IBM.
+Log Analysis with LogDNA is a third-party service that you can include as part of your IBM Cloud architecture to add log management capabilities. **Log Analysis with LogDNA** is operated by LogDNA in partnership with IBM.
 
-On the IBM Cloud, to configure cluster-level logging for a Kubernetes cluster, you must provision an instance of the IBM Log Analysis with LogDNA service.
+In order to configure cluster-level logging for a Kubernetes cluster, you must provision an instance of Log Analysis with LogDNA service.
 
 ![](./images/logdna-architecture.png)
 
