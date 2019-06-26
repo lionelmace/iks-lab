@@ -64,19 +64,18 @@ In this lab, we will test the **Ingress**.
     metadata:
       name: mytodos-ingress
       annotations:
-        ingress.bluemix.net/rewrite-path: "serviceName=mytodos rewrite=/"
         # Force the use of https if the request is http
         ingress.bluemix.net/redirect-to-https: "True"
     spec:
       tls:
       - hosts:
-        - <cluster-name>.<cloud-region>.containers.appdomain.cloud
+        - todo.<cluster-name>.<cloud-region>.containers.appdomain.cloud
         secretName: <cluster-name>
       rules:
-      - host: <cluster-name>.<cloud-region>.containers.appdomain.cloud
+      - host: todo.<cluster-name>.<cloud-region>.containers.appdomain.cloud
         http:
           paths:
-          - path: /todo/
+          - path: /
             backend:
               serviceName: mytodos
               servicePort: 8080
@@ -111,6 +110,6 @@ In this lab, we will test the **Ingress**.
 
 1. Open a browser and check out the app with the following URL:
     ```
-    https://<cluster-name>.eu-de.containers.appdomain.cloud/todo/
+    https://todo.<cluster-name>.eu-de.containers.appdomain.cloud
     ```
-    In this example, the url would be ```https://lab-cluster-1.eu-de.containers.appdomain.cloud/todo/```
+    In this example, the url would be ```https://todo.lab-cluster-1.eu-de.containers.appdomain.cloud```
