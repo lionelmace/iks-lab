@@ -685,19 +685,18 @@
  <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
    <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodos<span class="token punctuation">-</span>ingress
    <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
-     <span class="token key atrule">ingress.bluemix.net/rewrite-path</span><span class="token punctuation">:</span> <span class="token string">&quot;serviceName=mytodos rewrite=/&quot;</span>
      <span class="token comment"># Force the use of https if the request is http</span>
      <span class="token key atrule">ingress.bluemix.net/redirect-to-https</span><span class="token punctuation">:</span> <span class="token string">&quot;True&quot;</span>
  <span class="token key atrule">spec</span><span class="token punctuation">:</span>
    <span class="token key atrule">tls</span><span class="token punctuation">:</span>
    <span class="token punctuation">-</span> <span class="token key atrule">hosts</span><span class="token punctuation">:</span>
-     <span class="token punctuation">-</span> &lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>.&lt;cloud<span class="token punctuation">-</span>region<span class="token punctuation">&gt;</span>.containers.appdomain.cloud
+     <span class="token punctuation">-</span> todo.&lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>.&lt;cloud<span class="token punctuation">-</span>region<span class="token punctuation">&gt;</span>.containers.appdomain.cloud
      <span class="token key atrule">secretName</span><span class="token punctuation">:</span> &lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>
    <span class="token key atrule">rules</span><span class="token punctuation">:</span>
-   <span class="token punctuation">-</span> <span class="token key atrule">host</span><span class="token punctuation">:</span> &lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>.&lt;cloud<span class="token punctuation">-</span>region<span class="token punctuation">&gt;</span>.containers.appdomain.cloud
+   <span class="token punctuation">-</span> <span class="token key atrule">host</span><span class="token punctuation">:</span> todo.&lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>.&lt;cloud<span class="token punctuation">-</span>region<span class="token punctuation">&gt;</span>.containers.appdomain.cloud
      <span class="token key atrule">http</span><span class="token punctuation">:</span>
        <span class="token key atrule">paths</span><span class="token punctuation">:</span>
-       <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> /todo/
+       <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> /
          <span class="token key atrule">backend</span><span class="token punctuation">:</span>
            <span class="token key atrule">serviceName</span><span class="token punctuation">:</span> mytodos
            <span class="token key atrule">servicePort</span><span class="token punctuation">:</span> <span class="token number">8080</span>
@@ -728,8 +727,8 @@
  service/mytodos created
 </code></pre></li>
 <li><p>Open a browser and check out the app with the following URL:</p>
-<pre class="language-"><code> https://<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span>.eu-de.containers.appdomain.cloud/todo/
-</code></pre><p> In this example, the url would be <code>https://lab-cluster-1.eu-de.containers.appdomain.cloud/todo/</code></p>
+<pre class="language-"><code> https://todo.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span>.eu-de.containers.appdomain.cloud
+</code></pre><p> In this example, the url would be <code>https://todo.lab-cluster-1.eu-de.containers.appdomain.cloud</code></p>
 </li>
 </ol>
 

@@ -700,7 +700,7 @@
 </blockquote>
 </li>
 <li><p>If your app is still running you can create a new todo with the Web UI or using curl</p>
-<pre class="language-"><code> curl -d &apos;{&quot;text&quot;:&quot;newlog&quot;}&apos; -H &quot;Content-Type: application/json&quot; -X POST https://<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span>.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>region</span><span class="token punctuation">&gt;</span></span>.containers.appdomain.cloud/todo/api/todos
+<pre class="language-"><code> curl -d &apos;{&quot;text&quot;:&quot;newlog&quot;}&apos; -H &quot;Content-Type: application/json&quot; -X POST https://todo.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span>.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>region</span><span class="token punctuation">&gt;</span></span>.containers.appdomain.cloud/api/todos
 </code></pre></li>
 <li><p>As you go through the next steps, keep an eye on the LogDNA console for new log statements coming from your apps deployed in this namespace.</p>
 <p>      <a href="images/logdna-console.png" rel="grouped" title="LogDNA dashboard" target="_self" class="fancybox">
