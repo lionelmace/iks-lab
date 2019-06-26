@@ -664,7 +664,7 @@
 </ol>
 <h2 id="block-the-incoming-traffic-to-the-automatic-load-balancer">Block the incoming traffic to the Automatic Load Balancer</h2>
 <ol>
-<li><p>Edit the calico policy in folder <strong>kubernetes/deny-alb-traffic.yml</strong> to replace the ALB IPs.</p>
+<li><p>Edit the calico policy in folder <strong>kubernetes/calico-deny-alb-traffic.yml</strong> to replace the ALB IPs.</p>
 <pre class="language-"><code class="lang-yml"> <span class="token punctuation">-</span> <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> projectcalico.org/v3
    <span class="token key atrule">kind</span><span class="token punctuation">:</span> GlobalNetworkPolicy
    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
@@ -693,7 +693,7 @@
 </code></pre>
 </li>
 <li><p>Apply this Global Network Policy to deny all ingress traffic.</p>
-<pre class="language-"><code> calicoctl apply -f deny-alb-traffic.yml
+<pre class="language-"><code> calicoctl apply -f calico-deny-alb-traffic.yml
 </code></pre></li>
 <li><p>You should not be access any apps available on your sub domains <strong>containers.appdomain.cloud</strong>.</p>
 </li>
@@ -702,7 +702,7 @@
 <ol>
 <li><p>Find the IP of your laptop.</p>
 </li>
-<li><p>Edit the calico policy in folder <strong>kubernetes/allow-traffic-from-my-ip.yml</strong> to replace the ALB IPs and your laptop IP.</p>
+<li><p>Edit the calico policy in folder <strong>kubernetes/calico-allow-traffic-from-my-ip.yml</strong> to replace the ALB IPs and your laptop IP.</p>
 <pre class="language-"><code class="lang-yml"> <span class="token punctuation">-</span> <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> projectcalico.org/v3
    <span class="token key atrule">kind</span><span class="token punctuation">:</span> GlobalNetworkPolicy
    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
@@ -733,7 +733,7 @@
 </code></pre>
 </li>
 <li><p>Apply this Global Network Policy to allow the traffic.</p>
-<pre class="language-"><code> calicoctl apply -f allow-traffic-from-my-ip.yml
+<pre class="language-"><code> calicoctl apply -f calico-allow-traffic-from-my-ip.yml
 </code></pre><p> <div class="alert alert-info hints-alert"><div class="hints-icon"><i class="fa fa-info-circle"></i></div><div class="hints-container"><p> The order of the ALLOW rule is lower than the order of the DENY rule. This is important so that the allow rule gets evaluated first. </p>
 </div></div></p>
 </li>
