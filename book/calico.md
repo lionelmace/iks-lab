@@ -60,7 +60,7 @@ If you have unique security requirements or you have a multizone cluster with VL
 
 ## Block the incoming traffic to the Automatic Load Balancer
 
-1. Edit the calico policy in folder **kubernetes/deny-alb-traffic.yml** to replace the ALB IPs.
+1. Edit the calico policy in folder **kubernetes/calico-deny-alb-traffic.yml** to replace the ALB IPs.
     ```yml
     - apiVersion: projectcalico.org/v3
       kind: GlobalNetworkPolicy
@@ -91,7 +91,7 @@ If you have unique security requirements or you have a multizone cluster with VL
 
 1. Apply this Global Network Policy to deny all ingress traffic.
     ```
-    calicoctl apply -f deny-alb-traffic.yml
+    calicoctl apply -f calico-deny-alb-traffic.yml
     ```
 
 1. You should not be access any apps available on your sub domains **containers.appdomain.cloud**.
@@ -100,7 +100,7 @@ If you have unique security requirements or you have a multizone cluster with VL
 
 1. Find the IP of your laptop.
 
-1. Edit the calico policy in folder **kubernetes/allow-traffic-from-my-ip.yml** to replace the ALB IPs and your laptop IP.
+1. Edit the calico policy in folder **kubernetes/calico-allow-traffic-from-my-ip.yml** to replace the ALB IPs and your laptop IP.
     ```yml
     - apiVersion: projectcalico.org/v3
       kind: GlobalNetworkPolicy
@@ -133,7 +133,7 @@ If you have unique security requirements or you have a multizone cluster with VL
 
 1. Apply this Global Network Policy to allow the traffic.
     ```
-    calicoctl apply -f allow-traffic-from-my-ip.yml
+    calicoctl apply -f calico-allow-traffic-from-my-ip.yml
     ```
 
     {% hint style='info' %} The order of the ALLOW rule is lower than the order of the DENY rule. This is important so that the allow rule gets evaluated first. {% endhint %}
