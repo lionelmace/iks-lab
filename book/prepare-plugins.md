@@ -26,7 +26,7 @@ To create Kubernetes clusters, and manage worker nodes, install the Container Se
 
 1. To install the Container Service plugin, run the following command:
     ```sh
-    ibmcloud plugin install container-service -r "IBM Cloud"
+    ibmcloud plugin install kubernetes-service -r "IBM Cloud"
     ```
 
 1. Log in to the IBM Cloud Kubernetes Service. The prefix for running commands by using the IBM Cloud Kubernetes Service plug-in is **ibmcloud ks**.
