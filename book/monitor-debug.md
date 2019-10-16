@@ -6,7 +6,7 @@ You publicly exposed your app by creating an Ingress resource for your app in yo
 
 ![](./images/monitor-debug.png)
 
-## Deploy Run Ingress tests in the IBM Cloud Kubernetes Service Diagnostics and Debug Tool
+## Deploy Run Ingress tests in the IKS Diagnostics and Debug Tool
 
 1. Set up Helm in your cluster, create a service account for Tiller, and add the ibm repository to your Helm instance. You need to do the steps done in Step 4.1.
 
