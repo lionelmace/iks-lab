@@ -647,7 +647,7 @@
  Happy Helming!
 </code></pre></li>
 <li><p>Verify that the tiller-deploy pod has a Status of Running in your cluster.</p>
-<pre class="language-"><code class="lang-sh"> kubectl get pods -n kube-system -l app<span class="token operator">=</span>helm
+<pre class="language-"><code class="lang-sh"> kubectl get pods -n kube-system -l <span class="token assign-left variable">app</span><span class="token operator">=</span>helm
 </code></pre>
 <p> Results:</p>
 <pre class="language-"><code> NAME                           READY     STATUS    RESTARTS   AGE
@@ -657,7 +657,7 @@
 <h2 id="deploy-the-app-with-helm">Deploy the app with Helm</h2>
 <ol>
 <li><p>Go to the folder kubernetes/helm/chart</p>
-<pre class="language-"><code class="lang-sh"> <span class="token function">cd</span> mytodo/chart/mytodos
+<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">cd</span> mytodo/chart/mytodos
 </code></pre>
 </li>
 <li><p>Edit the file <strong>values.yaml</strong> to change the repository values which includes: the region, the registry namespace, the image name, and the tag (=version).</p>
@@ -721,7 +721,7 @@
 </blockquote>
 </li>
 <li><p>Install a Helm chart</p>
-<pre class="language-"><code class="lang-sh"> helm upgrade mytodos <span class="token keyword">.</span> --install
+<pre class="language-"><code class="lang-sh"> helm upgrade mytodos <span class="token builtin class-name">.</span> --install
 </code></pre>
 <p> Results:</p>
 <pre class="language-"><code> NAME:   mytodos
