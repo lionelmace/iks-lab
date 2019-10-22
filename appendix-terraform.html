@@ -628,22 +628,37 @@
      </a></p>
 <p><a href="https://www.terraform.io/" target="_blank">Terraform</a> enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.</p>
 <p>In this tutorial, you will use a sample configuration to provision a <strong>Kubernetes cluster</strong>, and, a <strong>Postgres</strong> database. Finish by deleting all of the resources created by the configuration.</p>
-<h2 id="install-terraform-and-the-ibm-cloud-provider">Install Terraform and the IBM Cloud provider</h2>
+<h2 id="install-terraform">Install Terraform</h2>
 <ol>
 <li><p>Download and install Terraform for your system. <a href="https://learn.hashicorp.com/terraform/getting-started/install.html" target="_blank">https://learn.hashicorp.com/terraform/getting-started/install.html</a></p>
 </li>
 <li><p>Check Terraform installation by running <strong>terraform</strong> in your terminal or command prompt window. You should see a list of <strong>Common commands</strong>.</p>
 </li>
-<li><p>Download the appropriate IBM Cloud Provider plugin for your system and extract the archive. <a href="https://github.com/IBM-Cloud/terraform-provider-ibm/releases" target="_blank">https://github.com/IBM-Cloud/terraform-provider-ibm/releases</a></p>
+</ol>
+<h2 id="install-ibm-cloud-provider">Install IBM Cloud Provider</h2>
+<ol>
+<li><p>Download the latest version of IBM Cloud Provider plugin. <a href="https://github.com/IBM-Cloud/terraform-provider-ibm/releases" target="_blank">https://github.com/IBM-Cloud/terraform-provider-ibm/releases</a></p>
 </li>
-<li><p>To setup Terraform with IBM Cloud provider, refer to this <a href="https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#setup" target="_blank">link</a></p>
+<li><p>Extract the archive</p>
 </li>
-<li><p>Create a .terraformrc file in your home directory that points to the Terraform binary. In the following example, $HOME/.terraform.d/plugins is the route to the directory.</p>
+<li><p>Create a hidden folder for your plug-in.</p>
+<pre class="language-"><code> mkdir $HOME/.terraform.d/plugins
+</code></pre></li>
+<li><p>Move the IBM Cloud Provider plug-in you extracted into your hidden folder.</p>
+<pre class="language-"><code> mv $HOME/Downloads/terraform-provider-ibm* $HOME/.terraform.d/plugins/
+</code></pre></li>
+<li><p>Navigate into your hidden directory and verify that the installation is complete.</p>
+<p> Example output:</p>
+<pre class="language-"><code> 2019/10/22 13:52:47 IBM Cloud Provider version 0.18.0
+ This binary is a plugin. These are not meant to be executed directly.
+ Please execute the program that consumes these plugins,
+</code></pre></li>
+<li><p>Create a .terraformrc file in your home directory that points to the Terraform binary.</p>
 <pre class="language-"><code> # ~/.terraformrc
  providers {
-   ibm = &quot;$HOME/.terraform.d/plugins/terraform-provider-ibm_v0.15.1&quot;
+   ibm = &quot;$HOME/.terraform.d/plugins/terraform-provider-ibm_v0.18.0&quot;
  }
-</code></pre><p> Note: Update the provider version according to the release you use.</p>
+</code></pre><p> Note: Update the provider version accordingly.</p>
 </li>
 </ol>
 <h2 id="set-platform-api-key">Set Platform API key</h2>
