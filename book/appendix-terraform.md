@@ -6,25 +6,48 @@
 
 In this tutorial, you will use a sample configuration to provision a **Kubernetes cluster**, and, a **Postgres** database. Finish by deleting all of the resources created by the configuration.
 
-## Install Terraform and the IBM Cloud provider
+## Install Terraform
 
 1. Download and install Terraform for your system. [https://learn.hashicorp.com/terraform/getting-started/install.html](https://learn.hashicorp.com/terraform/getting-started/install.html)
 
 1. Check Terraform installation by running **terraform** in your terminal or command prompt window. You should see a list of **Common commands**.
 
-1. Download the appropriate IBM Cloud Provider plugin for your system and extract the archive. [https://github.com/IBM-Cloud/terraform-provider-ibm/releases](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
+## Install IBM Cloud Provider
 
-1. To setup Terraform with IBM Cloud provider, refer to this [link](https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#setup)
+1. Download the latest version of IBM Cloud Provider plugin. [https://github.com/IBM-Cloud/terraform-provider-ibm/releases](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
 
-1. Create a .terraformrc file in your home directory that points to the Terraform binary. In the following example, $HOME/.terraform.d/plugins is the route to the directory.
+1. Extract the archive
+
+1. Create a hidden folder for your plug-in.
+
+    ```
+    mkdir $HOME/.terraform.d/plugins
+    ```
+
+1. Move the IBM Cloud Provider plug-in you extracted into your hidden folder.
+
+    ```
+    mv $HOME/Downloads/terraform-provider-ibm* $HOME/.terraform.d/plugins/
+    ```
+
+1. Navigate into your hidden directory and verify that the installation is complete.
+
+    Example output:
+    ```
+    2019/10/22 13:52:47 IBM Cloud Provider version 0.18.0
+    This binary is a plugin. These are not meant to be executed directly.
+    Please execute the program that consumes these plugins,
+    ```
+
+1. Create a .terraformrc file in your home directory that points to the Terraform binary.
 
     ```
     # ~/.terraformrc
     providers {
-      ibm = "$HOME/.terraform.d/plugins/terraform-provider-ibm_v0.15.1"
+      ibm = "$HOME/.terraform.d/plugins/terraform-provider-ibm_v0.18.0"
     }
     ```
-    Note: Update the provider version according to the release you use.
+    Note: Update the provider version accordingly.
 
 
 ## Set Platform API key
