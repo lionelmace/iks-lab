@@ -167,14 +167,14 @@
             
         </li>
     
-        <li class="chapter " data-level="2.3" data-path="prepare-cli.html">
+        <li class="chapter " data-level="2.3" data-path="login.html">
             
-                <a href="prepare-cli.html">
+                <a href="login.html">
             
                     
                         <b>2.3.</b>
                     
-                    Main command lines
+                    Connect IBM Cloud Account
             
                 </a>
             
@@ -623,8 +623,8 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="deploy-the-solution-using-terraform">Deploy the solution using Terraform</h1>
-<p>     <a href="images/terraform-color.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/terraform-color.png" alt="">
+<p>     <a href="images/terraform.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/terraform.png" alt="">
      </a></p>
 <p><a href="https://www.terraform.io/" target="_blank">Terraform</a> enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.</p>
 <p>In this tutorial, you will use a sample configuration to provision a <strong>Kubernetes cluster</strong>, and, a <strong>Postgres</strong> database. Finish by deleting all of the resources created by the configuration.</p>
@@ -632,6 +632,12 @@
 <ol>
 <li><p>Download and install Terraform for your system. <a href="https://learn.hashicorp.com/terraform/getting-started/install.html" target="_blank">https://learn.hashicorp.com/terraform/getting-started/install.html</a></p>
 </li>
+<li><p>On MacOS, Terraform can also be installed using Terraform version manager <code>tfenv</code></p>
+<pre class="language-"><code> brew install tfenv
+</code></pre><pre class="language-"><code> tfenv install <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>0.12.24
+</code></pre><p> For example:</p>
+<pre class="language-"><code> tfenv install 0.12.24
+</code></pre></li>
 <li><p>Check Terraform installation by running <strong>terraform</strong> in your terminal or command prompt window. You should see a list of <strong>Common commands</strong>.</p>
 </li>
 </ol>
