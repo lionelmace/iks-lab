@@ -1,16 +1,32 @@
-# Create account and get cluster
+# Get a cluster
 
-In this section, you will create your own IBM Cloud account, and then get access to a IBM Cloud Lab account which contains pre-provisioned clusters. Each lab attendee will be granted access to one cluster.
+In this section, you will either use your own cluster or get access to a IBM Cloud Lab account which contains pre-provisioned clusters. Each lab attendee should have access to one cluster.
 
-## Login to IBM Cloud
 
-1. Create your own IBM Cloud account.
+## Create a Kubernetes cluster
 
-1. After the email verification, confirm by logging in to https://cloud.ibm.com
+1. Create a standard cluster in the dashboard [https://cloud.ibm.com/kubernetes/catalog/create](https://cloud.ibm.com/kubernetes/catalog/create)
+
+    * Number of worker: 1
+    * Worker flavor: u3c.2x4
+    * Kube version: 1.17.4
+
+1. The cluster can be created by CLI
+    ```
+    ibmcloud ks cluster create classic --name mycluster --zone fra04 --flavor u3c.2x4 --workers 1 --version 1.17.4
+    ```
+    If you already have a public and private vlans, you would need this command
+    ```
+    ibmcloud ks cluster create classic --name mycluster --zone <zone> --flavor <flavor> --workers 1 --version <version> --private-vlan <vlan-id> --public-vlan <vlan-id>
+    ```
+    For example:
+    ```
+    ibmcloud ks cluster create classic --name mycluster --zone fra04 --flavor u3c.2x4 --workers 1 --version 1.17.4 --private-vlan 2700262 --public-vlan 2700260
+    ```
 
 ## Get a Kubernetes cluster
 
-1. Go to **[Get Cluster](https://assign-cluster.eu-de.mybluemix.net)** web page and enter your IBM ID (the email you used to sign up) and the lab key given by the trainer. Make sure to select the region where the cluster has been provisioned.
+1. Go to the web page given by the instructor and enter your IBM ID (the email you used to sign up) and the lab key given by the trainer. Make sure to select the region where the cluster has been provisioned.
 
     ![](./images/request-cluster.png)
 
@@ -32,4 +48,4 @@ In this section, you will create your own IBM Cloud account, and then get access
 
     ![](./images/resource-list.png)
 
-You will use this cluster for this lab. Note that this is a Standard/Paid cluster (as opposed to FREE cluster.)
+You will use this cluster for this lab. Note that this is a Standard/Paid cluster (as opposed to a FREE cluster.)

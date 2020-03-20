@@ -26,7 +26,7 @@ To create Kubernetes clusters, and manage worker nodes, install the Kubernetes S
 
 1. To install the Kubernetes Service plugin, run the following command:
     ```sh
-    ibmcloud plugin install kubernetes-service -r "IBM Cloud"
+    ibmcloud plugin install kubernetes-service
     ```
 
 1. Log in to IKS. The prefix for running commands by using the Kubernetes Service plug-in is **ibmcloud ks**.
@@ -40,7 +40,7 @@ To create Kubernetes clusters, and manage worker nodes, install the Kubernetes S
 
     This plug-in connects to a private image registry, where you can store docker images that can be used to build containers. The prefix for running registry commands is **ibmcloud cr**.
     ```sh
-    ibmcloud plugin install container-registry -r "IBM Cloud"
+    ibmcloud plugin install container-registry
     ```
 
 ## Verify the plugins installation
@@ -53,8 +53,8 @@ To create Kubernetes clusters, and manage worker nodes, install the Kubernetes S
     Listing installed plug-ins...
 
     Plugin Name          Version
-    container-registry                     0.1.347   
-    container-service/kubernetes-service   0.2.19 
+    container-registry                          0.1.454
+    container-service/kubernetes-service        1.0.0
     ```
 1. To update the container registry plugin
     ```sh

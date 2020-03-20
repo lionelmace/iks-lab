@@ -19,6 +19,12 @@ In this tutorial, you act as a developper. You configure a custom Kubernetes clu
 1. The application is deployed to a Kubernetes cluster.
 1. Users access the application.
 
+## Command Lines
+
+This diagram gives you an overview of the task, services and main command lines you will be using during the lab.
+
+![](./images/cli-main-cmds.png)
+
 ## Services used
 
 This tutorial uses the following runtimes and services:

@@ -1,6 +1,6 @@
 # Deploy the solution using Terraform
 
-![](./images/terraform-color.png)
+![](./images/terraform.png)
 
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
@@ -9,6 +9,18 @@ In this tutorial, you will use a sample configuration to provision a **Kubernete
 ## Install Terraform
 
 1. Download and install Terraform for your system. [https://learn.hashicorp.com/terraform/getting-started/install.html](https://learn.hashicorp.com/terraform/getting-started/install.html)
+
+1. On MacOS, Terraform can also be installed using Terraform version manager `tfenv`
+    ```
+    brew install tfenv
+    ```
+    ```
+    tfenv install <version>0.12.24
+    ```
+    For example:
+    ```
+    tfenv install 0.12.24
+    ```
 
 1. Check Terraform installation by running **terraform** in your terminal or command prompt window. You should see a list of **Common commands**.
 
