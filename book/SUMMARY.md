@@ -10,12 +10,13 @@
 * [Install Container Plugins](prepare-plugins.md)
 * [Connect IBM Cloud Account](login.md)
 * [Get a cluster](prepare-get-cluster.md)
+* [Connect via CLI](connect-via-cli.md)
+* [Target your environement](prepare-target.md)
 
 ## Lab 1 - Deploy an app in a Kubernetes cluster
 
 * [View your cluster](view-cluster.md)
 * [Kubernetes Dashboard](kube-dashboard.md)
-* [Connect via CLI](connect-via-cli.md)
 * [Get and run the app locally](get-app.md)
 * [Build docker image](docker-build.md)
 * [Push docker image](docker-push.md)

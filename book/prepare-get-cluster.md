@@ -2,7 +2,7 @@
 
 In this section, you will either use your own cluster or get access to a IBM Cloud Lab account which contains pre-provisioned clusters. Each lab attendee should have access to one cluster.
 
-{% hint style='info' %} If you're doing this lab on your own, you will need to created your own cluster by following the next section Create a Kubernetes cluster to create your own cluster.{% endhint %}
+{% hint style='info' %} If you're doing this lab on your own, you will need to create your own cluster by following the next section **Create a Kubernetes cluster** to create your own cluster.{% endhint %}
 
 ## Create a Kubernetes cluster
 
@@ -28,7 +28,7 @@ In this section, you will either use your own cluster or get access to a IBM Clo
 
 ## Get a Kubernetes cluster
 
-1. Go to the web page given by the instructor and enter your IBM ID (the email you used to sign up) and the lab key given by the trainer. Make sure to select the region where the cluster has been provisioned.
+1. Go to the web page given by the instructor and enter your IBM ID (the email you used to sign up) and the lab key given by the trainer.
 
     ![](./images/request-cluster.png)
 
