@@ -81,10 +81,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="get-app.html" />
+    <link rel="next" href="prepare-target.html" />
     
     
-    <link rel="prev" href="kube-dashboard.html" />
+    <link rel="prev" href="prepare-get-cluster.html" />
     
 
     </head>
@@ -197,6 +197,36 @@
             
         </li>
     
+        <li class="chapter active" data-level="2.5" data-path="connect-via-cli.html">
+            
+                <a href="connect-via-cli.html">
+            
+                    
+                        <b>2.5.</b>
+                    
+                    Connect via CLI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="prepare-target.html">
+            
+                <a href="prepare-target.html">
+            
+                    
+                        <b>2.6.</b>
+                    
+                    Target your environement
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -234,27 +264,12 @@
             
         </li>
     
-        <li class="chapter active" data-level="3.3" data-path="connect-via-cli.html">
-            
-                <a href="connect-via-cli.html">
-            
-                    
-                        <b>3.3.</b>
-                    
-                    Connect via CLI
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="3.4" data-path="get-app.html">
+        <li class="chapter " data-level="3.3" data-path="get-app.html">
             
                 <a href="get-app.html">
             
                     
-                        <b>3.4.</b>
+                        <b>3.3.</b>
                     
                     Get and run the app locally
             
@@ -264,12 +279,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.5" data-path="docker-build.html">
+        <li class="chapter " data-level="3.4" data-path="docker-build.html">
             
                 <a href="docker-build.html">
             
                     
-                        <b>3.5.</b>
+                        <b>3.4.</b>
                     
                     Build docker image
             
@@ -279,12 +294,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.6" data-path="docker-push.html">
+        <li class="chapter " data-level="3.5" data-path="docker-push.html">
             
                 <a href="docker-push.html">
             
                     
-                        <b>3.6.</b>
+                        <b>3.5.</b>
                     
                     Push docker image
             
@@ -294,12 +309,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.7" data-path="deploy-app.html">
+        <li class="chapter " data-level="3.6" data-path="deploy-app.html">
             
                 <a href="deploy-app.html">
             
                     
-                        <b>3.7.</b>
+                        <b>3.6.</b>
                     
                     Deploy app
             
@@ -309,12 +324,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.8" data-path="scale-app.html">
+        <li class="chapter " data-level="3.7" data-path="scale-app.html">
             
                 <a href="scale-app.html">
             
                     
-                        <b>3.8.</b>
+                        <b>3.7.</b>
                     
                     Scale app
             
@@ -324,12 +339,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.9" data-path="connect-database.html">
+        <li class="chapter " data-level="3.8" data-path="connect-database.html">
             
                 <a href="connect-database.html">
             
                     
-                        <b>3.9.</b>
+                        <b>3.8.</b>
                     
                     Optional: Connect to a database
             
@@ -339,12 +354,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.10" data-path="test-resiliency.html">
+        <li class="chapter " data-level="3.9" data-path="test-resiliency.html">
             
                 <a href="test-resiliency.html">
             
                     
-                        <b>3.10.</b>
+                        <b>3.9.</b>
                     
                     Optional: Test the resiliency
             
@@ -354,12 +369,12 @@
             
         </li>
     
-        <li class="chapter " data-level="3.11" data-path="clean-up.html">
+        <li class="chapter " data-level="3.10" data-path="clean-up.html">
             
                 <a href="clean-up.html">
             
                     
-                        <b>3.11.</b>
+                        <b>3.10.</b>
                     
                     Clean up
             
@@ -623,19 +638,28 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="connect-to-your-cluster-via-cli">Connect to your cluster via CLI</h1>
-<p>For this lab, a hosted shell is provided for you with all the necessary tools. Use this web shell to perform the tasks in this lab. If you are having problems with this web shell, you can use a local docker container and follow the instructions here instead.</p>
+<p>In this section, you will use the IBM Cloud CLI to connect to the cluster.</p>
+<p><div class="alert alert-info hints-alert"><div class="hints-icon"><i class="fa fa-info-circle"></i></div><div class="hints-container"><p> IBM Cloud comes with a built-in hosted web shell with all the necessary tools. If you prefer to use your own terminal, make sure to perform the <a href="../prepare-prereq">Pre-Requisites</a>. </p>
+</div></div></p>
+<h1 id="connect-to-ibm-cloud-using-the-cloud-shell">Connect to IBM Cloud using the Cloud Shell</h1>
 <ol>
-<li><p>Using Chrome or Firefox, go to the <a href="https://cloudshell-pyrk8s-ba.us-south.cf.cloud.ibm.com/" target="_blank"><strong>Cloud Shell</strong></a>.</p>
+<li><p>Make sure youre logged in to the IBM Cloud.</p>
 </li>
-<li><p>Login using your IBMid email and <strong>Passcode</strong> that has been given during the training.</p>
-</li>
-<li><p>Click on the Terminal icon to launch your web shell.</p>
-<p>      <a href="images/cloudshell-account.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/cloudshell-account.png" alt="">
+<li><p>Click on the top right terminal icon to launch the IBM Cloud Shell.</p>
+<p>      <a href="images/cloudshell.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/cloudshell.png" alt="">
      </a></p>
 </li>
+<li><p>You are now logged in IBM Cloud and you can run commands such git, kubectl</p>
+<p>      <a href="images/cloudshell-login.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/cloudshell-login.png" alt="">
+     </a></p>
+</li>
+<li><p>List the clusters in the account</p>
+<pre class="language-"><code> ibmcloud ks clusters
+</code></pre></li>
 </ol>
-<h1 id="connect-to-ibm-cloud">Connect to IBM Cloud</h1>
+<h1 id="connect-to-ibm-cloud-using-the-cli">Connect to IBM Cloud using the CLI</h1>
 <ol>
 <li><p>Select your cloud account or the one provided by the trainer.</p>
 </li>
@@ -665,40 +689,6 @@
 </blockquote>
 </li>
 </ol>
-<h1 id="target-your-resource-group">Target your Resource Group</h1>
-<p>You need to target a Resource Group (RG) to view your cluster or to add a service (e.g. Cloudant Database). Access to the group and the resources within it are managed by using Identity and Access Management (IAM). </p>
-<ol>
-<li><p>In this lab, the Resource Group <strong>lab</strong> has been created. Select this resource group.</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud target -g lab
-</code></pre>
-</li>
-<li><p>Verify you can see your cluster.</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud ks clusters
-</code></pre>
-<p> Output
-      <a href="images/cli-cluster-list.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/cli-cluster-list.png" alt="">
-     </a></p>
-</li>
-<li><p>Retrieve the cluster configuration by setting MYCLUSTER environment variable to your cluster name:</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud ks cluster-config MY_CLUSTER_NAME
-</code></pre>
-</li>
-<li><p>Copy and paste the displayed set command to set the KUBECONFIG environment variable as directed. </p>
-</li>
-<li><p>To verify whether the KUBECONFIG environment variable is set properly or not, run the following command:</p>
-<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">echo</span> <span class="token variable">$KUBECONFIG</span>
-</code></pre>
-</li>
-<li><p>Check that the kubectl command is correctly configured </p>
-<pre class="language-"><code class="lang-sh"> kubectl cluster-info
-</code></pre>
-<p> The output should look like:
-      <a href="images/cli-cluster-info.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/cli-cluster-info.png" alt="">
-     </a></p>
-</li>
-</ol>
 
                                 
                                 </section>
@@ -726,12 +716,12 @@
 
             
                 
-                <a href="kube-dashboard.html" class="navigation navigation-prev " aria-label="Previous page: Kubernetes Dashboard">
+                <a href="prepare-get-cluster.html" class="navigation navigation-prev " aria-label="Previous page: Get a cluster">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="get-app.html" class="navigation navigation-next " aria-label="Next page: Get and run the app locally">
+                <a href="prepare-target.html" class="navigation navigation-next " aria-label="Next page: Target your environement">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -742,7 +732,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Connect via CLI","level":"3.3","depth":1,"next":{"title":"Get and run the app locally","level":"3.4","depth":1,"path":"get-app.md","ref":"get-app.md","articles":[]},"previous":{"title":"Kubernetes Dashboard","level":"3.2","depth":1,"path":"kube-dashboard.md","ref":"kube-dashboard.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"connect-via-cli.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Connect via CLI","level":"2.5","depth":1,"next":{"title":"Target your environement","level":"2.6","depth":1,"path":"prepare-target.md","ref":"prepare-target.md","articles":[]},"previous":{"title":"Get a cluster","level":"2.4","depth":1,"path":"prepare-get-cluster.md","ref":"prepare-get-cluster.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"connect-via-cli.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

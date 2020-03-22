@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Kubernetes Dashboard · IBM Cloud Kubernetes Service Lab</title>
+        <title>Target your environement · IBM Cloud Kubernetes Service Lab</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -81,10 +81,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="get-app.html" />
+    <link rel="next" href="view-cluster.html" />
     
     
-    <link rel="prev" href="view-cluster.html" />
+    <link rel="prev" href="connect-via-cli.html" />
     
 
     </head>
@@ -212,7 +212,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.6" data-path="prepare-target.html">
+        <li class="chapter active" data-level="2.6" data-path="prepare-target.html">
             
                 <a href="prepare-target.html">
             
@@ -249,7 +249,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="3.2" data-path="kube-dashboard.html">
+        <li class="chapter " data-level="3.2" data-path="kube-dashboard.html">
             
                 <a href="kube-dashboard.html">
             
@@ -622,7 +622,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Kubernetes Dashboard</a>
+        <a href="." >Target your environement</a>
     </h1>
 </div>
 
@@ -637,31 +637,28 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="kubernetes-dashboard">Kubernetes Dashboard</h1>
-<p>Dashboard is a web-based Kubernetes user interface. You can use Dashboard to</p>
-<ul>
-<li>deploy containerized applications to a Kubernetes cluster</li>
-<li>troubleshoot your containerized application</li>
-<li>manage the cluster resources</li>
-<li>get an overview of applications running on your cluster</li>
-<li>create or modify individual Kubernetes resources (such as Deployments, Jobs, DaemonSets, etc)</li>
-<li>scale a Deployment</li>
-<li>initiate a rolling update</li>
-<li>restart a pod or deploy new applications using a deploy wizard.</li>
-</ul>
-<p>Dashboard also provides information on the state of Kubernetes resources in your cluster and on any errors that may have occurred.</p>
+                                <h1 id="target-your-resource-group">Target your Resource Group</h1>
+<p>You need to target a Resource Group (RG) to view your cluster or to add a service (e.g. Cloudant Database). Access to the group and the resources within it are managed by using Identity and Access Management (IAM). </p>
 <ol>
-<li><p>Navigate to <a href="https://cloud.ibm.com/containers-kubernetes/clusters" target="_blank">Clusters</a> to see a list of clusters and click on the cluster you were assigned to.</p>
+<li><p>In this lab, the Resource Group <strong>lab</strong> has been created. Select this resource group.</p>
+<pre class="language-"><code class="lang-sh"> ibmcloud target -g lab
+</code></pre>
 </li>
-<li><p>Click <strong>Kubernetes Dashboard</strong> to launch the dashboard in a new tab.</p>
-<p>     <a href="images/monitor-launch-dashboard.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/monitor-launch-dashboard.png" alt="">
+<li><p>Verify you can see your cluster.</p>
+<pre class="language-"><code class="lang-sh"> ibmcloud ks clusters
+</code></pre>
+<p> Output
+      <a href="images/cli-cluster-list.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/cli-cluster-list.png" alt="">
      </a></p>
 </li>
-<li><p>Select <strong>Nodes</strong> on the left pane, click the <strong>Name</strong> of the nodes and see the <strong>Allocation Resources</strong> to see the health of your nodes.</p>
-<p>     <a href="images/kubernetes-dashboard.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/kubernetes-dashboard.png" alt="">
-     </a></p>
+<li><p>Download the Kubernetes configuration files and certificates to connect to your cluster by using kubectl commands</p>
+<pre class="language-"><code class="lang-sh"> ibmcloud ks cluster config --cluster <span class="token operator">&lt;</span>cluster-name<span class="token operator">&gt;</span>
+</code></pre>
+</li>
+<li><p>You can now execute &apos;kubectl&apos; commands against your cluster. For example, get the worker nodes of your cluster:</p>
+<pre class="language-"><code class="lang-sh"> kubectl get nodes
+</code></pre>
 </li>
 </ol>
 
@@ -691,12 +688,12 @@
 
             
                 
-                <a href="view-cluster.html" class="navigation navigation-prev " aria-label="Previous page: View your cluster">
+                <a href="connect-via-cli.html" class="navigation navigation-prev " aria-label="Previous page: Connect via CLI">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="get-app.html" class="navigation navigation-next " aria-label="Next page: Get and run the app locally">
+                <a href="view-cluster.html" class="navigation navigation-next " aria-label="Next page: View your cluster">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -707,7 +704,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Kubernetes Dashboard","level":"3.2","depth":1,"next":{"title":"Get and run the app locally","level":"3.3","depth":1,"path":"get-app.md","ref":"get-app.md","articles":[]},"previous":{"title":"View your cluster","level":"3.1","depth":1,"path":"view-cluster.md","ref":"view-cluster.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"kube-dashboard.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Target your environement","level":"2.6","depth":1,"next":{"title":"View your cluster","level":"3.1","depth":1,"path":"view-cluster.md","ref":"view-cluster.md","articles":[]},"previous":{"title":"Connect via CLI","level":"2.5","depth":1,"path":"connect-via-cli.md","ref":"connect-via-cli.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"prepare-target.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
