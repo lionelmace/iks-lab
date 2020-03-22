@@ -2,14 +2,16 @@
 
 In this section, you will either use your own cluster or get access to a IBM Cloud Lab account which contains pre-provisioned clusters. Each lab attendee should have access to one cluster.
 
+{% hint style='info' %} If you're doing this lab on your own, you will need to created your own cluster by following the next section Create a Kubernetes cluster to create your own cluster.{% endhint %}
 
 ## Create a Kubernetes cluster
 
-1. Create a standard cluster in the dashboard [https://cloud.ibm.com/kubernetes/catalog/create](https://cloud.ibm.com/kubernetes/catalog/create)
+1. Create a Standard cluster [https://cloud.ibm.com/kubernetes/catalog/about](https://cloud.ibm.com/kubernetes/catalog/about)
 
     * Number of worker: 1
     * Worker flavor: u3c.2x4
     * Kube version: 1.17.4
+
 
 1. The cluster can be created by CLI
     ```
@@ -49,3 +51,9 @@ In this section, you will either use your own cluster or get access to a IBM Clo
     ![](./images/resource-list.png)
 
 You will use this cluster for this lab. Note that this is a Standard/Paid cluster (as opposed to a FREE cluster.)
+
+With a standard cluster, you can:
+
+* Guard against zone failures with mutltizone clusters.
+* React to workload changes with automatic load balancing and scaling of apps and worker nodes.
+* Expose apps with stable IPs and domains, and manage network traffic with Istio.
