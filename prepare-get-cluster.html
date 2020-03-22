@@ -624,21 +624,22 @@
                                 
                                 <h1 id="get-a-cluster">Get a cluster</h1>
 <p>In this section, you will either use your own cluster or get access to a IBM Cloud Lab account which contains pre-provisioned clusters. Each lab attendee should have access to one cluster.</p>
+<p><div class="alert alert-info hints-alert"><div class="hints-icon"><i class="fa fa-info-circle"></i></div><div class="hints-container"><p> If you&apos;re doing this lab on your own, you will need to created your own cluster by following the next section Create a Kubernetes cluster to create your own cluster.</p>
+</div></div></p>
 <h2 id="create-a-kubernetes-cluster">Create a Kubernetes cluster</h2>
 <ol>
-<li><p>Create a standard cluster in the dashboard <a href="https://cloud.ibm.com/kubernetes/catalog/create" target="_blank">https://cloud.ibm.com/kubernetes/catalog/create</a></p>
+<li><p>Create a Standard cluster <a href="https://cloud.ibm.com/kubernetes/catalog/about" target="_blank">https://cloud.ibm.com/kubernetes/catalog/about</a></p>
 <ul>
 <li>Number of worker: 1</li>
 <li>Worker flavor: u3c.2x4</li>
 <li>Kube version: 1.17.4</li>
 </ul>
 </li>
-<li><p>The cluster can be created by CLI</p>
-<pre class="language-"><code> ibmcloud ks cluster create classic --name mycluster --zone fra04 --flavor u3c.2x4 --workers 1 --version 1.17.4
-</code></pre><p> If you already have a public and private vlans, you would need this command</p>
-<pre class="language-"><code> ibmcloud ks cluster create classic --name mycluster --zone <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>zone</span><span class="token punctuation">&gt;</span></span> --flavor <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>flavor</span><span class="token punctuation">&gt;</span></span> --workers 1 --version <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span> --private-vlan <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vlan-id</span><span class="token punctuation">&gt;</span></span> --public-vlan <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vlan-id</span><span class="token punctuation">&gt;</span></span>
-</code></pre><p> For example:</p>
-<pre class="language-"><code> ibmcloud ks cluster create classic --name mycluster --zone fra04 --flavor u3c.2x4 --workers 1 --version 1.17.4 --private-vlan 2700262 --public-vlan 2700260
+</ol>
+<ol>
+<li>The cluster can be created by CLI<pre class="language-"><code> ibmcloud ks cluster create classic --name mycluster --zone fra04 --flavor u3c.2x4 --workers 1 --version 1.17.4
+</code></pre> If you already have a public and private vlans, you would need this command<pre class="language-"><code> ibmcloud ks cluster create classic --name mycluster --zone <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>zone</span><span class="token punctuation">&gt;</span></span> --flavor <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>flavor</span><span class="token punctuation">&gt;</span></span> --workers 1 --version <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span> --private-vlan <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vlan-id</span><span class="token punctuation">&gt;</span></span> --public-vlan <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vlan-id</span><span class="token punctuation">&gt;</span></span>
+</code></pre> For example:<pre class="language-"><code> ibmcloud ks cluster create classic --name mycluster --zone fra04 --flavor u3c.2x4 --workers 1 --version 1.17.4 --private-vlan 2700262 --public-vlan 2700260
 </code></pre></li>
 </ol>
 <h2 id="get-a-kubernetes-cluster">Get a Kubernetes cluster</h2>
@@ -671,6 +672,12 @@
 </li>
 </ol>
 <p>You will use this cluster for this lab. Note that this is a Standard/Paid cluster (as opposed to a FREE cluster.)</p>
+<p>With a standard cluster, you can:</p>
+<ul>
+<li>Guard against zone failures with mutltizone clusters.</li>
+<li>React to workload changes with automatic load balancing and scaling of apps and worker nodes.</li>
+<li>Expose apps with stable IPs and domains, and manage network traffic with Istio.</li>
+</ul>
 
                                 
                                 </section>
