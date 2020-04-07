@@ -653,13 +653,15 @@
 <p> You should get a namespace called <strong>lab-registry</strong></p>
 </li>
 <li><p>If you&apos;re using your own account, create a namespace such as <strong>lab-registry</strong></p>
-<pre class="language-"><code class="lang-sh"> ibmcloud cr namespace <span class="token function">add</span> lab-registry
+<pre class="language-"><code class="lang-sh"> ibmcloud cr namespace-add lab-registry
 </code></pre>
 </li>
 <li><p><strong>Push</strong> the image to your private image registry.</p>
 <pre class="language-"><code class="lang-sh"> docker push <span class="token operator">&lt;</span>region<span class="token operator">&gt;</span>.icr.io/<span class="token operator">&lt;</span>registry-namespace-name<span class="token operator">&gt;</span>/todo-<span class="token operator">&lt;</span>lastname<span class="token operator">&gt;</span>:1.0
 </code></pre>
-<blockquote>
+<p> Example:</p>
+<pre class="language-"><code> docker push de.icr.io/lab-registry/todo-mace:1.0
+</code></pre><blockquote>
 <p>If you get the error <code>unauthorized: authentication required</code>, run the command <strong>ibmcloud cr login</strong></p>
 </blockquote>
 </li>
