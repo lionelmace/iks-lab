@@ -15,9 +15,14 @@ Before you can deploy the application on the cluster, you first need to push the
     ```
     You should get a namespace called **lab-registry**
 
+1. If you're using your own account, create a namespace such as **lab-registry**
+    ```sh
+    ibmcloud cr namespace add lab-registry
+    ```
+
 1. **Push** the image to your private image registry.
     ```sh
-    docker push <region>.icr.io/<namespace>/todo-<lastname>:1.0
+    docker push <region>.icr.io/<registry-namespace-name>/todo-<lastname>:1.0
     ```
 
     > If you get the error `unauthorized: authentication required`, run the command **ibmcloud cr login**

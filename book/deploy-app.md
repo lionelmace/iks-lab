@@ -46,7 +46,7 @@ In this lab, we will test the **Ingress**.
         spec:
           containers:
           - name: mytodos
-            image: <registry-region>.icr.io/<registry-namespace>/todo-<lastname>:1.0
+            image: <registry-region>.icr.io/<registry-namespace-name>/todo-<lastname>:1.0
             imagePullPolicy: Always
             resources:
               requests:
