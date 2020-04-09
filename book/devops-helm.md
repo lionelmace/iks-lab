@@ -44,7 +44,7 @@ Helm is a client/server application :
 
 1. Go to the folder kubernetes/helm/chart
     ```sh
-    cd mytodo/chart/mytodos
+    cd .cloud/chart/mytodos
     ```
 
 1. Edit the file **values.yaml** to change the repository values which includes: the region, the registry namespace, the image name, and the tag (=version).

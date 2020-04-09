@@ -8,7 +8,7 @@ In this lab, we will test the **Ingress**.
 
 1. Navigate to the folder **kubernetes**.
     ```sh
-    cd kubernetes
+    cd .cloud/kubernetes
     ```
 
 1. Let's use the online web editor to modify the deployment file. Click the pen on the top right corner
