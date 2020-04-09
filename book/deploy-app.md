@@ -11,20 +11,17 @@ In this lab, we will test the **Ingress**.
     cd .cloud/kubernetes
     ```
 
-1. Let's use the online web editor to modify the deployment file. Click the pen on the top right corner
+1. In your favorite IDE such as VS Code, edit the file `ingress-tls-deploy.yaml`.
 
-    ![](./images/cloudshell-ide-shortcut.png)
+1. Replace all the values wrapped in <...> with the appropriate values:
 
-1. Open the project **mytodos** you cloned before. Select **File** on the left hand side, then **Open Workspace** and search for the downloaded project
-
-    ![](./images/cloudshell-ide-open.png)
-
-    ![](./images/cloudshell-ide-view.png)
-
-1. Select the file `ingress-tls-deploy.yaml` .
-
-1. Replace all the values wrapped in <...> with the appropriate values: registry-region such as `de` for Frankfurt, registry-namespace such as `lab-registry`, cloud-region such as `eu-de` for Frankfurt, cluster-name such as `lab-11`
-
+    | Field              | Value         |
+    | ------------------ |:------------- |
+    | registry-region    | **de** for Frankfurt |
+    | registry-namespace | **lab-registry** |
+    | cloud-region       | **eu-de** for Frankfurt |
+    | cluster-name       | **lab-11** |
+  
     Your YAML file should look as follows:
     ```yaml
     ---
