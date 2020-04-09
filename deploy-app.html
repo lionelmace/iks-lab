@@ -646,22 +646,15 @@
 <pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">cd</span> .cloud/kubernetes
 </code></pre>
 </li>
-<li><p>Let&apos;s use the online web editor to modify the deployment file. Click the pen on the top right corner</p>
-<p>      <a href="images/cloudshell-ide-shortcut.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/cloudshell-ide-shortcut.png" alt="">
-     </a></p>
+<li><p>In your favorite IDE such as VS Code, edit the file <code>ingress-tls-deploy.yaml</code>.</p>
 </li>
-<li><p>Open the project <strong>mytodos</strong> you cloned before. Select <strong>File</strong> on the left hand side, then <strong>Open Workspace</strong> and search for the downloaded project</p>
-<p>      <a href="images/cloudshell-ide-open.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/cloudshell-ide-open.png" alt="">
-     </a></p>
-<p>      <a href="images/cloudshell-ide-view.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/cloudshell-ide-view.png" alt="">
-     </a></p>
-</li>
-<li><p>Select the file <code>ingress-tls-deploy.yaml</code> .</p>
-</li>
-<li><p>Replace all the values wrapped in &lt;...&gt; with the appropriate values: registry-region such as <code>de</code> for Frankfurt, registry-namespace such as <code>lab-registry</code>, cloud-region such as <code>eu-de</code> for Frankfurt, cluster-name such as <code>lab-11</code></p>
+<li><p>Replace all the values wrapped in &lt;...&gt; with the appropriate values:</p>
+<p> | Field              | Value         |
+ | ------------------ |:------------- |
+ | registry-region    | <strong>de</strong> for Frankfurt |
+ | registry-namespace | <strong>lab-registry</strong> |
+ | cloud-region       | <strong>eu-de</strong> for Frankfurt |
+ | cluster-name       | <strong>lab-11</strong> |</p>
 <p> Your YAML file should look as follows:</p>
 <pre class="language-"><code class="lang-yaml"> <span class="token punctuation">---</span>
   <span class="token comment"># Application to deploy</span>
