@@ -1,12 +1,25 @@
 # Control traffic with Calico network policies
 
-Every Kubernetes cluster is set up with a network plug-in called [Calico](https://www.projectcalico.org/). Default network policies are set up to secure the public network interface of every worker node in IBM® Cloud Kubernetes Service.
+Every Kubernetes cluster is set up with a network plug-in called [Calico](https://www.projectcalico.org/). Default network policies are set up to secure the public network interface of every worker node in IKS.
 
-If you have unique security requirements or you have a multizone cluster with VLAN spanning enabled, you can use Calico and Kubernetes to create network policies for a cluster. With Kubernetes network policies, you can specify the network traffic that you want to allow or block to and from a pod within a cluster. 
+If you have unique security requirements, you can use Calico and Kubernetes to create network policies for a cluster. With Kubernetes network policies, you can specify the network traffic that you want to allow or block to and from a pod within a cluster. 
 
-## Install and Configure the Calico CLI
 
-1.  Include the --admin and --network options with the ibmcloud ks cluster-config command. --admin downloads the keys to access your infrastructure portfolio and run Calico commands on your worker nodes. --network downloads the Calico configuration file to run all Calico commands.
+## Install the Calico CLI
+
+{% hint style='info' %} The CalicoCtl is pre-installed in the Cloud Shell. If you use it, then you can skip this step and open the [Cloud Shell](https://cloud.ibm.com/shell) to continue the next steps. {% endhint %}
+
+1. On Mac OS, install Calico with Homebrew
+    ```
+    brew install calico
+    ```
+    
+1. Otherwise, [download the Calico CLI.](https://github.com/projectcalico/calicoctl/releases).
+
+
+## Configure the Calico CLI
+
+1.  Include the --admin and --network options with the `ibmcloud ks cluster config` command. **--admin** downloads the keys to access your infrastructure portfolio and run Calico commands on your worker nodes. **--network** downloads the Calico configuration file to run all Calico commands.
 
     ```
     ibmcloud ks cluster config --cluster <cluster_name_or_ID> --admin --network
@@ -26,8 +39,6 @@ If you have unique security requirements or you have a multizone cluster with VL
     ```
     calicoctl get nodes
     ```
-
-{% hint style='info' %}Install Calico with Homebrew on Mac using `brew install calico` or [download the Calico CLI.](https://github.com/projectcalico/calicoctl/releases).{% endhint %}
 
 
 ## To view existing network policies in clusters
@@ -134,7 +145,7 @@ If you have unique security requirements or you have a multizone cluster with VL
     calicoctl apply -f calico-allow-traffic-from-my-ip.yml
     ```
 
-    {% hint style='info' %} The order of the ALLOW rule is lower than the order of the DENY rule. This is important so that the allow rule gets evaluated first. {% endhint %}
+     
 
 1. Both rules you applied are now listed in the Global network policies of your cluster.
     ```
