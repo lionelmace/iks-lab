@@ -58,10 +58,10 @@ If you have unique security requirements, you can use Calico and Kubernetes to c
 1. View details for a network policy.
     ```
     calicoctl get NetworkPolicy -o yaml <policy_name> --namespace <policy_namespace>
-    ````
+    ```
 
 1. View the details of all global network policies for the cluster.
-    ````
+    ```
     calicoctl get GlobalNetworkPolicy -o yaml
     ```
 
@@ -102,7 +102,7 @@ If you have unique security requirements, you can use Calico and Kubernetes to c
     calicoctl apply -f calico-deny-alb-traffic.yml
     ```
 
-1. You should not be access any apps available on your sub domains **containers.appdomain.cloud**.
+1. You should not be access any apps available on your sub domain ***.containers.appdomain.cloud**.
 
 ## Whitelist the incoming traffic from your laptop IP.
 
@@ -152,7 +152,7 @@ If you have unique security requirements, you can use Calico and Kubernetes to c
     calicoctl get GlobalNetworkPolicy -o wide
     ```
 
-1. You should now be able to access any apps available on your sub domains **containers.appdomain.cloud** from your laptop.
+1. You should now be able to access any apps available on your sub domain ***.containers.appdomain.cloud** from your laptop.
 
 ## Resources
 
