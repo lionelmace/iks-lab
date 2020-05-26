@@ -14,7 +14,7 @@ If you have unique security requirements, you can use Calico and Kubernetes to c
     brew install calico
     ```
     
-1. Otherwise, [download the Calico CLI.](https://github.com/projectcalico/calicoctl/releases).
+1. Otherwise, [download the Calico CLI](https://github.com/projectcalico/calicoctl/releases).
 
 
 ## Configure the Calico CLI
