@@ -643,26 +643,23 @@
 <h2 id="install-and-configure-the-calico-cli">Install and Configure the Calico CLI</h2>
 <ol>
 <li><p>Include the --admin and --network options with the ibmcloud ks cluster-config command. --admin downloads the keys to access your infrastructure portfolio and run Calico commands on your worker nodes. --network downloads the Calico configuration file to run all Calico commands.</p>
-<pre class="language-"><code>ibmcloud ks cluster-config --cluster <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster_name_or_ID</span><span class="token punctuation">&gt;</span></span> --admin --network
+<pre class="language-"><code>ibmcloud ks cluster config --cluster <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster_name_or_ID</span><span class="token punctuation">&gt;</span></span> --admin --network
 </code></pre></li>
 <li><p>Create the /etc/calico directory.</p>
 <pre class="language-"><code>  sudo mkdir /etc/calico
 </code></pre></li>
 <li><p>Move the Calico configuration file that you previously downloaded to the directory.</p>
-<pre class="language-"><code> sudo mv /Users/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>user</span><span class="token punctuation">&gt;</span></span>/.bluemix/plugins/container-service/clusters/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster_name</span><span class="token punctuation">&gt;</span></span>-admin/calicoctl.cfg /etc/calico
+<pre class="language-"><code> mv /Users/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>user</span><span class="token punctuation">&gt;</span></span>/.bluemix/plugins/container-service/clusters/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster_name</span><span class="token punctuation">&gt;</span></span>-admin/calicoctl.cfg /etc/calico
 </code></pre></li>
-<li><p>On Mac OS, install Calico with Homebrew</p>
-<pre class="language-"><code> brew install calico
-</code></pre></li>
-<li><p>Otherwise, <a href="https://github.com/projectcalico/calicoctl/releases" target="_blank">download the Calico CLI.</a></p>
-</li>
 <li><p>Verify that the Calico configuration is working correctly.</p>
 <pre class="language-"><code> calicoctl get nodes
 </code></pre></li>
 </ol>
-<h2 id="to-view-network-policies-in-clusters">To view network policies in clusters</h2>
+<p><div class="alert alert-info hints-alert"><div class="hints-icon"><i class="fa fa-info-circle"></i></div><div class="hints-container"><p>Install Calico with Homebrew on Mac using <code>brew install calico</code> or <a href="https://github.com/projectcalico/calicoctl/releases" target="_blank">download the Calico CLI.</a>.</p>
+</div></div></p>
+<h2 id="to-view-existing-network-policies-in-clusters">To view existing network policies in clusters</h2>
 <ol>
-<li><p>View all of the Calico and Kubernetes network policies that were created for the cluster. This list includes policies that might not be applied to any pods or hosts yet. For a network policy to be enforced, a Kubernetes resource must be found that matches the selector that was defined in the Calico network policy.</p>
+<li><p>View all of the Calico and Kubernetes network policies that were created by default for the cluster.</p>
 <p> Network policies are scoped to specific namespaces:</p>
 <pre class="language-"><code> calicoctl get NetworkPolicy --all-namespaces -o wide
 </code></pre><p> Global network policies are not scoped to specific namespaces:</p>
@@ -680,31 +677,32 @@
 <h2 id="block-the-incoming-traffic-to-the-automatic-load-balancer">Block the incoming traffic to the Automatic Load Balancer</h2>
 <ol>
 <li><p>Edit the calico policy in folder <strong>kubernetes/calico-deny-alb-traffic.yml</strong> to replace the ALB IPs.</p>
-<pre class="language-"><code class="lang-yml"> <span class="token punctuation">-</span> <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> projectcalico.org/v3
-   <span class="token key atrule">kind</span><span class="token punctuation">:</span> GlobalNetworkPolicy
-   <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-     <span class="token key atrule">name</span><span class="token punctuation">:</span> deny<span class="token punctuation">-</span>alb<span class="token punctuation">-</span>traffic
-   <span class="token key atrule">spec</span><span class="token punctuation">:</span>
-     <span class="token key atrule">applyOnForward</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
-     <span class="token key atrule">preDNAT</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
-     <span class="token key atrule">ingress</span><span class="token punctuation">:</span>
-     <span class="token punctuation">-</span> <span class="token key atrule">action</span><span class="token punctuation">:</span> Deny
-       <span class="token key atrule">destination</span><span class="token punctuation">:</span>
-         <span class="token key atrule">nets</span><span class="token punctuation">:</span>
-         <span class="token comment"># (ALB) Automatic Load Balancer (= Ingress Subdomain)</span>
-         <span class="token comment"># dig &lt;cluster-name&gt;.&lt;region&gt;.containers.appdomain.cloud</span>
-         <span class="token punctuation">-</span> &lt;Automatic_Load_Balancer_IP<span class="token punctuation">&gt;</span>/32
-         <span class="token punctuation">-</span> &lt;Automatic<span class="token punctuation">-</span>Load<span class="token punctuation">-</span>Balancer_IP<span class="token punctuation">&gt;</span>/32
-         <span class="token punctuation">-</span> &lt;Automatic_Load_Balancer_IP<span class="token punctuation">&gt;</span>/32
-         <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-         <span class="token punctuation">-</span> <span class="token number">80</span>
-         <span class="token punctuation">-</span> <span class="token number">443</span>
-       <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
-       <span class="token key atrule">source</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-     <span class="token key atrule">selector</span><span class="token punctuation">:</span> ibm.role == &apos;worker_public&apos;
-     <span class="token key atrule">order</span><span class="token punctuation">:</span> <span class="token number">4000</span>
-     <span class="token key atrule">types</span><span class="token punctuation">:</span>
-     <span class="token punctuation">-</span> Ingress
+<pre class="language-"><code class="lang-yml"> <span class="token punctuation">---</span> 
+ <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> projectcalico.org/v3
+ <span class="token key atrule">kind</span><span class="token punctuation">:</span> GlobalNetworkPolicy
+ <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+   <span class="token key atrule">name</span><span class="token punctuation">:</span> deny<span class="token punctuation">-</span>alb<span class="token punctuation">-</span>traffic
+ <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+   <span class="token key atrule">applyOnForward</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+   <span class="token key atrule">preDNAT</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+   <span class="token key atrule">ingress</span><span class="token punctuation">:</span>
+   <span class="token punctuation">-</span> <span class="token key atrule">action</span><span class="token punctuation">:</span> Deny
+     <span class="token key atrule">destination</span><span class="token punctuation">:</span>
+       <span class="token key atrule">nets</span><span class="token punctuation">:</span>
+       <span class="token comment"># (ALB) Automatic Load Balancer (= Ingress Subdomain)</span>
+       <span class="token comment"># dig &lt;cluster-name&gt;.&lt;region&gt;.containers.appdomain.cloud</span>
+       <span class="token punctuation">-</span> &lt;Automatic_Load_Balancer_IP<span class="token punctuation">&gt;</span>/32
+       <span class="token punctuation">-</span> &lt;Automatic<span class="token punctuation">-</span>Load<span class="token punctuation">-</span>Balancer_IP<span class="token punctuation">&gt;</span>/32
+       <span class="token punctuation">-</span> &lt;Automatic_Load_Balancer_IP<span class="token punctuation">&gt;</span>/32
+       <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+       <span class="token punctuation">-</span> <span class="token number">80</span>
+       <span class="token punctuation">-</span> <span class="token number">443</span>
+     <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
+     <span class="token key atrule">source</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+   <span class="token key atrule">selector</span><span class="token punctuation">:</span> ibm.role == &apos;worker_public&apos;
+   <span class="token key atrule">order</span><span class="token punctuation">:</span> <span class="token number">4000</span>
+   <span class="token key atrule">types</span><span class="token punctuation">:</span>
+   <span class="token punctuation">-</span> Ingress
 </code></pre>
 </li>
 <li><p>Apply this Global Network Policy to deny all ingress traffic.</p>
@@ -718,33 +716,34 @@
 <li><p>Find the IP of your laptop.</p>
 </li>
 <li><p>Edit the calico policy in folder <strong>kubernetes/calico-allow-traffic-from-my-ip.yml</strong> to replace the ALB IPs and your laptop IP.</p>
-<pre class="language-"><code class="lang-yml"> <span class="token punctuation">-</span> <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> projectcalico.org/v3
-   <span class="token key atrule">kind</span><span class="token punctuation">:</span> GlobalNetworkPolicy
-   <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-     <span class="token key atrule">name</span><span class="token punctuation">:</span> allow<span class="token punctuation">-</span>traffic<span class="token punctuation">-</span>from<span class="token punctuation">-</span>my<span class="token punctuation">-</span>ip
-   <span class="token key atrule">spec</span><span class="token punctuation">:</span>
-     <span class="token key atrule">applyOnForward</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
-     <span class="token key atrule">preDNAT</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
-     <span class="token key atrule">ingress</span><span class="token punctuation">:</span>
-     <span class="token punctuation">-</span> <span class="token key atrule">action</span><span class="token punctuation">:</span> Allow
-       <span class="token key atrule">destination</span><span class="token punctuation">:</span>
-         <span class="token key atrule">nets</span><span class="token punctuation">:</span>
-         <span class="token comment"># (ALB) Automatic Load Balancer (= Ingress Subdomain)</span>
-         <span class="token comment"># dig &lt;cluster-name&gt;.&lt;region&gt;.containers.appdomain.cloud</span>
-         <span class="token punctuation">-</span> &lt;Automatic_Load_Balancer_IP<span class="token punctuation">&gt;</span>/32
-         <span class="token punctuation">-</span> &lt;Automatic<span class="token punctuation">-</span>Load<span class="token punctuation">-</span>Balancer_IP<span class="token punctuation">&gt;</span>/32
-         <span class="token punctuation">-</span> &lt;Automatic_Load_Balancer_IP<span class="token punctuation">&gt;</span>/32
-         <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-         <span class="token punctuation">-</span> <span class="token number">80</span>
-         <span class="token punctuation">-</span> <span class="token number">443</span>
-       <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
-       <span class="token key atrule">source</span><span class="token punctuation">:</span>
-         <span class="token key atrule">nets</span><span class="token punctuation">:</span>
-         <span class="token punctuation">-</span>  &lt;your<span class="token punctuation">-</span>laptop<span class="token punctuation">-</span>ip<span class="token punctuation">&gt;</span>/32
-     <span class="token key atrule">selector</span><span class="token punctuation">:</span> ibm.role == &apos;worker_public&apos;
-     <span class="token key atrule">order</span><span class="token punctuation">:</span> <span class="token number">2000</span>
-     <span class="token key atrule">types</span><span class="token punctuation">:</span>
-     <span class="token punctuation">-</span> Ingress
+<pre class="language-"><code class="lang-yml"> <span class="token punctuation">---</span>
+ <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> projectcalico.org/v3
+ <span class="token key atrule">kind</span><span class="token punctuation">:</span> GlobalNetworkPolicy
+ <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+   <span class="token key atrule">name</span><span class="token punctuation">:</span> allow<span class="token punctuation">-</span>traffic<span class="token punctuation">-</span>from<span class="token punctuation">-</span>my<span class="token punctuation">-</span>ip
+ <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+   <span class="token key atrule">applyOnForward</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+   <span class="token key atrule">preDNAT</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+   <span class="token key atrule">ingress</span><span class="token punctuation">:</span>
+   <span class="token punctuation">-</span> <span class="token key atrule">action</span><span class="token punctuation">:</span> Allow
+     <span class="token key atrule">destination</span><span class="token punctuation">:</span>
+       <span class="token key atrule">nets</span><span class="token punctuation">:</span>
+       <span class="token comment"># (ALB) Automatic Load Balancer (= Ingress Subdomain)</span>
+       <span class="token comment"># dig &lt;cluster-name&gt;.&lt;region&gt;.containers.appdomain.cloud</span>
+       <span class="token punctuation">-</span> &lt;Automatic_Load_Balancer_IP<span class="token punctuation">&gt;</span>/32
+       <span class="token punctuation">-</span> &lt;Automatic<span class="token punctuation">-</span>Load<span class="token punctuation">-</span>Balancer_IP<span class="token punctuation">&gt;</span>/32
+       <span class="token punctuation">-</span> &lt;Automatic_Load_Balancer_IP<span class="token punctuation">&gt;</span>/32
+       <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+       <span class="token punctuation">-</span> <span class="token number">80</span>
+       <span class="token punctuation">-</span> <span class="token number">443</span>
+     <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
+     <span class="token key atrule">source</span><span class="token punctuation">:</span>
+       <span class="token key atrule">nets</span><span class="token punctuation">:</span>
+       <span class="token punctuation">-</span>  &lt;your<span class="token punctuation">-</span>laptop<span class="token punctuation">-</span>ip<span class="token punctuation">&gt;</span>/32
+   <span class="token key atrule">selector</span><span class="token punctuation">:</span> ibm.role == &apos;worker_public&apos;
+   <span class="token key atrule">order</span><span class="token punctuation">:</span> <span class="token number">2000</span>
+   <span class="token key atrule">types</span><span class="token punctuation">:</span>
+   <span class="token punctuation">-</span> Ingress
 </code></pre>
 </li>
 <li><p>Apply this Global Network Policy to allow the traffic.</p>
