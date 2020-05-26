@@ -675,12 +675,10 @@
 </code></pre></li>
 <li><p>View details for a network policy.</p>
 <pre class="language-"><code> calicoctl get NetworkPolicy -o yaml <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>policy_name</span><span class="token punctuation">&gt;</span></span> --namespace <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>policy_namespace</span><span class="token punctuation">&gt;</span></span>
- `
 </code></pre></li>
 <li><p>View the details of all global network policies for the cluster.</p>
-<pre class="language-"><code class="lang-`"> calicoctl get GlobalNetworkPolicy -o yaml
-</code></pre>
-</li>
+<pre class="language-"><code> calicoctl get GlobalNetworkPolicy -o yaml
+</code></pre></li>
 </ol>
 <h2 id="block-the-incoming-traffic-to-the-automatic-load-balancer">Block the incoming traffic to the Automatic Load Balancer</h2>
 <ol>
@@ -716,7 +714,7 @@
 <li><p>Apply this Global Network Policy to deny all ingress traffic.</p>
 <pre class="language-"><code> calicoctl apply -f calico-deny-alb-traffic.yml
 </code></pre></li>
-<li><p>You should not be access any apps available on your sub domains <strong>containers.appdomain.cloud</strong>.</p>
+<li><p>You should not be access any apps available on your sub domain <strong>*.containers.appdomain.cloud</strong>.</p>
 </li>
 </ol>
 <h2 id="whitelist-the-incoming-traffic-from-your-laptop-ip">Whitelist the incoming traffic from your laptop IP.</h2>
@@ -762,7 +760,7 @@
 <li><p>Both rules you applied are now listed in the Global network policies of your cluster.</p>
 <pre class="language-"><code> calicoctl get GlobalNetworkPolicy -o wide
 </code></pre></li>
-<li><p>You should now be able to access any apps available on your sub domains <strong>containers.appdomain.cloud</strong> from your laptop.</p>
+<li><p>You should now be able to access any apps available on your sub domain <strong>*.containers.appdomain.cloud</strong> from your laptop.</p>
 </li>
 </ol>
 <h2 id="resources">Resources</h2>
