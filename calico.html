@@ -641,7 +641,7 @@
 <p>Every Kubernetes cluster is set up with a network plug-in called <a href="https://www.projectcalico.org/" target="_blank">Calico</a>. Default network policies are set up to secure the public network interface of every worker node in IKS.</p>
 <p>If you have unique security requirements, you can use Calico and Kubernetes to create network policies for a cluster. With Kubernetes network policies, you can specify the network traffic that you want to allow or block to and from a pod within a cluster. </p>
 <h2 id="install-the-calico-cli">Install the Calico CLI</h2>
-<p><div class="alert alert-info hints-alert"><div class="hints-icon"><i class="fa fa-info-circle"></i></div><div class="hints-container"><p> The Calico CLI is pre-installed in the <strong>Cloud Shell</strong>. If you use it, then you can skip this step and open the <a href="https://cloud.ibm.com/shell" target="_blank">Cloud Shell</a> and follow the next section Configure the Calico CLI.</p>
+<p><div class="alert alert-info hints-alert"><div class="hints-icon"><i class="fa fa-info-circle"></i></div><div class="hints-container"><p> The Calico CLI is pre-installed in the <a href="https://cloud.ibm.com/shell" target="_blank">Cloud Shell</a>. If you use it, skip the installation  and go to the next section Configure the Calico CLI.</p>
 </div></div></p>
 <ol>
 <li><p>On Mac OS, install Calico with Homebrew</p>
@@ -682,6 +682,12 @@
 </ol>
 <h2 id="block-the-incoming-traffic-to-the-automatic-load-balancer">Block the incoming traffic to the Automatic Load Balancer</h2>
 <ol>
+<li><p>Retrieve and copy the Ingress Subdomain of your cluster</p>
+<pre class="language-"><code> ibmcloud ks cluster get --cluster <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>iks-cluster-name</span><span class="token punctuation">&gt;</span></span>
+</code></pre></li>
+<li><p>Retrieve the IP of Ingress</p>
+<pre class="language-"><code> dig <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span>.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>region</span><span class="token punctuation">&gt;</span></span>.containers.appdomain.cloud
+</code></pre></li>
 <li><p>Edit the calico policy in folder <strong>kubernetes/calico-deny-alb-traffic.yml</strong> to replace the ALB IPs.</p>
 <pre class="language-"><code class="lang-yml"> <span class="token punctuation">---</span> 
  <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> projectcalico.org/v3
@@ -696,7 +702,6 @@
      <span class="token key atrule">destination</span><span class="token punctuation">:</span>
        <span class="token key atrule">nets</span><span class="token punctuation">:</span>
        <span class="token comment"># (ALB) Automatic Load Balancer (= Ingress Subdomain)</span>
-       <span class="token comment"># dig &lt;cluster-name&gt;.&lt;region&gt;.containers.appdomain.cloud</span>
        <span class="token punctuation">-</span> &lt;Automatic_Load_Balancer_IP<span class="token punctuation">&gt;</span>/32
        <span class="token punctuation">-</span> &lt;Automatic<span class="token punctuation">-</span>Load<span class="token punctuation">-</span>Balancer_IP<span class="token punctuation">&gt;</span>/32
        <span class="token punctuation">-</span> &lt;Automatic_Load_Balancer_IP<span class="token punctuation">&gt;</span>/32
@@ -714,7 +719,7 @@
 <li><p>Apply this Global Network Policy to deny all ingress traffic.</p>
 <pre class="language-"><code> calicoctl apply -f calico-deny-alb-traffic.yml
 </code></pre></li>
-<li><p>You should not be access any apps available on your sub domain <strong>*.containers.appdomain.cloud</strong>.</p>
+<li><p>You should not be able to access any apps available on your sub domain <strong>*.containers.appdomain.cloud</strong>.</p>
 </li>
 </ol>
 <h2 id="whitelist-the-incoming-traffic-from-your-laptop-ip">Whitelist the incoming traffic from your laptop IP.</h2>
@@ -735,7 +740,6 @@
      <span class="token key atrule">destination</span><span class="token punctuation">:</span>
        <span class="token key atrule">nets</span><span class="token punctuation">:</span>
        <span class="token comment"># (ALB) Automatic Load Balancer (= Ingress Subdomain)</span>
-       <span class="token comment"># dig &lt;cluster-name&gt;.&lt;region&gt;.containers.appdomain.cloud</span>
        <span class="token punctuation">-</span> &lt;Automatic_Load_Balancer_IP<span class="token punctuation">&gt;</span>/32
        <span class="token punctuation">-</span> &lt;Automatic<span class="token punctuation">-</span>Load<span class="token punctuation">-</span>Balancer_IP<span class="token punctuation">&gt;</span>/32
        <span class="token punctuation">-</span> &lt;Automatic_Load_Balancer_IP<span class="token punctuation">&gt;</span>/32
