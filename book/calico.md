@@ -7,7 +7,7 @@ If you have unique security requirements, you can use Calico and Kubernetes to c
 
 ## Install the Calico CLI
 
-{% hint style='info' %} The Calico CLI is pre-installed in the **Cloud Shell**. If you use it, then you can skip this step and open the [Cloud Shell](https://cloud.ibm.com/shell) and follow the next section Configure the Calico CLI.{% endhint %}
+{% hint style='info' %} The Calico CLI is pre-installed in the [Cloud Shell](https://cloud.ibm.com/shell). If you use it, skip the installation  and go to the next section Configure the Calico CLI.{% endhint %}
 
 1. On Mac OS, install Calico with Homebrew
     ```
@@ -67,6 +67,16 @@ If you have unique security requirements, you can use Calico and Kubernetes to c
 
 ## Block the incoming traffic to the Automatic Load Balancer
 
+1. Retrieve and copy the Ingress Subdomain of your cluster
+    ```
+    ibmcloud ks cluster get --cluster <iks-cluster-name> 
+    ```
+
+1. Retrieve the IP of Ingress
+    ```
+    dig <cluster-name>.<region>.containers.appdomain.cloud
+    ```
+
 1. Edit the calico policy in folder **kubernetes/calico-deny-alb-traffic.yml** to replace the ALB IPs.
     ```yml
     --- 
@@ -82,7 +92,6 @@ If you have unique security requirements, you can use Calico and Kubernetes to c
         destination:
           nets:
           # (ALB) Automatic Load Balancer (= Ingress Subdomain)
-          # dig <cluster-name>.<region>.containers.appdomain.cloud
           - <Automatic_Load_Balancer_IP>/32
           - <Automatic-Load-Balancer_IP>/32
           - <Automatic_Load_Balancer_IP>/32
@@ -102,7 +111,7 @@ If you have unique security requirements, you can use Calico and Kubernetes to c
     calicoctl apply -f calico-deny-alb-traffic.yml
     ```
 
-1. You should not be access any apps available on your sub domain ***.containers.appdomain.cloud**.
+1. You should not be able to access any apps available on your sub domain ***.containers.appdomain.cloud**.
 
 ## Whitelist the incoming traffic from your laptop IP.
 
@@ -123,7 +132,6 @@ If you have unique security requirements, you can use Calico and Kubernetes to c
         destination:
           nets:
           # (ALB) Automatic Load Balancer (= Ingress Subdomain)
-          # dig <cluster-name>.<region>.containers.appdomain.cloud
           - <Automatic_Load_Balancer_IP>/32
           - <Automatic-Load-Balancer_IP>/32
           - <Automatic_Load_Balancer_IP>/32
@@ -153,6 +161,7 @@ If you have unique security requirements, you can use Calico and Kubernetes to c
     ```
 
 1. You should now be able to access any apps available on your sub domain ***.containers.appdomain.cloud** from your laptop.
+
 
 ## Resources
 
