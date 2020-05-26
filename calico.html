@@ -638,11 +638,21 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="control-traffic-with-calico-network-policies">Control traffic with Calico network policies</h1>
-<p>Every Kubernetes cluster is set up with a network plug-in called <a href="https://www.projectcalico.org/" target="_blank">Calico</a>. Default network policies are set up to secure the public network interface of every worker node in IBM&#xAE; Cloud Kubernetes Service.</p>
-<p>If you have unique security requirements or you have a multizone cluster with VLAN spanning enabled, you can use Calico and Kubernetes to create network policies for a cluster. With Kubernetes network policies, you can specify the network traffic that you want to allow or block to and from a pod within a cluster. </p>
-<h2 id="install-and-configure-the-calico-cli">Install and Configure the Calico CLI</h2>
+<p>Every Kubernetes cluster is set up with a network plug-in called <a href="https://www.projectcalico.org/" target="_blank">Calico</a>. Default network policies are set up to secure the public network interface of every worker node in IKS.</p>
+<p>If you have unique security requirements, you can use Calico and Kubernetes to create network policies for a cluster. With Kubernetes network policies, you can specify the network traffic that you want to allow or block to and from a pod within a cluster. </p>
+<h2 id="install-the-calico-cli">Install the Calico CLI</h2>
+<p><div class="alert alert-info hints-alert"><div class="hints-icon"><i class="fa fa-info-circle"></i></div><div class="hints-container"><p> The CalicoCtl is pre-installed in the Cloud Shell. If you use it, then you can skip this step and open the <a href="https://cloud.ibm.com/shell" target="_blank">Cloud Shell</a> to continue the next steps. </p>
+</div></div></p>
 <ol>
-<li><p>Include the --admin and --network options with the ibmcloud ks cluster-config command. --admin downloads the keys to access your infrastructure portfolio and run Calico commands on your worker nodes. --network downloads the Calico configuration file to run all Calico commands.</p>
+<li><p>On Mac OS, install Calico with Homebrew</p>
+<pre class="language-"><code> brew install calico
+</code></pre></li>
+<li><p>Otherwise, <a href="https://github.com/projectcalico/calicoctl/releases" target="_blank">download the Calico CLI.</a>.</p>
+</li>
+</ol>
+<h2 id="configure-the-calico-cli">Configure the Calico CLI</h2>
+<ol>
+<li><p>Include the --admin and --network options with the <code>ibmcloud ks cluster config</code> command. <strong>--admin</strong> downloads the keys to access your infrastructure portfolio and run Calico commands on your worker nodes. <strong>--network</strong> downloads the Calico configuration file to run all Calico commands.</p>
 <pre class="language-"><code>ibmcloud ks cluster config --cluster <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster_name_or_ID</span><span class="token punctuation">&gt;</span></span> --admin --network
 </code></pre></li>
 <li><p>Create the /etc/calico directory.</p>
@@ -655,8 +665,6 @@
 <pre class="language-"><code> calicoctl get nodes
 </code></pre></li>
 </ol>
-<p><div class="alert alert-info hints-alert"><div class="hints-icon"><i class="fa fa-info-circle"></i></div><div class="hints-container"><p>Install Calico with Homebrew on Mac using <code>brew install calico</code> or <a href="https://github.com/projectcalico/calicoctl/releases" target="_blank">download the Calico CLI.</a>.</p>
-</div></div></p>
 <h2 id="to-view-existing-network-policies-in-clusters">To view existing network policies in clusters</h2>
 <ol>
 <li><p>View all of the Calico and Kubernetes network policies that were created by default for the cluster.</p>
@@ -748,9 +756,9 @@
 </li>
 <li><p>Apply this Global Network Policy to allow the traffic.</p>
 <pre class="language-"><code> calicoctl apply -f calico-allow-traffic-from-my-ip.yml
-</code></pre><p> <div class="alert alert-info hints-alert"><div class="hints-icon"><i class="fa fa-info-circle"></i></div><div class="hints-container"><p> The order of the ALLOW rule is lower than the order of the DENY rule. This is important so that the allow rule gets evaluated first. </p>
-</div></div></p>
-</li>
+</code></pre></li>
+</ol>
+<ol>
 <li><p>Both rules you applied are now listed in the Global network policies of your cluster.</p>
 <pre class="language-"><code> calicoctl get GlobalNetworkPolicy -o wide
 </code></pre></li>
