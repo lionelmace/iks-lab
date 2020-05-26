@@ -7,7 +7,7 @@ If you have unique security requirements, you can use Calico and Kubernetes to c
 
 ## Install the Calico CLI
 
-{% hint style='info' %} The CalicoCtl is pre-installed in the Cloud Shell. If you use it, then you can skip this step and open the [Cloud Shell](https://cloud.ibm.com/shell) to continue the next steps. {% endhint %}
+{% hint style='info' %} The Calico CLI is pre-installed in the **Cloud Shell**. If you use it, then you can skip this step and open the [Cloud Shell](https://cloud.ibm.com/shell) to continue the next steps.{% endhint %}
 
 1. On Mac OS, install Calico with Homebrew
     ```
