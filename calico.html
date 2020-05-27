@@ -665,19 +665,16 @@
 <pre class="language-"><code> calicoctl get nodes
 </code></pre></li>
 </ol>
-<h2 id="to-view-existing-network-policies-in-clusters">To view existing network policies in clusters</h2>
+<h2 id="view-existing-network-policies-in-the-cluster">View existing network policies in the cluster</h2>
 <ol>
-<li><p>View all of the Calico and Kubernetes network policies that were created by default for the cluster.</p>
-<p> Network policies are scoped to specific namespaces:</p>
-<pre class="language-"><code> calicoctl get NetworkPolicy --all-namespaces -o wide
-</code></pre><p> Global network policies are not scoped to specific namespaces:</p>
+<li><p>View all of the global network policies that were created by default for the cluster.</p>
 <pre class="language-"><code> calicoctl get GlobalNetworkPolicy -o wide
-</code></pre></li>
-<li><p>View details for a network policy.</p>
-<pre class="language-"><code> calicoctl get NetworkPolicy -o yaml <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>policy_name</span><span class="token punctuation">&gt;</span></span> --namespace <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>policy_namespace</span><span class="token punctuation">&gt;</span></span>
-</code></pre></li>
-<li><p>View the details of all global network policies for the cluster.</p>
-<pre class="language-"><code> calicoctl get GlobalNetworkPolicy -o yaml
+</code></pre><blockquote>
+<p>Global network policies are not scoped to specific namespaces.</p>
+</blockquote>
+</li>
+<li><p>View the details for a global network policy.</p>
+<pre class="language-"><code> calicoctl get GlobalNetworkPolicy -o yaml <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>policy_name</span><span class="token punctuation">&gt;</span></span>
 </code></pre></li>
 </ol>
 <h2 id="block-the-incoming-traffic-to-the-automatic-load-balancer">Block the incoming traffic to the Automatic Load Balancer</h2>
