@@ -683,9 +683,9 @@
 <pre class="language-"><code> ibmcloud ks cluster get --cluster <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>iks-cluster-name</span><span class="token punctuation">&gt;</span></span>
 </code></pre></li>
 <li><p>Retrieve the IP of Ingress</p>
-<pre class="language-"><code> dig <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span>.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>region</span><span class="token punctuation">&gt;</span></span>.containers.appdomain.cloud
+<pre class="language-"><code> dig <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>iks-luster-name</span><span class="token punctuation">&gt;</span></span>.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>region</span><span class="token punctuation">&gt;</span></span>.containers.appdomain.cloud
 </code></pre></li>
-<li><p>Edit the calico policy in folder <strong>kubernetes/calico-deny-alb-traffic.yml</strong> to replace the ALB IPs.</p>
+<li><p>Edit the calico policy in folder <strong>.cloud/calico/calico-deny-alb-traffic.yml</strong> to replace the ALB IPs.</p>
 <pre class="language-"><code class="lang-yml"> <span class="token punctuation">---</span> 
  <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> projectcalico.org/v3
  <span class="token key atrule">kind</span><span class="token punctuation">:</span> GlobalNetworkPolicy
@@ -723,7 +723,7 @@
 <ol>
 <li><p>Find the IP of your laptop.</p>
 </li>
-<li><p>Edit the calico policy in folder <strong>kubernetes/calico-allow-traffic-from-my-ip.yml</strong> to replace the ALB IPs and your laptop IP.</p>
+<li><p>Edit the calico policy in folder <strong>.cloud/calico/calico-allow-traffic-from-my-ip.yml</strong> to replace the ALB IPs and your laptop IP.</p>
 <pre class="language-"><code class="lang-yml"> <span class="token punctuation">---</span>
  <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> projectcalico.org/v3
  <span class="token key atrule">kind</span><span class="token punctuation">:</span> GlobalNetworkPolicy
