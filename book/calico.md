@@ -64,10 +64,10 @@ If you have unique security requirements, you can use Calico and Kubernetes to c
 
 1. Retrieve the IP of Ingress
     ```
-    dig <cluster-name>.<region>.containers.appdomain.cloud
+    dig <iks-luster-name>.<region>.containers.appdomain.cloud
     ```
 
-1. Edit the calico policy in folder **kubernetes/calico-deny-alb-traffic.yml** to replace the ALB IPs.
+1. Edit the calico policy in folder **.cloud/calico/calico-deny-alb-traffic.yml** to replace the ALB IPs.
     ```yml
     --- 
     apiVersion: projectcalico.org/v3
@@ -107,7 +107,7 @@ If you have unique security requirements, you can use Calico and Kubernetes to c
 
 1. Find the IP of your laptop.
 
-1. Edit the calico policy in folder **kubernetes/calico-allow-traffic-from-my-ip.yml** to replace the ALB IPs and your laptop IP.
+1. Edit the calico policy in folder **.cloud/calico/calico-allow-traffic-from-my-ip.yml** to replace the ALB IPs and your laptop IP.
     ```yml
     ---
     apiVersion: projectcalico.org/v3
