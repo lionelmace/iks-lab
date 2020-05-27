@@ -41,29 +41,19 @@ If you have unique security requirements, you can use Calico and Kubernetes to c
     ```
 
 
-## To view existing network policies in clusters
+## View existing network policies in the cluster
 
-1. View all of the Calico and Kubernetes network policies that were created by default for the cluster.
-
-    Network policies are scoped to specific namespaces:
-    ```
-    calicoctl get NetworkPolicy --all-namespaces -o wide
-    ```
-
-    Global network policies are not scoped to specific namespaces:
+1. View all of the global network policies that were created by default for the cluster.
     ```
     calicoctl get GlobalNetworkPolicy -o wide
     ```
+    > Global network policies are not scoped to specific namespaces.
 
-1. View details for a network policy.
+1. View the details for a global network policy.
     ```
-    calicoctl get NetworkPolicy -o yaml <policy_name> --namespace <policy_namespace>
+    calicoctl get GlobalNetworkPolicy -o yaml <policy_name>
     ```
 
-1. View the details of all global network policies for the cluster.
-    ```
-    calicoctl get GlobalNetworkPolicy -o yaml
-    ```
 
 ## Block the incoming traffic to the Automatic Load Balancer
 
