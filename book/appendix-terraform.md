@@ -1,7 +1,5 @@
 # Deploy the solution using Terraform
 
-![](./images/terraform.png)
-
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
 In this tutorial, you will use a sample configuration to provision a **Kubernetes cluster**, and, a **Postgres** database. Finish by deleting all of the resources created by the configuration.
@@ -15,7 +13,7 @@ In this tutorial, you will use a sample configuration to provision a **Kubernete
     brew install tfenv
     ```
     ```
-    tfenv install <version>0.12.24
+    tfenv install <version>
     ```
     For example:
     ```
@@ -24,9 +22,10 @@ In this tutorial, you will use a sample configuration to provision a **Kubernete
 
 1. Check Terraform installation by running **terraform** in your terminal or command prompt window. You should see a list of **Common commands**.
 
+
 ## Install IBM Cloud Provider
 
-1. Download the latest version of IBM Cloud Provider plugin. [https://github.com/IBM-Cloud/terraform-provider-ibm/releases](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
+1. Download the IBM Cloud Provider plugin. [https://github.com/IBM-Cloud/terraform-provider-ibm/releases](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
 
 1. Extract the archive
 
@@ -42,31 +41,30 @@ In this tutorial, you will use a sample configuration to provision a **Kubernete
     mv $HOME/Downloads/terraform-provider-ibm* $HOME/.terraform.d/plugins/
     ```
 
-1. Navigate into your hidden directory and verify that the installation is complete.
-
-    Example output:
-    ```
-    2019/10/22 13:52:47 IBM Cloud Provider version 0.18.0
-    This binary is a plugin. These are not meant to be executed directly.
-    Please execute the program that consumes these plugins,
-    ```
-
 1. Create a .terraformrc file in your home directory that points to the Terraform binary.
 
     ```
-    # ~/.terraformrc
+    vi ~/.terraformrc
+    ```
+    with the following content:
+    ```
     providers {
-      ibm = "$HOME/.terraform.d/plugins/terraform-provider-ibm_v0.18.0"
+      ibm = "$HOME/.terraform.d/plugins/terraform-provider-ibm_v1.9.0"
     }
     ```
     Note: Update the provider version accordingly.
 
+1. Export API credential tokens as environment variables
+    ```
+    export IC_API_KEY="Your IBM Cloud API Key"
+    ```
 
-## Set Platform API key
+
+## Initialize Terraform
 
 1. Go to the terraform folder
     ```
-    cd terraform
+    cd .cloud/terraform
     ```
 
 1. Terraform must initialize the provider before it can be used.
@@ -107,7 +105,7 @@ In this tutorial, you will use a sample configuration to provision a **Kubernete
     ```
     terraform plan
     ```
-    > You can activate debug log by running: *export TF_LOG=debug*
+    > You can activate debug log by running: *export TF_LOG=TRACE*
 
 1. Start provisioning
     ```
