@@ -52,7 +52,7 @@ In this tutorial, you will use a sample configuration to provision a **Kubernete
       ibm = "$HOME/.terraform.d/plugins/terraform-provider-ibm_v1.9.0"
     }
     ```
-    Note: Update the provider version accordingly.
+    > Note: Update the provider version accordingly.
 
 1. Export API credential tokens as environment variables
     ```
