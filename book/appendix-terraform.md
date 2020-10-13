@@ -20,86 +20,95 @@ In this tutorial, you will use a sample configuration to provision a **Kubernete
     tfenv install 0.12.24
     ```
 
-1. Check Terraform installation by running **terraform** in your terminal or command prompt window. You should see a list of **Common commands**.
+1. Check Terraform installation by running `terraform` in your terminal. You should see a list of **Common commands**.
 
 
 ## Install IBM Cloud Provider
 
-1. Download the IBM Cloud Provider plugin. [https://github.com/IBM-Cloud/terraform-provider-ibm/releases](https://github.com/IBM-Cloud/terraform-provider-ibm/releases)
-
-1. Extract the archive
-
-1. Create a hidden folder for your plug-in.
-
-    ```
-    mkdir $HOME/.terraform.d/plugins
-    ```
-
-1. Move the IBM Cloud Provider plug-in you extracted into your hidden folder.
-
-    ```
-    mv $HOME/Downloads/terraform-provider-ibm* $HOME/.terraform.d/plugins/
-    ```
-
-1. Create a .terraformrc file in your home directory that points to the Terraform binary.
-
-    ```
-    vi ~/.terraformrc
-    ```
-    with the following content:
-    ```
-    providers {
-      ibm = "$HOME/.terraform.d/plugins/terraform-provider-ibm_v1.9.0"
-    }
-    ```
-    > Note: Update the provider version accordingly.
+The IBM Cloud Terraform Provider is available on [HashiCorp Terraform Registry](https://registry.terraform.io/providers/IBM-Cloud/ibm).
 
 1. Export API credential tokens as environment variables
     ```
-    export IC_API_KEY="Your IBM Cloud API Key"
+    export TF_VAR_ibmcloud_api_key="Your IBM Cloud API Key"
     ```
+1. 
 
 
-## Initialize Terraform
+## Provision a VPC to host your cluster
 
 1. Go to the terraform folder
     ```
-    cd .cloud/terraform
+    cd cloud/terraform/02-vpc
     ```
 
 1. Terraform must initialize the provider before it can be used.
     ```
     terraform init
     ```
-
-1. Verify the terraform provider is installed
+    Output
     ```
-    terraform providers
+    Initializing the backend...
+
+    Initializing provider plugins...
+    - Finding ibm-cloud/ibm versions matching "1.12.0"...
+    - Installing ibm-cloud/ibm v1.12.0...
+    - Installed ibm-cloud/ibm v1.12.0 (self-signed, key ID AAD3B791C49CC253)
+
+    Partner and community providers are signed by their developers.
+    If you'd like to know more about provider signing, you can read about it here:
+    https://www.terraform.io/docs/plugins/signing.html
+
+    Terraform has been successfully initialized!
+
+    You may now begin working with Terraform. Try running "terraform plan" to see
+    any changes that are required for your infrastructure. All Terraform commands
+    should now work.
+
+    If you ever set or change modules or backend configuration for Terraform,
+    rerun this command to reinitialize your working directory. If you forget, other
+    commands will detect it and remind you to do so if necessary.
     ```
 
-    Output:
+1. Start provisioning
     ```
-    .
-    └── provider.ibm
+    terraform apply
     ```
-
-1. Copy terraform/credentials.tfvars.tmpl to terraform/credentials.tfvars by running the below command
-    ```
-    cp terraform/credentials.tfvars.tmpl terraform/credentials.tfvars
-    ```
-
-1. Edit terraform/credentials.tfvars and set the value for ibmcloud_api_key to the Platform API key you obtained.
-
-1. To provision the cluster, the terraform needs your Infrastructure API. To do so, go to [https://cloud.ibm.com/iam#/users](https://cloud.ibm.com/iam#/users)
-
-1. Select the User
-
-1. Scroll down to API Keys
-
-1. Select the **Classic infrastructure API key** - To see your classic infrastructure API key details, select Details in the Options menu.
 
 
 ## Provision a Kubernetes cluster
+
+1. Go to the terraform folder
+    ```
+    cd cloud/terraform/03-iks
+    ```
+
+1. Terraform must initialize the provider before it can be used.
+    ```
+    terraform init
+    ```
+    Output
+    ```
+    Initializing the backend...
+
+    Initializing provider plugins...
+    - Finding ibm-cloud/ibm versions matching "1.12.0"...
+    - Installing ibm-cloud/ibm v1.12.0...
+    - Installed ibm-cloud/ibm v1.12.0 (self-signed, key ID AAD3B791C49CC253)
+
+    Partner and community providers are signed by their developers.
+    If you'd like to know more about provider signing, you can read about it here:
+    https://www.terraform.io/docs/plugins/signing.html
+
+    Terraform has been successfully initialized!
+
+    You may now begin working with Terraform. Try running "terraform plan" to see
+    any changes that are required for your infrastructure. All Terraform commands
+    should now work.
+
+    If you ever set or change modules or backend configuration for Terraform,
+    rerun this command to reinitialize your working directory. If you forget, other
+    commands will detect it and remind you to do so if necessary.
+    ```
 
 1. Perform a dry run to show what infrastructure terraform intends to create
     ```

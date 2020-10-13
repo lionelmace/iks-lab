@@ -1,6 +1,6 @@
-# Push the docker image to the IBM Cloud Container Registry
+# Push the docker image to the IBM Container Registry
 
-Before you can deploy the application on the cluster, you first need to push the Docker image to the IBM Cloud private container registry.
+Before you can deploy the application on the cluster, you first need to push the Docker image to the IBM Container Registry.
 
 1. Log in to the private **Container Registry** of IBM Cloud. Only required if you haven't `ibmcloud login` before.
 
@@ -15,9 +15,9 @@ Before you can deploy the application on the cluster, you first need to push the
     ```
     You should get a namespace called **lab-registry**
 
-1. If you're using your own account, create a namespace such as **lab-registry**
+1. If you're using your own account, create a namespace such as **lab-lastname**
     ```sh
-    ibmcloud cr namespace-add lab-registry
+    ibmcloud cr namespace-add lab-<lastname>
     ```
 
 1. **Push** the image to your private image registry.

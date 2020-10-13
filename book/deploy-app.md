@@ -8,19 +8,19 @@ In this lab, we will test the **Ingress**.
 
 1. Navigate to the folder **kubernetes**.
     ```sh
-    cd .cloud/kubernetes
+    cd cloud/kubernetes
     ```
 
 1. In your favorite IDE such as VS Code, edit the file `ingress-tls-deploy.yaml`.
 
 1. Replace all the values wrapped in <...> with the appropriate values:
 
-    | Field              | Value         |
-    | ------------------ |:------------- |
-    | registry-region    | **de** for Frankfurt |
-    | registry-namespace | **lab-registry** |
-    | cloud-region       | **eu-de** for Frankfurt |
-    | cluster-name       | **lab-11** |
+  | Field              | Value         |
+  | ------------------ |:------------- |
+  | registry-region    | **de** for Frankfurt |
+  | registry-namespace | **lab-registry** |
+  | cloud-region       | **eu-de** for Frankfurt |
+  | cluster-name       | **lab-11** |
   
     Your YAML file should look as follows:
     ```yaml
