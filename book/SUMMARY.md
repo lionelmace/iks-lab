@@ -39,7 +39,6 @@
 
 ## Advanced
 * [Create a cluster with CLI](appendix-create-cluster-cli.md)
-* [Create a cluster in the Console](appendix-create-cluster-ui.md)
 * [Weavescope](weavescope.md)
 * [Provisioning with Terraform](appendix-terraform.md)
 * [Control traffic with Calico](calico.md)
