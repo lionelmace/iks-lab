@@ -219,7 +219,7 @@
                     
                         <b>2.6.</b>
                     
-                    Target your environement
+                    Target your environment
             
                 </a>
             
@@ -650,65 +650,78 @@
 </code></pre><p> For example:</p>
 <pre class="language-"><code> tfenv install 0.12.24
 </code></pre></li>
-<li><p>Check Terraform installation by running <strong>terraform</strong> in your terminal or command prompt window. You should see a list of <strong>Common commands</strong>.</p>
+<li><p>Check Terraform installation by running <code>terraform</code> in your terminal. You should see a list of <strong>Common commands</strong>.</p>
 </li>
 </ol>
 <h2 id="install-ibm-cloud-provider">Install IBM Cloud Provider</h2>
+<p>The IBM Cloud Terraform Provider is available on <a href="https://registry.terraform.io/providers/IBM-Cloud/ibm" target="_blank">HashiCorp Terraform Registry</a>.</p>
 <ol>
-<li><p>Download the IBM Cloud Provider plugin. <a href="https://github.com/IBM-Cloud/terraform-provider-ibm/releases" target="_blank">https://github.com/IBM-Cloud/terraform-provider-ibm/releases</a></p>
-</li>
-<li><p>Extract the archive</p>
-</li>
-<li><p>Create a hidden folder for your plug-in.</p>
-<pre class="language-"><code> mkdir $HOME/.terraform.d/plugins
+<li>Export API credential tokens as environment variables<pre class="language-"><code> export TF_VAR_ibmcloud_api_key=&quot;Your IBM Cloud API Key&quot;
 </code></pre></li>
-<li><p>Move the IBM Cloud Provider plug-in you extracted into your hidden folder.</p>
-<pre class="language-"><code> mv $HOME/Downloads/terraform-provider-ibm* $HOME/.terraform.d/plugins/
-</code></pre></li>
-<li><p>Create a .terraformrc file in your home directory that points to the Terraform binary.</p>
-<pre class="language-"><code> vi ~/.terraformrc
-</code></pre><p> with the following content:</p>
-<pre class="language-"><code> providers {
-   ibm = &quot;$HOME/.terraform.d/plugins/terraform-provider-ibm_v1.9.0&quot;
- }
-</code></pre><blockquote>
-<p>Note: Update the provider version accordingly.</p>
-</blockquote>
-</li>
-<li><p>Export API credential tokens as environment variables</p>
-<pre class="language-"><code> export IC_API_KEY=&quot;Your IBM Cloud API Key&quot;
-</code></pre></li>
+<li></li>
 </ol>
-<h2 id="initialize-terraform">Initialize Terraform</h2>
+<h2 id="provision-a-vpc-to-host-your-cluster">Provision a VPC to host your cluster</h2>
 <ol>
 <li><p>Go to the terraform folder</p>
-<pre class="language-"><code> cd .cloud/terraform
+<pre class="language-"><code> cd cloud/terraform/02-vpc
 </code></pre></li>
 <li><p>Terraform must initialize the provider before it can be used.</p>
 <pre class="language-"><code> terraform init
+</code></pre><p> Output</p>
+<pre class="language-"><code> Initializing the backend...
+
+ Initializing provider plugins...
+ - Finding ibm-cloud/ibm versions matching &quot;1.12.0&quot;...
+ - Installing ibm-cloud/ibm v1.12.0...
+ - Installed ibm-cloud/ibm v1.12.0 (self-signed, key ID AAD3B791C49CC253)
+
+ Partner and community providers are signed by their developers.
+ If you&apos;d like to know more about provider signing, you can read about it here:
+ https://www.terraform.io/docs/plugins/signing.html
+
+ Terraform has been successfully initialized!
+
+ You may now begin working with Terraform. Try running &quot;terraform plan&quot; to see
+ any changes that are required for your infrastructure. All Terraform commands
+ should now work.
+
+ If you ever set or change modules or backend configuration for Terraform,
+ rerun this command to reinitialize your working directory. If you forget, other
+ commands will detect it and remind you to do so if necessary.
 </code></pre></li>
-<li><p>Verify the terraform provider is installed</p>
-<pre class="language-"><code> terraform providers
-</code></pre><p> Output:</p>
-<pre class="language-"><code> .
- &#x2514;&#x2500;&#x2500; provider.ibm
+<li><p>Start provisioning</p>
+<pre class="language-"><code> terraform apply
 </code></pre></li>
-<li><p>Copy terraform/credentials.tfvars.tmpl to terraform/credentials.tfvars by running the below command</p>
-<pre class="language-"><code> cp terraform/credentials.tfvars.tmpl terraform/credentials.tfvars
-</code></pre></li>
-<li><p>Edit terraform/credentials.tfvars and set the value for ibmcloud_api_key to the Platform API key you obtained.</p>
-</li>
-<li><p>To provision the cluster, the terraform needs your Infrastructure API. To do so, go to <a href="https://cloud.ibm.com/iam#/users" target="_blank">https://cloud.ibm.com/iam#/users</a></p>
-</li>
-<li><p>Select the User</p>
-</li>
-<li><p>Scroll down to API Keys</p>
-</li>
-<li><p>Select the <strong>Classic infrastructure API key</strong> - To see your classic infrastructure API key details, select Details in the Options menu.</p>
-</li>
 </ol>
 <h2 id="provision-a-kubernetes-cluster">Provision a Kubernetes cluster</h2>
 <ol>
+<li><p>Go to the terraform folder</p>
+<pre class="language-"><code> cd cloud/terraform/03-iks
+</code></pre></li>
+<li><p>Terraform must initialize the provider before it can be used.</p>
+<pre class="language-"><code> terraform init
+</code></pre><p> Output</p>
+<pre class="language-"><code> Initializing the backend...
+
+ Initializing provider plugins...
+ - Finding ibm-cloud/ibm versions matching &quot;1.12.0&quot;...
+ - Installing ibm-cloud/ibm v1.12.0...
+ - Installed ibm-cloud/ibm v1.12.0 (self-signed, key ID AAD3B791C49CC253)
+
+ Partner and community providers are signed by their developers.
+ If you&apos;d like to know more about provider signing, you can read about it here:
+ https://www.terraform.io/docs/plugins/signing.html
+
+ Terraform has been successfully initialized!
+
+ You may now begin working with Terraform. Try running &quot;terraform plan&quot; to see
+ any changes that are required for your infrastructure. All Terraform commands
+ should now work.
+
+ If you ever set or change modules or backend configuration for Terraform,
+ rerun this command to reinitialize your working directory. If you forget, other
+ commands will detect it and remind you to do so if necessary.
+</code></pre></li>
 <li><p>Perform a dry run to show what infrastructure terraform intends to create</p>
 <pre class="language-"><code> terraform plan
 </code></pre><blockquote>

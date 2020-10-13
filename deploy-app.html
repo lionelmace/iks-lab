@@ -219,7 +219,7 @@
                     
                         <b>2.6.</b>
                     
-                    Target your environement
+                    Target your environment
             
                 </a>
             
@@ -643,18 +643,18 @@
 <h2 id="deploy-with-ingress">Deploy with Ingress</h2>
 <ol>
 <li><p>Navigate to the folder <strong>kubernetes</strong>.</p>
-<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">cd</span> .cloud/kubernetes
+<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">cd</span> cloud/kubernetes
 </code></pre>
 </li>
 <li><p>In your favorite IDE such as VS Code, edit the file <code>ingress-tls-deploy.yaml</code>.</p>
 </li>
 <li><p>Replace all the values wrapped in &lt;...&gt; with the appropriate values:</p>
-<p> | Field              | Value         |
- | ------------------ |:------------- |
- | registry-region    | <strong>de</strong> for Frankfurt |
- | registry-namespace | <strong>lab-registry</strong> |
- | cloud-region       | <strong>eu-de</strong> for Frankfurt |
- | cluster-name       | <strong>lab-11</strong> |</p>
+<p>| Field              | Value         |
+| ------------------ |:------------- |
+| registry-region    | <strong>de</strong> for Frankfurt |
+| registry-namespace | <strong>lab-registry</strong> |
+| cloud-region       | <strong>eu-de</strong> for Frankfurt |
+| cluster-name       | <strong>lab-11</strong> |</p>
 <p> Your YAML file should look as follows:</p>
 <pre class="language-"><code class="lang-yaml"> <span class="token punctuation">---</span>
   <span class="token comment"># Application to deploy</span>

@@ -219,7 +219,7 @@
                     
                         <b>2.6.</b>
                     
-                    Target your environement
+                    Target your environment
             
                 </a>
             
@@ -637,8 +637,8 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="push-the-docker-image-to-the-ibm-cloud-container-registry">Push the docker image to the IBM Cloud Container Registry</h1>
-<p>Before you can deploy the application on the cluster, you first need to push the Docker image to the IBM Cloud private container registry.</p>
+                                <h1 id="push-the-docker-image-to-the-ibm-container-registry">Push the docker image to the IBM Container Registry</h1>
+<p>Before you can deploy the application on the cluster, you first need to push the Docker image to the IBM Container Registry.</p>
 <ol>
 <li><p>Log in to the private <strong>Container Registry</strong> of IBM Cloud. Only required if you haven&apos;t <code>ibmcloud login</code> before.</p>
 <pre class="language-"><code class="lang-sh"> ibmcloud cr login
@@ -652,8 +652,8 @@
 </code></pre>
 <p> You should get a namespace called <strong>lab-registry</strong></p>
 </li>
-<li><p>If you&apos;re using your own account, create a namespace such as <strong>lab-registry</strong></p>
-<pre class="language-"><code class="lang-sh"> ibmcloud cr namespace-add lab-registry
+<li><p>If you&apos;re using your own account, create a namespace such as <strong>lab-lastname</strong></p>
+<pre class="language-"><code class="lang-sh"> ibmcloud cr namespace-add lab-<span class="token operator">&lt;</span>lastname<span class="token operator">&gt;</span>
 </code></pre>
 </li>
 <li><p><strong>Push</strong> the image to your private image registry.</p>
