@@ -2,7 +2,9 @@
 
 [Terraform](https://www.terraform.io/) enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.
 
-In this tutorial, you will use a sample configuration to provision a **Kubernetes cluster**, and, a **Postgres** database. Finish by deleting all of the resources created by the configuration.
+The IBM Cloud Terraform Provider is available on [HashiCorp Terraform Registry](https://registry.terraform.io/providers/IBM-Cloud/ibm).
+
+In this tutorial, you will use a sample configuration to provision a **VPC**, a **Kubernetes cluster** and, a **Postgres** database. Finish by deleting all of the resources created by the configuration.
 
 ## Install Terraform
 
@@ -23,18 +25,12 @@ In this tutorial, you will use a sample configuration to provision a **Kubernete
 1. Check Terraform installation by running `terraform` in your terminal. You should see a list of **Common commands**.
 
 
-## Install IBM Cloud Provider
-
-The IBM Cloud Terraform Provider is available on [HashiCorp Terraform Registry](https://registry.terraform.io/providers/IBM-Cloud/ibm).
+## Provision a VPC to host your cluster
 
 1. Export API credential tokens as environment variables
     ```
     export TF_VAR_ibmcloud_api_key="Your IBM Cloud API Key"
     ```
-1. 
-
-
-## Provision a VPC to host your cluster
 
 1. Go to the terraform folder
     ```
