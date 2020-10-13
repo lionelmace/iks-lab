@@ -81,7 +81,7 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="appendix-create-cluster-ui.html" />
+    <link rel="next" href="weavescope.html" />
     
     
     <link rel="prev" href="monitor-cluster-metrics.html" />
@@ -495,27 +495,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.2" data-path="appendix-create-cluster-ui.html">
-            
-                <a href="appendix-create-cluster-ui.html">
-            
-                    
-                        <b>6.2.</b>
-                    
-                    Create a cluster in the Console
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="6.3" data-path="weavescope.html">
+        <li class="chapter " data-level="6.2" data-path="weavescope.html">
             
                 <a href="weavescope.html">
             
                     
-                        <b>6.3.</b>
+                        <b>6.2.</b>
                     
                     Weavescope
             
@@ -525,12 +510,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.4" data-path="appendix-terraform.html">
+        <li class="chapter " data-level="6.3" data-path="appendix-terraform.html">
             
                 <a href="appendix-terraform.html">
             
                     
-                        <b>6.4.</b>
+                        <b>6.3.</b>
                     
                     Provisioning with Terraform
             
@@ -540,12 +525,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.5" data-path="calico.html">
+        <li class="chapter " data-level="6.4" data-path="calico.html">
             
                 <a href="calico.html">
             
                     
-                        <b>6.5.</b>
+                        <b>6.4.</b>
                     
                     Control traffic with Calico
             
@@ -555,12 +540,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.6" data-path="appendix.html">
+        <li class="chapter " data-level="6.5" data-path="appendix.html">
             
                 <a href="appendix.html">
             
                     
-                        <b>6.6.</b>
+                        <b>6.5.</b>
                     
                     Appendix
             
@@ -660,73 +645,86 @@
 </ol>
 <h2 id="create-a-standard-cluster">Create a Standard cluster</h2>
 <ol>
-<li><p>Set Infrastructure credentials</p>
-<pre class="language-"><code> ibmcloud ks credentials-set --infrastructure-username <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>YOUR-USER-NAME</span><span class="token punctuation">&gt;</span></span> --infrastructure-api-key <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>YOUR-API-KEY</span><span class="token punctuation">&gt;</span></span>
+<li><p>Select the Kubernetes version</p>
+<pre class="language-"><code> ibmcloud ks versions
+</code></pre><p> Output</p>
+<pre class="language-"><code> Kubernetes Versions
+ 1.16.15
+ 1.17.12
+ 1.18.9 (default)
+ 1.19.2
 </code></pre></li>
 <li><p>Review the data centers that are available.</p>
-<pre class="language-"><code> ibmcloud ks zones
-</code></pre><p> Output for US South:</p>
-<pre class="language-"><code> dal10
- dal12
+<pre class="language-"><code> ibmcloud ks zones --provider vpc-gen2
+</code></pre><p> Output for Frankfurt:</p>
+<pre class="language-"><code> eu-de-1      eu-de-1      Frankfurt         -
+ eu-de-2      eu-de-2      Frankfurt         -
+ eu-de-3      eu-de-3      Frankfurt         -
 </code></pre></li>
 <li><p>Review the machine types available in the data center</p>
-<pre class="language-"><code> ibmcloud ks machine-types <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>datacenter</span><span class="token punctuation">&gt;</span></span>
-</code></pre><p> Output for fra02:</p>
-<pre class="language-"><code> Name                      Cores   Memory   Network Speed   OS             Server Type   Storage   Secondary Storage   Trustable
- u2c.2x4                   2       4GB      1000Mbps        UBUNTU_16_64   virtual       25GB      100GB               false
- ms2c.4x32.1.9tb.ssd       4       32GB     10000Mbps       UBUNTU_16_64   physical      2000GB    960GB               false
- ms2c.16x64.1.9tb.ssd      16      64GB     10000Mbps       UBUNTU_16_64   physical      2000GB    960GB               true
- ms2c.28x256.3.8tb.ssd     28      256GB    10000Mbps       UBUNTU_16_64   physical      2000GB    1920GB              true
- ms2c.28x512.4x3.8tb.ssd   28      512GB    10000Mbps       UBUNTU_16_64   physical      2000GB    1920GB              true
- mr1c.28x512               28      512GB    10000Mbps       UBUNTU_16_64   physical      2000GB    960GB               true
- mg1c.16x128               16      128GB    10000Mbps       UBUNTU_16_64   physical      2000GB    960GB               false
- mg1c.28x256               28      256GB    10000Mbps       UBUNTU_16_64   physical      2000GB    960GB               false
- md1c.16x64.4x4tb          16      64GB     10000Mbps       UBUNTU_16_64   physical      2000GB    8000GB              true
- md1c.28x512.4x4tb         28      512GB    10000Mbps       UBUNTU_16_64   physical      2000GB    8000GB              true
- mb2c.4x32                 4       32GB     10000Mbps       UBUNTU_16_64   physical      2000GB    2000GB              false
- mb1c.16x64                16      64GB     10000Mbps       UBUNTU_16_64   physical      2000GB    960GB               true
- c2c.16x16                 16      16GB     1000Mbps        UBUNTU_16_64   virtual       25GB      100GB               false
- c2c.16x32                 16      32GB     1000Mbps        UBUNTU_16_64   virtual       25GB      100GB               false
- c2c.32x32                 32      32GB     1000Mbps        UBUNTU_16_64   virtual       25GB      100GB               false
- c2c.32x64                 32      64GB     1000Mbps        UBUNTU_16_64   virtual       25GB      100GB               false
- b2c.4x16                  4       16GB     1000Mbps        UBUNTU_16_64   virtual       25GB      100GB               false
- b2c.8x32                  8       32GB     1000Mbps        UBUNTU_16_64   virtual       25GB      100GB               false
- b2c.16x64                 16      64GB     1000Mbps        UBUNTU_16_64   virtual       25GB      100GB               false
- b2c.32x128                32      128GB    1000Mbps        UBUNTU_16_64   virtual       25GB      100GB               false
- b2c.56x242                56      242GB    1000Mbps        UBUNTU_16_64   virtual       25GB      100GB               false
+<pre class="language-"><code> ic ks flavors --zone <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>zone</span><span class="token punctuation">&gt;</span></span>
+</code></pre><p> Output for eu-de-1:</p>
+<pre class="language-"><code> Name         Cores   Memory   Network Speed   OS             Server Type   Storage   Secondary Storage   Provider
+ b2.16x64&#x2020;    16      64GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
+ b2.32x128&#x2020;   32      128GB    1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
+ b2.4x16&#x2020;     4       16GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
+ b2.8x32&#x2020;     8       32GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
+ bx2.16x64    16      64GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ bx2.2x8&#x2020;     2       8GB      4Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ bx2.32x128   32      128GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ bx2.48x192   48      192GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ bx2.4x16     4       16GB     8Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ bx2.8x32     8       32GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ c2.16x32&#x2020;    16      32GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
+ c2.2x4&#x2020;      2       4GB      1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
+ c2.32x64&#x2020;    32      64GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
+ cx2.16x32    16      32GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ cx2.2x4&#x2020;     2       4GB      4Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ cx2.32x64    32      64GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ cx2.48x96    48      96GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ cx2.4x8&#x2020;     4       8GB      8Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ cx2.8x16     8       16GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ m2.16x128&#x2020;   16      128GB    1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
+ m2.8x64&#x2020;     8       64GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
+ mx2.16x128   16      128GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ mx2.2x16&#x2020;    2       16GB     4Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ mx2.32x256   32      256GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ mx2.48x384   48      384GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ mx2.4x32     4       32GB     8Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
+ mx2.8x64     8       64GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
 </code></pre></li>
-<li><p>Get the available VLANs in your account</p>
-<pre class="language-"><code> ibmcloud ks vlans <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>datacenter</span><span class="token punctuation">&gt;</span></span>
+<li><p>Get the available VPCs in your account</p>
+<pre class="language-"><code> ibmcloud is vpcs
 </code></pre><p> Output for fra02:</p>
-<pre class="language-"><code> ID        Name   Number   Type      Router         Supports Virtual Workers
- 2438033          1817     private   bcr01a.fra02   true
- 2438031          1898     public    fcr01a.fra02   true
+<pre class="language-"><code> Listing vpcs for generation 2 compute in resource group demo and region eu-de under account ACME as user lionel.mace@fr.ibm.com...
+ ID                                          Name            Status      Classic access   Default network ACL   Default security group   Resource group
+ r010-68dfdcd1-a8ca-4302-83a1-a14d7408ab7c   vpc-eu-de-iks   available   false            vpc-eu-de-iks-acl     vpc-eu-de-iks-sg         demo
 </code></pre><blockquote>
 <p> When you create a Kube cluster with no vlans in create command, those should get created for you.</p>
 </blockquote>
 </li>
+<li><p>Get the available subnet for the vpc above</p>
+<pre class="language-"><code> ic is subnets
+</code></pre></li>
 <li><p>Create cluster</p>
-<pre class="language-"><code> ibmcloud ks cluster-create \
+<pre class="language-"><code> ibmcloud ks cluster create vpc-gen2 \
    --name <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span> \
    --zone <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>zone</span><span class="token punctuation">&gt;</span></span> \
    --workers <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>number-of-workers</span><span class="token punctuation">&gt;</span></span> \
-   --machine-type <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>machine-type</span><span class="token punctuation">&gt;</span></span> \
-   --hardware shared \
-   --public-vlan <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>public-vlan-id</span><span class="token punctuation">&gt;</span></span> \
-   --private-vlan <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>private-vlan-id</span><span class="token punctuation">&gt;</span></span>
+   --flavor <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>machine-type</span><span class="token punctuation">&gt;</span></span> \
+   --version <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>kubernetes-version</span><span class="token punctuation">&gt;</span></span> \
+   --vpc-id <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vpc-id</span><span class="token punctuation">&gt;</span></span> \
+   --subnet-id <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>subnet-id</span><span class="token punctuation">&gt;</span></span>
 </code></pre><p> For example:</p>
-<pre class="language-"><code> ibmcloud ks cluster-create \
-   --name my-cluster \
-   --zone fra02 \
-   --workers 1 \
-   --machine-type u2c.2x4 \
-   --hardware shared \
-   --public-vlan 2438031 \
-   --private-vlan 2438033
-</code></pre><blockquote>
-<p>The cluster creation can be scripted. A yml sample is provided in <strong>kubernetes/cluster-create.yml</strong> once you have donwloaded the application code in Step 5.</p>
-</blockquote>
-</li>
+<pre class="language-"><code> ibmcloud ks cluster create vpc-gen2 \
+   --name mycluster \
+   --zone eu-de-1 \
+   --version 1.18.9 \
+   --flavor cx2.2x4  \
+   --workers 2 \
+   --vpc-id r006-809f4e33-36fb-4bdd-a026-bd2a4918eeee \
+   --subnet-id 0717-30090a05-434a-42e3-973f-dde7999acb2c
+</code></pre></li>
 <li><p>Verify that the creation of the cluster was requested.</p>
 <pre class="language-"><code> ibmcloud ks clusters
 </code></pre></li>
@@ -756,26 +754,10 @@
 <p> <code>kubectl get nodes</code></p>
 </li>
 </ol>
-<h2 id="access-the-cluster-via-kubernetes-cli-and-dashboard">Access the cluster via Kubernetes CLI and Dashboard</h2>
+<h2 id="access-the-cluster-via-kubernetes-cli">Access the cluster via Kubernetes CLI</h2>
 <ol>
-<li><p>You will need the kubeconfig data and certs to connect to your cluster using kubectl. You can download the config to your local machine via the CLI. Issue the following command to download your kubeconfig for a given cluster.</p>
-<pre class="language-"><code> ibmcloud ks cluster-config <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster_name_or_id</span><span class="token punctuation">&gt;</span></span>
+<li>You will need the kubeconfig data and certs to connect to your cluster using kubectl. You can download the config to your local machine via the CLI.<pre class="language-"><code> ibmcloud ks cluster-config <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster_name_or_id</span><span class="token punctuation">&gt;</span></span>
 </code></pre></li>
-<li><p>Use the result of the previous command to set the path to your Kubernetes configuration file as an environment variable.
- For Mac:
- <code>export KUBECONFIG=/Users/ibm/.bluemix/plugins...</code>
- For Win:
- <code>set KUBECONFIG=/Users/ibm/.bluemix/plugins...</code></p>
-</li>
-<li><p>Access your Kubernetes dashboard with the default port 8001.</p>
-<pre class="language-"><code> kubectl proxy
- Starting to serve on 127.0.0.1:8001
-</code></pre></li>
-<li><p>Open the Kubernetes dashboard: <a href="http://localhost:8001/ui" target="_blank">http://localhost:8001/ui</a></p>
-<p>      <a href="images/kubernetes-dashboard.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/kubernetes-dashboard.png" alt="">
-     </a></p>
-</li>
 </ol>
 
                                 
@@ -809,7 +791,7 @@
                 </a>
                 
                 
-                <a href="appendix-create-cluster-ui.html" class="navigation navigation-next " aria-label="Next page: Create a cluster in the Console">
+                <a href="weavescope.html" class="navigation navigation-next " aria-label="Next page: Weavescope">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -820,7 +802,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Create a cluster with CLI","level":"6.1","depth":1,"next":{"title":"Create a cluster in the Console","level":"6.2","depth":1,"path":"appendix-create-cluster-ui.md","ref":"appendix-create-cluster-ui.md","articles":[]},"previous":{"title":"Monitoring your cluster","level":"5.2","depth":1,"path":"monitor-cluster-metrics.md","ref":"monitor-cluster-metrics.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"appendix-create-cluster-cli.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Create a cluster with CLI","level":"6.1","depth":1,"next":{"title":"Weavescope","level":"6.2","depth":1,"path":"weavescope.md","ref":"weavescope.md","articles":[]},"previous":{"title":"Monitoring your cluster","level":"5.2","depth":1,"path":"monitor-cluster-metrics.md","ref":"monitor-cluster-metrics.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"appendix-create-cluster-cli.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
