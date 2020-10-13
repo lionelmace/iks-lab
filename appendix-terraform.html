@@ -639,7 +639,8 @@
                                 
                                 <h1 id="deploy-the-solution-using-terraform">Deploy the solution using Terraform</h1>
 <p><a href="https://www.terraform.io/" target="_blank">Terraform</a> enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.</p>
-<p>In this tutorial, you will use a sample configuration to provision a <strong>Kubernetes cluster</strong>, and, a <strong>Postgres</strong> database. Finish by deleting all of the resources created by the configuration.</p>
+<p>The IBM Cloud Terraform Provider is available on <a href="https://registry.terraform.io/providers/IBM-Cloud/ibm" target="_blank">HashiCorp Terraform Registry</a>.</p>
+<p>In this tutorial, you will use a sample configuration to provision a <strong>VPC</strong>, a <strong>Kubernetes cluster</strong> and, a <strong>Postgres</strong> database. Finish by deleting all of the resources created by the configuration.</p>
 <h2 id="install-terraform">Install Terraform</h2>
 <ol>
 <li><p>Download and install Terraform for your system. <a href="https://learn.hashicorp.com/terraform/getting-started/install.html" target="_blank">https://learn.hashicorp.com/terraform/getting-started/install.html</a></p>
@@ -653,15 +654,11 @@
 <li><p>Check Terraform installation by running <code>terraform</code> in your terminal. You should see a list of <strong>Common commands</strong>.</p>
 </li>
 </ol>
-<h2 id="install-ibm-cloud-provider">Install IBM Cloud Provider</h2>
-<p>The IBM Cloud Terraform Provider is available on <a href="https://registry.terraform.io/providers/IBM-Cloud/ibm" target="_blank">HashiCorp Terraform Registry</a>.</p>
-<ol>
-<li>Export API credential tokens as environment variables<pre class="language-"><code> export TF_VAR_ibmcloud_api_key=&quot;Your IBM Cloud API Key&quot;
-</code></pre></li>
-<li></li>
-</ol>
 <h2 id="provision-a-vpc-to-host-your-cluster">Provision a VPC to host your cluster</h2>
 <ol>
+<li><p>Export API credential tokens as environment variables</p>
+<pre class="language-"><code> export TF_VAR_ibmcloud_api_key=&quot;Your IBM Cloud API Key&quot;
+</code></pre></li>
 <li><p>Go to the terraform folder</p>
 <pre class="language-"><code> cd cloud/terraform/02-vpc
 </code></pre></li>
