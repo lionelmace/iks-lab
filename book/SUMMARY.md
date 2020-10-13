@@ -11,7 +11,7 @@
 * [Connect IBM Cloud Account](login.md)
 * [Get a cluster](prepare-get-cluster.md)
 * [Connect via CLI](connect-via-cli.md)
-* [Target your environement](prepare-target.md)
+* [Target your environment](prepare-target.md)
 
 ## Lab 1 - Deploy an app in a Kubernetes cluster
 
