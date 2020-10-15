@@ -82,7 +82,7 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
         spec:
           containers:
           - name: mytodo
-            image: <region>.icr.io/<namespace>/mytodo-<lastname>:1.0
+            image: <registry-region>.icr.io/<registry-namespace>/mytodo-<lastname>:1.0
             imagePullPolicy: Always
             resources:
               requests:

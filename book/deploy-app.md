@@ -43,7 +43,7 @@ In this lab, we will test the **Ingress**.
         spec:
           containers:
           - name: mytodo
-            image: <registry-region>.icr.io/<registry-namespace-name>/todo-<lastname>:1.0
+            image: <registry-region>.icr.io/<registry-namespace>/todo-<lastname>:1.0
             imagePullPolicy: Always
             resources:
               requests:
@@ -66,10 +66,10 @@ In this lab, we will test the **Ingress**.
     spec:
       tls:
       - hosts:
-        - todo.<cluster-name>.<cloud-region>.containers.appdomain.cloud
+        - mytodo.<cluster-name>.<cloud-region>.containers.appdomain.cloud
         secretName: <cluster-name>
       rules:
-      - host: todo.<cluster-name>.<cloud-region>.containers.appdomain.cloud
+      - host: mytodo.<cluster-name>.<cloud-region>.containers.appdomain.cloud
         http:
           paths:
           - path: /
@@ -107,6 +107,6 @@ In this lab, we will test the **Ingress**.
 
 1. Open a browser and check out the app with the following URL:
     ```
-    https://todo.<cluster-name>.eu-de.containers.appdomain.cloud
+    https://mytodo.<cluster-name>.eu-de.containers.appdomain.cloud
     ```
     In this example, the url would be ```https://mytodo.lab-cluster-1.eu-de.containers.appdomain.cloud```
