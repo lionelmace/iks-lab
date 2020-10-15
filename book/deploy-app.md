@@ -15,12 +15,12 @@ In this lab, we will test the **Ingress**.
 
 1. Replace all the values wrapped in <...> with the appropriate values:
 
-  | Field              | Value         |
-  | ------------------ |:------------- |
-  | registry-region    | **de** for Frankfurt |
-  | registry-namespace | **lab-registry** |
-  | cloud-region       | **eu-de** for Frankfurt |
-  | cluster-name       | **lab-11** |
+    | Field              | Value         |
+    | ------------------ |:------------- |
+    | registry-region    | **de** for Frankfurt |
+    | registry-namespace | **lab-registry** |
+    | cloud-region       | **eu-de** for Frankfurt |
+    | cluster-name       | **lab-11** |
   
     Your YAML file should look as follows:
     ```yaml
@@ -43,7 +43,7 @@ In this lab, we will test the **Ingress**.
         spec:
           containers:
           - name: mytodo
-            image: <registry-region>.icr.io/<registry-namespace>/todo-<lastname>:1.0
+            image: <registry-region>.icr.io/<registry-namespace>/mytodo-<lastname>:1.0
             imagePullPolicy: Always
             resources:
               requests:
