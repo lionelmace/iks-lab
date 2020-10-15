@@ -69,6 +69,7 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
     kind: Deployment
     metadata:
       name: mytodo
+      namespace: mytodo
     spec:
       replicas: 2 # tells deployment to run 2 pods matching the template
       selector:
