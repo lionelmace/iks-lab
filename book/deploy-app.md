@@ -1,6 +1,6 @@
 # Deploy the app in your cluster
 
-Different ways exist to make your app accessible from the internet. To choose the best networking option for your application, you can follow the decision tree available [here](https://cloud.ibm.com/docs/containers/cs_network_planning.html#planning).
+Different ways exist to make your app accessible from the internet. To choose the best networking option for your application, you can follow the decision tree available [here](https://cloud.ibm.com/docs/containers?topic=containers-cs_network_planning).
 
 In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
 
