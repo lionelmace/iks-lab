@@ -53,21 +53,10 @@ By default, any deployment is done in the namespace **default**. A best practise
 
 1. Retrieve the values of both the ingress subdomain and the ingress secret of your cluster
     ```
-    ibmcloud ks cluster get -c <cluster-name>
+    ibmcloud ks cluster get -c <cluster-name> | grep Ingress
     ```
     Output example:
     ```
-    Name:                           iks
-    ID:                             bu3m8kqf0imum0ifs9dg
-    State:                          normal
-    Status:                         All Workers Normal
-    Created:                        2020-10-14 22:49:23 +0200 (1 day ago)
-    Resource Group ID:              b09f8cf6d2bd4f59a777bbeeb390c0e2
-    Resource Group Name:            demo
-    Pod Subnet:                     172.17.64.0/18
-    Service Subnet:                 172.21.0.0/16
-    Workers:                        3
-    Worker Zones:                   eu-de-1, eu-de-2, eu-de-3
     Ingress Subdomain:              iks-466821-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
     Ingress Secret:                 iks-466821-483cccd2f0d38128dd40d2b711142ba9-0000
     Ingress Status:                 healthy
