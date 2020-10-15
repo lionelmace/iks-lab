@@ -626,12 +626,12 @@
 <p>Different ways exist to make your app accessible from the internet. To choose the best networking option for your application, you can follow the decision tree available <a href="https://cloud.ibm.com/docs/containers/cs_network_planning.html#planning" target="_blank">here</a>.</p>
 <p>In this lab, we will test the <strong>Ingress</strong>, which a NGINX based reverse proxy.</p>
 <h2 id="create-a-kubernetes-namespace">Create a Kubernetes namespace</h2>
-<p>By default any deployment is done in the namespace <strong>default</strong>. A good practise is to create a dedicated namespace for this deployement. Let&apos;s do it.</p>
+<p>By default, any deployment is done in the namespace <strong>default</strong>. A best practise is to create a new namespace for this deployment. In order to be able to pull image during the deployement, we also need to set up the Container Registry image pull secret in the new namespace.</p>
 <ol>
 <li><p>Create a Kubernetes namespace called <code>mytodo</code></p>
 <pre class="language-"><code> kubectl create namespace mytodo
 </code></pre></li>
-<li><p>Set up the Container Registry image pull secret in the new namespace to be able to pull image during the deployement later. Let&apos;s copy the all-icr-io image pull secret from the default namespace to the new namespace <code>mytodo</code></p>
+<li><p>Let&apos;s copy the all-icr-io image pull secret from the default namespace to the new namespace <code>mytodo</code></p>
 <pre class="language-"><code> kubectl get secret all-icr-io -n default -o yaml | sed &apos;s/default/mytodo/g&apos; | kubectl create -n mytodo -f -
 </code></pre></li>
 <li><p>Verify that the secrets are created successfully.</p>
