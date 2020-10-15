@@ -622,94 +622,138 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="deploy-the-app-using-kubernetes-services-and-deployments">Deploy the app using Kubernetes Services and Deployments</h1>
+                                <h1 id="deploy-the-app-in-your-cluster">Deploy the app in your cluster</h1>
 <p>Different ways exist to make your app accessible from the internet. To choose the best networking option for your application, you can follow the decision tree available <a href="https://cloud.ibm.com/docs/containers/cs_network_planning.html#planning" target="_blank">here</a>.</p>
-<p>In this lab, we will test the <strong>Ingress</strong>.</p>
+<p>In this lab, we will test the <strong>Ingress</strong>, which a NGINX based reverse proxy.</p>
+<h2 id="create-a-kubernetes-namespace">Create a Kubernetes namespace</h2>
+<p>By default any deployment is done in the namespace <strong>default</strong>. A good practise is to create a dedicated namespace for this deployement. Let&apos;s do it.</p>
+<ol>
+<li><p>Create a Kubernetes namespace called <code>mytodo</code></p>
+<pre class="language-"><code> kubectl create namespace mytodo
+</code></pre></li>
+<li><p>Set up the Container Registry image pull secret in the new namespace to be able to pull image during the deployement later. Let&apos;s copy the all-icr-io image pull secret from the default namespace to the new namespace <code>mytodo</code></p>
+<pre class="language-"><code> kubectl get secret all-icr-io -n default -o yaml | sed &apos;s/default/mytodo/g&apos; | kubectl create -n mytodo -f -
+</code></pre></li>
+<li><p>Verify that the secrets are created successfully.</p>
+<pre class="language-"><code> kubectl get secrets -n mytodo | grep icr-io
+</code></pre></li>
+<li><p>To deploy containers, add the image pull secret to the service account of the namespace so that any deployment in the namespace can pull images from the registry.</p>
+<pre class="language-"><code> kubectl patch  -n mytodo serviceaccount/default -p &apos;{&quot;imagePullSecrets&quot;:[{&quot;name&quot;: &quot;all-icr-io&quot;}]}&apos;
+</code></pre></li>
+<li><p>Verify that your image pull secret was added to your default service account.</p>
+<pre class="language-"><code> kubectl describe serviceaccount default -n mytodo
+</code></pre><p> Example output:</p>
+<pre class="language-"><code> Name:                default
+ Namespace:           mytodo
+ Labels:              <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>
+ Annotations:         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>
+ Image pull secrets:  all-icr-io
+ Mountable secrets:   default-token-xs4kr
+ Tokens:              default-token-xs4kr
+ Events:              <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>
+</code></pre></li>
+</ol>
 <h2 id="deploy-with-ingress">Deploy with Ingress</h2>
 <ol>
 <li><p>Navigate to the folder <strong>kubernetes</strong>.</p>
 <pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">cd</span> cloud/kubernetes
 </code></pre>
 </li>
-<li><p>In your favorite IDE such as VS Code, edit the file <code>ingress-tls-deploy.yaml</code>.</p>
+<li><p>Edit the file <code>ingress-tls-deploy.yaml</code>.</p>
 </li>
 <li><p>Replace all the values wrapped in &lt;...&gt; with the appropriate values:</p>
-<p> | Field              | Value         |
- | ------------------ |:------------- |
- | registry-region    | <strong>de</strong> for Frankfurt |
- | registry-namespace | <strong>lab-registry</strong> |
- | cloud-region       | <strong>eu-de</strong> for Frankfurt |
- | cluster-name       | <strong>lab-11</strong> |</p>
-<p> Your YAML file should look as follows:</p>
-<pre class="language-"><code class="lang-yaml"> <span class="token punctuation">---</span>
-  <span class="token comment"># Application to deploy</span>
- <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
- <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
- <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
- <span class="token key atrule">spec</span><span class="token punctuation">:</span>
-   <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">2</span> <span class="token comment"># tells deployment to run 2 pods matching the template</span>
-   <span class="token key atrule">selector</span><span class="token punctuation">:</span>
-     <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
-       <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
-   <span class="token key atrule">template</span><span class="token punctuation">:</span>   <span class="token comment"># create pods using pod definition in this template</span>
-     <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-       <span class="token key atrule">labels</span><span class="token punctuation">:</span>
-         <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
-         <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
-     <span class="token key atrule">spec</span><span class="token punctuation">:</span>
-       <span class="token key atrule">containers</span><span class="token punctuation">:</span>
-       <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
-         <span class="token key atrule">image</span><span class="token punctuation">:</span> &lt;registry<span class="token punctuation">-</span>region<span class="token punctuation">&gt;</span>.icr.io/&lt;registry<span class="token punctuation">-</span>namespace<span class="token punctuation">&gt;</span>/mytodo<span class="token punctuation">-</span>&lt;lastname<span class="token punctuation">&gt;</span><span class="token punctuation">:</span><span class="token number">1.0</span>
-         <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> Always
-         <span class="token key atrule">resources</span><span class="token punctuation">:</span>
-           <span class="token key atrule">requests</span><span class="token punctuation">:</span>
-             <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 250m     <span class="token comment"># 250 millicores = 1/4 core</span>
-             <span class="token key atrule">memory</span><span class="token punctuation">:</span> 128Mi <span class="token comment"># 128 MB</span>
-           <span class="token key atrule">limits</span><span class="token punctuation">:</span>
-             <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 500m
-             <span class="token key atrule">memory</span><span class="token punctuation">:</span> 384Mi
-         <span class="token comment"># envFrom:</span>
-         <span class="token comment"># - secretRef:</span>
-         <span class="token comment">#     name: database-credentials</span>
- <span class="token punctuation">---</span>
- <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> extensions/v1beta1
- <span class="token key atrule">kind</span><span class="token punctuation">:</span> Ingress
- <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo<span class="token punctuation">-</span>ingress
-   <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
-     <span class="token comment"># Force the use of https if the request is http</span>
-     <span class="token key atrule">ingress.bluemix.net/redirect-to-https</span><span class="token punctuation">:</span> <span class="token string">&quot;True&quot;</span>
- <span class="token key atrule">spec</span><span class="token punctuation">:</span>
-   <span class="token key atrule">tls</span><span class="token punctuation">:</span>
-   <span class="token punctuation">-</span> <span class="token key atrule">hosts</span><span class="token punctuation">:</span>
-     <span class="token punctuation">-</span> mytodo.&lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>.&lt;cloud<span class="token punctuation">-</span>region<span class="token punctuation">&gt;</span>.containers.appdomain.cloud
-     <span class="token key atrule">secretName</span><span class="token punctuation">:</span> &lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>
-   <span class="token key atrule">rules</span><span class="token punctuation">:</span>
-   <span class="token punctuation">-</span> <span class="token key atrule">host</span><span class="token punctuation">:</span> mytodo.&lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>.&lt;cloud<span class="token punctuation">-</span>region<span class="token punctuation">&gt;</span>.containers.appdomain.cloud
-     <span class="token key atrule">http</span><span class="token punctuation">:</span>
-       <span class="token key atrule">paths</span><span class="token punctuation">:</span>
-       <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> /
-         <span class="token key atrule">backend</span><span class="token punctuation">:</span>
-           <span class="token key atrule">serviceName</span><span class="token punctuation">:</span> mytodo
-           <span class="token key atrule">servicePort</span><span class="token punctuation">:</span> <span class="token number">8080</span>
- <span class="token punctuation">---</span>
-  <span class="token comment"># Service to expose frontend</span>
- <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
- <span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
- <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
-   <span class="token key atrule">labels</span><span class="token punctuation">:</span>
-     <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
-     <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
- <span class="token key atrule">spec</span><span class="token punctuation">:</span>
-   <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-   <span class="token punctuation">-</span> <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
-     <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">8080</span>
-   <span class="token key atrule">selector</span><span class="token punctuation">:</span>
-     <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
-     <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
-</code></pre>
+<ul>
+<li>registry-region    <strong>de</strong> for Frankfurt</li>
+<li>registry-namespace <strong>lab-registry</strong></li>
+<li>cloud-region       <strong>eu-de</strong> for Frankfurt</li>
+<li><p>cluster-name       <strong>lab-11</strong></p>
+<p>Your YAML file should look as follows:
+```yaml</p>
+</li>
+</ul>
+<hr>
+<h1 id="create-a-kubernetes-namespace">Create a Kubernetes namespace</h1>
+<p> apiVersion: v1
+ kind: Namespace
+ metadata:
+   name: mytodo</p>
+<hr>
+<h1 id="application-to-deploy">Application to deploy</h1>
+<p> apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: mytodo
+   namespace: mytodo
+ spec:
+   replicas: 2 # tells deployment to run 2 pods matching the template
+   selector:</p>
+<pre class="language-"><code> matchLabels:
+   app: mytodo
+</code></pre><p>   template:   # create pods using pod definition in this template</p>
+<pre class="language-"><code> metadata:
+   labels:
+     app: mytodo
+     tier: frontend
+ spec:
+   containers:
+   - name: mytodo
+     image: <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>registry-region</span><span class="token punctuation">&gt;</span></span>.icr.io/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>registry-namespace</span><span class="token punctuation">&gt;</span></span>/mytodo-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>lastname</span><span class="token punctuation">&gt;</span></span>:1.0
+     imagePullPolicy: Always
+     resources:
+       requests:
+         cpu: 250m     # 250 millicores = 1/4 core
+         memory: 128Mi # 128 MB
+       limits:
+         cpu: 500m
+         memory: 384Mi
+     # envFrom:
+     # - secretRef:
+     #     name: database-credentials
+</code></pre><hr>
+<p> apiVersion: extensions/v1beta1
+ kind: Ingress
+ metadata:
+   name: mytodo-ingress
+   namespace: mytodo
+   annotations:</p>
+<pre class="language-"><code> # Force the use of https if the request is http
+ ingress.bluemix.net/redirect-to-https: &quot;True&quot;
+</code></pre><p> spec:
+   tls:</p>
+<ul>
+<li>hosts:<ul>
+<li>mytodo.<cluster-name>.<cloud-region>.containers.appdomain.cloud
+secretName: <cluster-name>
+rules:</cluster-name></cloud-region></cluster-name></li>
+</ul>
+</li>
+<li>host: mytodo.<cluster-name>.<cloud-region>.containers.appdomain.cloud
+http:
+  paths:<ul>
+<li>path: /
+backend:
+  serviceName: mytodo
+  servicePort: 8080</li>
+</ul>
+<hr>
+<h1 id="service-to-expose-frontend">Service to expose frontend</h1>
+apiVersion: v1
+kind: Service
+metadata:
+name: mytodo
+namespace: mytodo
+labels:
+app: mytodo
+tier: frontend
+spec:
+ports:</cloud-region></cluster-name></li>
+<li>protocol: TCP
+port: 8080
+selector:
+app: mytodo
+tier: frontend
+```</li>
+</ul>
 </li>
 <li><p>Deploy the app into your Kubernetes cluster.</p>
 <pre class="language-"><code class="lang-sh"> kubectl apply -f ingress-tls-deploy.yaml
@@ -724,6 +768,11 @@
 </code></pre><p> In this example, the url would be <code>https://mytodo.lab-cluster-1.eu-de.containers.appdomain.cloud</code></p>
 </li>
 </ol>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://cloud.ibm.com/docs/containers?topic=containers-registry#copy_imagePullSecret" target="_blank">Copying an existing image pull secret from the default namespace to new namespace</a></li>
+<li><a href="https://cloud.ibm.com/docs/containers?topic=containers-registry#store_imagePullSecret" target="_blank">Storing the image pull secret in the Kubernetes service account for the selected namespace</a></li>
+</ul>
 
                                 
                                 </section>
