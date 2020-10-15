@@ -659,6 +659,25 @@
 <pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">cd</span> cloud/kubernetes
 </code></pre>
 </li>
+<li><p>Retrieve the values of both the ingress subdomain and the ingress secret of your cluster</p>
+<pre class="language-"><code> ibmcloud ks cluster get -c <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span>
+</code></pre><p> Output example:</p>
+<pre class="language-"><code> Name:                           iks
+ ID:                             bu3m8kqf0imum0ifs9dg
+ State:                          normal
+ Status:                         All Workers Normal
+ Created:                        2020-10-14 22:49:23 +0200 (1 day ago)
+ Resource Group ID:              b09f8cf6d2bd4f59a777bbeeb390c0e2
+ Resource Group Name:            demo
+ Pod Subnet:                     172.17.64.0/18
+ Service Subnet:                 172.21.0.0/16
+ Workers:                        3
+ Worker Zones:                   eu-de-1, eu-de-2, eu-de-3
+ Ingress Subdomain:              iks-466821-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+ Ingress Secret:                 iks-466821-483cccd2f0d38128dd40d2b711142ba9-0000
+ Ingress Status:                 healthy
+ Ingress Message:                All Ingress components are healthy
+</code></pre></li>
 <li><p>Edit the file <code>ingress-tls-deploy.yaml</code>.</p>
 </li>
 <li><p>Replace all the values wrapped in &lt;...&gt; with the appropriate values:</p>
@@ -713,10 +732,10 @@
  <span class="token key atrule">spec</span><span class="token punctuation">:</span>
    <span class="token key atrule">tls</span><span class="token punctuation">:</span>
    <span class="token punctuation">-</span> <span class="token key atrule">hosts</span><span class="token punctuation">:</span>
-     <span class="token punctuation">-</span> mytodo.&lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>.&lt;cloud<span class="token punctuation">-</span>region<span class="token punctuation">&gt;</span>.containers.appdomain.cloud
-     <span class="token key atrule">secretName</span><span class="token punctuation">:</span> &lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>
+     <span class="token punctuation">-</span> mytodo.&lt;ingress<span class="token punctuation">-</span>subdomain<span class="token punctuation">&gt;</span>
+     <span class="token key atrule">secretName</span><span class="token punctuation">:</span> &lt;ingress<span class="token punctuation">-</span>secret<span class="token punctuation">&gt;</span>
    <span class="token key atrule">rules</span><span class="token punctuation">:</span>
-   <span class="token punctuation">-</span> <span class="token key atrule">host</span><span class="token punctuation">:</span> mytodo.&lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>.&lt;cloud<span class="token punctuation">-</span>region<span class="token punctuation">&gt;</span>.containers.appdomain.cloud
+   <span class="token punctuation">-</span> <span class="token key atrule">host</span><span class="token punctuation">:</span> mytodo.&lt;ingress<span class="token punctuation">-</span>subdomain<span class="token punctuation">&gt;</span>
      <span class="token key atrule">http</span><span class="token punctuation">:</span>
        <span class="token key atrule">paths</span><span class="token punctuation">:</span>
        <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> /
@@ -745,15 +764,15 @@
 <li><p>Deploy the app into your Kubernetes cluster.</p>
 <pre class="language-"><code class="lang-sh"> kubectl apply -f ingress-tls-deploy.yaml
 </code></pre>
-<p> Result:</p>
-<pre class="language-"><code> deployment.apps/mytodo created
+<p> Output example:</p>
+<pre class="language-"><code> namespace/mytodo configured
+ deployment.apps/mytodo created
  ingress.extensions/mytodo-ingress created
  service/mytodo created
 </code></pre></li>
 <li><p>Open a browser and check out the app with the following URL:</p>
-<pre class="language-"><code> https://mytodo.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span>.eu-de.containers.appdomain.cloud
-</code></pre><p> In this example, the url would be <code>https://mytodo.lab-cluster-1.eu-de.containers.appdomain.cloud</code></p>
-</li>
+<pre class="language-"><code> https://mytodo.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ingress-subdomain</span><span class="token punctuation">&gt;</span></span>
+</code></pre></li>
 </ol>
 <h2 id="resources">Resources</h2>
 <ul>
