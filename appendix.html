@@ -664,25 +664,25 @@ ibmcloud iam user-policy-create xxx.xxx@fr.ibm.com \
 <h2 id="appendix---using-kubernetes-namespaces">Appendix - Using Kubernetes namespaces</h2>
 <p>In order to isolate the applications you deploy in the cluster, you may want to leverage Kubernetes namespace. Using namespace has an impact on the following commands:</p>
 <ol>
-<li><p>Create a new namespace in your cluster. Let&apos;s call it <em>mytodos</em></p>
-<pre class="language-"><code> kubectl create namespace mytodos
+<li><p>Create a new namespace in your cluster. Let&apos;s call it <em>mytodo</em></p>
+<pre class="language-"><code> kubectl create namespace mytodo
 </code></pre></li>
 <li><p>Verify your new namespace was created</p>
 <pre class="language-"><code> kubectl get namespaces
 </code></pre></li>
 <li><p>The service cloudant should be bound in this namespace</p>
-<pre class="language-"><code> ibmcloud ks cluster-service-bind <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster_id</span><span class="token punctuation">&gt;</span></span> mytodos <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>service_instance_name</span><span class="token punctuation">&gt;</span></span>
+<pre class="language-"><code> ibmcloud ks cluster-service-bind <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster_id</span><span class="token punctuation">&gt;</span></span> mytodo <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>service_instance_name</span><span class="token punctuation">&gt;</span></span>
 </code></pre><p> Example:</p>
-<pre class="language-"><code> ibmcloud ks cluster-service-bind ad35aacc139b4e11a6f3182fb13d24af mytodos todo-cloudant
+<pre class="language-"><code> ibmcloud ks cluster-service-bind ad35aacc139b4e11a6f3182fb13d24af mytodo todo-cloudant
 </code></pre></li>
 <li><p>The new namespace does not contain the secret to access the private container registry. The default namespace has by default this secret to access the registry. If you try to deploy without this step, you will get this error:</p>
 <blockquote>
-<p>Failed to pull image &quot;de.icr.io/mace/mytodos:1&quot;: rpc error: code = Unknown desc = Error response from daemon: Get <a href="https://de.icr.io/v2/mace/mytodos/manifests/v1" target="_blank">https://de.icr.io/v2/mace/mytodos/manifests/v1</a>: unauthorized: authentication required</p>
+<p>Failed to pull image &quot;de.icr.io/mace/mytodo:1&quot;: rpc error: code = Unknown desc = Error response from daemon: Get <a href="https://de.icr.io/v2/mace/mytodo/manifests/v1" target="_blank">https://de.icr.io/v2/mace/mytodo/manifests/v1</a>: unauthorized: authentication required</p>
 </blockquote>
 <p> In order to add this registry secret, run the following command:</p>
 <pre class="language-"><code> kubectl --namespace <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>CLUSTER_NAMESPACE</span><span class="token punctuation">&gt;</span></span> create secret docker-registry <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>IMAGE_REGISTRY_SECRET_NAME</span><span class="token punctuation">&gt;</span></span> --docker-server=<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>REGISTRY_URL</span><span class="token punctuation">&gt;</span></span> --docker-password=<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>IBMCLOUD_API_KEY</span><span class="token punctuation">&gt;</span></span> --docker-username=iamapikey --docker-email=a@b.com
 </code></pre><p> For example:</p>
-<pre class="language-"><code> kubectl --namespace mytodos create secret docker-registry private-registry-secret --docker-server=de.icr.io --docker-password=<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>IBMCLOUD_API_KEY</span><span class="token punctuation">&gt;</span></span> --docker-username=iamapikey --docker-email=a@b.com
+<pre class="language-"><code> kubectl --namespace mytodo create secret docker-registry private-registry-secret --docker-server=de.icr.io --docker-password=<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>IBMCLOUD_API_KEY</span><span class="token punctuation">&gt;</span></span> --docker-username=iamapikey --docker-email=a@b.com
 </code></pre><blockquote>
 <p>You can generate the api key using the following command:
  <code>ibmcloud iam api-key-create IBMCLOUD_API_KEY</code></p>
@@ -693,26 +693,26 @@ ibmcloud iam user-policy-create xxx.xxx@fr.ibm.com \
  <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> extensions/v1beta1
  <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
  <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
- <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodos
+ <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
  <span class="token key atrule">spec</span><span class="token punctuation">:</span>
  <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">2</span> <span class="token comment"># tells deployment to run 2 pods matching the template</span>
  <span class="token key atrule">template</span><span class="token punctuation">:</span> <span class="token comment"># create pods using pod definition in this template</span>
      <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
-         <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodos
+         <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
          <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
      <span class="token key atrule">spec</span><span class="token punctuation">:</span>
      <span class="token key atrule">imagePullSecrets</span><span class="token punctuation">:</span>
      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> private<span class="token punctuation">-</span>registry<span class="token punctuation">-</span>secret
      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
-     <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodos
-         <span class="token key atrule">image</span><span class="token punctuation">:</span> &lt;region<span class="token punctuation">&gt;</span>.icr.io/&lt;namespace<span class="token punctuation">&gt;</span>/mytodos<span class="token punctuation">:</span><span class="token number">1</span>
+     <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
+         <span class="token key atrule">image</span><span class="token punctuation">:</span> &lt;region<span class="token punctuation">&gt;</span>.icr.io/&lt;namespace<span class="token punctuation">&gt;</span>/mytodo<span class="token punctuation">:</span><span class="token number">1</span>
          <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> Always
      <span class="token punctuation">...</span>
 </code></pre>
 </li>
 <li><p>Deploy the container in the new namespace</p>
-<pre class="language-"><code> kubectl create -f deploy2kubernetes.yml --namespace mytodos
+<pre class="language-"><code> kubectl create -f deploy2kubernetes.yml --namespace mytodo
 </code></pre></li>
 </ol>
 

@@ -646,20 +646,20 @@
  <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
  <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
  <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodos
+   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
  <span class="token key atrule">spec</span><span class="token punctuation">:</span>
    <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">2</span> <span class="token comment"># tells deployment to run 2 pods matching the template</span>
    <span class="token key atrule">selector</span><span class="token punctuation">:</span>
      <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
-       <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodos
+       <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
    <span class="token key atrule">template</span><span class="token punctuation">:</span>   <span class="token comment"># create pods using pod definition in this template</span>
      <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
        <span class="token key atrule">labels</span><span class="token punctuation">:</span>
-         <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodos
+         <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
          <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
      <span class="token key atrule">spec</span><span class="token punctuation">:</span>
        <span class="token key atrule">containers</span><span class="token punctuation">:</span>
-       <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodos
+       <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
          <span class="token key atrule">image</span><span class="token punctuation">:</span> &lt;registry<span class="token punctuation">-</span>region<span class="token punctuation">&gt;</span>.icr.io/&lt;registry<span class="token punctuation">-</span>namespace<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>/todo<span class="token punctuation">-</span>&lt;lastname<span class="token punctuation">&gt;</span><span class="token punctuation">:</span><span class="token number">1.0</span>
          <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> Always
          <span class="token key atrule">resources</span><span class="token punctuation">:</span>
@@ -676,7 +676,7 @@
  <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> extensions/v1beta1
  <span class="token key atrule">kind</span><span class="token punctuation">:</span> Ingress
  <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodos<span class="token punctuation">-</span>ingress
+   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo<span class="token punctuation">-</span>ingress
    <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
      <span class="token comment"># Force the use of https if the request is http</span>
      <span class="token key atrule">ingress.bluemix.net/redirect-to-https</span><span class="token punctuation">:</span> <span class="token string">&quot;True&quot;</span>
@@ -691,23 +691,23 @@
        <span class="token key atrule">paths</span><span class="token punctuation">:</span>
        <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> /
          <span class="token key atrule">backend</span><span class="token punctuation">:</span>
-           <span class="token key atrule">serviceName</span><span class="token punctuation">:</span> mytodos
+           <span class="token key atrule">serviceName</span><span class="token punctuation">:</span> mytodo
            <span class="token key atrule">servicePort</span><span class="token punctuation">:</span> <span class="token number">8080</span>
  <span class="token punctuation">---</span>
   <span class="token comment"># Service to expose frontend</span>
  <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
  <span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
  <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodos
+   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
    <span class="token key atrule">labels</span><span class="token punctuation">:</span>
-     <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodos
+     <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
      <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
  <span class="token key atrule">spec</span><span class="token punctuation">:</span>
    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
    <span class="token punctuation">-</span> <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">8080</span>
    <span class="token key atrule">selector</span><span class="token punctuation">:</span>
-     <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodos
+     <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
      <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
 </code></pre>
 </li>
@@ -715,13 +715,13 @@
 <pre class="language-"><code class="lang-sh"> kubectl apply -f ingress-tls-deploy.yaml
 </code></pre>
 <p> Result:</p>
-<pre class="language-"><code> deployment.apps/mytodos created
- ingress.extensions/mytodos-ingress created
- service/mytodos created
+<pre class="language-"><code> deployment.apps/mytodo created
+ ingress.extensions/mytodo-ingress created
+ service/mytodo created
 </code></pre></li>
 <li><p>Open a browser and check out the app with the following URL:</p>
 <pre class="language-"><code> https://todo.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span>.eu-de.containers.appdomain.cloud
-</code></pre><p> In this example, the url would be <code>https://todo.lab-cluster-1.eu-de.containers.appdomain.cloud</code></p>
+</code></pre><p> In this example, the url would be <code>https://mytodo.lab-cluster-1.eu-de.containers.appdomain.cloud</code></p>
 </li>
 </ol>
 
