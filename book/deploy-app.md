@@ -1,8 +1,8 @@
-# Deploy the app using Kubernetes Services and Deployments
+# Deploy the app in your cluster
 
 Different ways exist to make your app accessible from the internet. To choose the best networking option for your application, you can follow the decision tree available [here](https://cloud.ibm.com/docs/containers/cs_network_planning.html#planning).
 
-In this lab, we will test the **Ingress**.
+In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
 
 ## Create a Kubernetes namespace
 
@@ -63,6 +63,7 @@ By default any deployment is done in the namespace **default**. A good practise 
     Your YAML file should look as follows:
     ```yaml
     ---
+     # Create a Kubernetes namespace
     apiVersion: v1
     kind: Namespace
     metadata:
