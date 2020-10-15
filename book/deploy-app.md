@@ -4,6 +4,46 @@ Different ways exist to make your app accessible from the internet. To choose th
 
 In this lab, we will test the **Ingress**.
 
+## Create a Kubernetes namespace
+
+By default any deployment is done in the namespace **default**. A good practise is to create a dedicated namespace for this deployement. Let's do it.
+
+1. Create a Kubernetes namespace called `mytodo`
+    ```
+    kubectl create namespace mytodo
+    ```
+
+1. Set up the Container Registry image pull secret in the new namespace to be able to pull image during the deployement later. Let's copy the all-icr-io image pull secret from the default namespace to the new namespace `mytodo`
+    ```
+    kubectl get secret all-icr-io -n default -o yaml | sed 's/default/mytodo/g' | kubectl create -n mytodo -f -
+    ```
+
+1. Verify that the secrets are created successfully.
+    ```
+    kubectl get secrets -n mytodo | grep icr-io
+    ```
+
+1. To deploy containers, add the image pull secret to the service account of the namespace so that any deployment in the namespace can pull images from the registry.
+    ```
+    kubectl patch  -n mytodo serviceaccount/default -p '{"imagePullSecrets":[{"name": "all-icr-io"}]}'
+    ```
+
+1. Verify that your image pull secret was added to your default service account.
+    ```
+    kubectl describe serviceaccount default -n mytodo
+    ```
+    Example output:
+    ```
+    Name:                default
+    Namespace:           mytodo
+    Labels:              <none>
+    Annotations:         <none>
+    Image pull secrets:  all-icr-io
+    Mountable secrets:   default-token-xs4kr
+    Tokens:              default-token-xs4kr
+    Events:              <none>
+    ```
+
 ## Deploy with Ingress
 
 1. Navigate to the folder **kubernetes**.
@@ -11,25 +51,30 @@ In this lab, we will test the **Ingress**.
     cd cloud/kubernetes
     ```
 
-1. In your favorite IDE such as VS Code, edit the file `ingress-tls-deploy.yaml`.
+1. Edit the file `ingress-tls-deploy.yaml`.
 
 1. Replace all the values wrapped in <...> with the appropriate values:
 
-    | Field              | Value         |
-    | ------------------ |:------------- |
-    | registry-region    | **de** for Frankfurt |
-    | registry-namespace | **lab-registry** |
-    | cloud-region       | **eu-de** for Frankfurt |
-    | cluster-name       | **lab-11** |
+    * registry-region    **de** for Frankfurt
+    * registry-namespace **lab-registry**
+    * cloud-region       **eu-de** for Frankfurt
+    * cluster-name       **lab-11**
   
     Your YAML file should look as follows:
     ```yaml
+    ---
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: mytodo
+
     ---
      # Application to deploy
     apiVersion: apps/v1
     kind: Deployment
     metadata:
       name: mytodo
+      namespace: mytodo
     spec:
       replicas: 2 # tells deployment to run 2 pods matching the template
       selector:
@@ -60,6 +105,7 @@ In this lab, we will test the **Ingress**.
     kind: Ingress
     metadata:
       name: mytodo-ingress
+      namespace: mytodo
       annotations:
         # Force the use of https if the request is http
         ingress.bluemix.net/redirect-to-https: "True"
@@ -82,6 +128,7 @@ In this lab, we will test the **Ingress**.
     kind: Service
     metadata:
       name: mytodo
+      namespace: mytodo
       labels:
         app: mytodo
         tier: frontend
@@ -110,3 +157,9 @@ In this lab, we will test the **Ingress**.
     https://mytodo.<cluster-name>.eu-de.containers.appdomain.cloud
     ```
     In this example, the url would be ```https://mytodo.lab-cluster-1.eu-de.containers.appdomain.cloud```
+
+
+## Resources
+
+* [Copying an existing image pull secret from the default namespace to new namespace](https://cloud.ibm.com/docs/containers?topic=containers-registry#copy_imagePullSecret)
+* [Storing the image pull secret in the Kubernetes service account for the selected namespace](https://cloud.ibm.com/docs/containers?topic=containers-registry#store_imagePullSecret)
