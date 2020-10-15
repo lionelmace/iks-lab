@@ -715,50 +715,6 @@ ibmcloud iam user-policy-create xxx.xxx@fr.ibm.com \
 <pre class="language-"><code> kubectl create -f deploy2kubernetes.yml --namespace mytodos
 </code></pre></li>
 </ol>
-<h2 id="appendix---adding-user-managed-subnets-and-ip-address-to-your-automatic-load-balancer">Appendix - Adding user-managed subnets and IP address to your Automatic Load Balancer</h2>
-<p>In order to isolate the applications you deploy in the cluster, you may want to leverage Kubernetes namespace. Using namespace has an impact on the following commands:</p>
-<ol>
-<li><p>View the ID of your cluster&apos;s Private VLAN. Locate the VLANs section. In the field User-managed, identify the VLAN ID with false.</p>
-<pre class="language-"><code> ibmcloud ks cluster-get --showResources <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span>
-</code></pre><pre class="language-"><code> Subnet VLANs
- VLAN ID   Subnet CIDR         Public   User-managed   
- 2268624   10.85.126.8/29      false    false   
- 2268622   158.177.115.64/29   true     false
-</code></pre></li>
-<li><p>Add the external subnet to your private VLAN. The portable private IP addresses are added to the cluster&apos;s configmap.</p>
-<pre class="language-"><code> ibmcloud ks cluster-user-subnet-add <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster_name</span><span class="token punctuation">&gt;</span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>subnet_CIDR</span><span class="token punctuation">&gt;</span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>VLAN_ID</span><span class="token punctuation">&gt;</span></span>
-</code></pre><p> Exemple:</p>
-<pre class="language-"><code> ibmcloud ks cluster-user-subnet-add dev-cluster 10.101.53.0/24 2268624
-</code></pre></li>
-<li><p>Verify that the user-provided subnet is added. The field User-managed is true.</p>
-<pre class="language-"><code> ibmcloud ks cluster-get --showResources <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span>
-</code></pre><pre class="language-"><code> Subnet VLANs
- VLAN ID   Subnet CIDR         Public   User-managed   
- 2268624   10.101.53.0/24      false    true 
- 2268624   10.85.126.8/29      false    false   
- 2268622   158.177.115.64/29   true     false
-</code></pre></li>
-<li><p>Enable the Automatic Load Balancer (ALB) with your custom subnet</p>
-<pre class="language-"><code> ibmcloud ks alb-configure --albID private-cr8001501222964a11b5dd950c9ac2662c-alb1 --enable --user-ip 10.101.53.2
-</code></pre></li>
-<li><p>Optional: <a href="https://cloud.ibm.com/docs/containers/cs_subnets.html#vlan-spanning" target="_blank">Enable routing between subnets on the same VLAN</a></p>
-</li>
-<li><p>Add a private load balancer service or a private Ingress application load balancer to access your app. First retrieve the ALB.</p>
-<pre class="language-"><code> ibmcloud ks albs --cluster dev-cluster
-</code></pre><pre class="language-"><code> ALB ID                                            Enabled   Status    Type      ALB IP   
- private-cr8001501222964a11b5dd950c9ac2662c-alb1   true      disabled  private   10.101.53.2   
- public-cr8001501222964a11b5dd950c9ac2662c-alb1    true      enabled   public    158.177.115.70
-</code></pre></li>
-<li><p>Add a private load balancer service or a private Ingress application load balancer to access your app over the private network. To use a private IP address from the subnet that you added, you must specify an IP address. </p>
-<pre class="language-"><code> ibmcloud ks alb-configure --albID private-cr8001501222964a11b5dd950c9ac2662c-alb1 --enable --user-ip 10.101.53.2
-</code></pre></li>
-<li><p>Verify that ALB was enabled</p>
-<pre class="language-"><code> ibmcloud ks albs --cluster dev-cluster
-</code></pre><pre class="language-"><code> ALB ID                                            Enabled   Status    Type      ALB IP   
- private-cr8001501222964a11b5dd950c9ac2662c-alb1   true      enabled   private   10.101.53.2   
- public-cr8001501222964a11b5dd950c9ac2662c-alb1    true      enabled   public    158.177.115.70
-</code></pre></li>
-</ol>
 
                                 
                                 </section>
