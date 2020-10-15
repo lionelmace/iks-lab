@@ -68,21 +68,21 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
     apiVersion: apps/v1
     kind: Deployment
     metadata:
-      name: mytodos
+      name: mytodo
     spec:
       replicas: 2 # tells deployment to run 2 pods matching the template
       selector:
         matchLabels:
-          app: mytodos
+          app: mytodo
       template:   # create pods using pod definition in this template
         metadata:
           labels:
-            app: mytodos
+            app: mytodo
             tier: frontend
         spec:
           containers:
-          - name: mytodos
-            image: <region>.icr.io/<namespace>/todo-<lastname>:1.0
+          - name: mytodo
+            image: <region>.icr.io/<namespace>/mytodo-<lastname>:1.0
             imagePullPolicy: Always
             resources:
               requests:

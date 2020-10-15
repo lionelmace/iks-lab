@@ -44,20 +44,20 @@ Helm is a client/server application :
 
 1. Go to the folder kubernetes/helm/chart
     ```sh
-    cd .cloud/chart/mytodos
+    cd cloud/chart/mytodo
     ```
 
 1. Edit the file **values.yaml** to change the repository values which includes: the region, the registry namespace, the image name, and the tag (=version).
 
     ```yaml
-      # Default values for mytodos.
+      # Default values for mytodo.
       # This is a YAML-formatted file.
       # Declare variables to be passed into your templates.
 
     replicaCount: 3
 
     image:
-      repository: <region>.icr.io/<namespace>/todo-<lastname>
+      repository: <region>.icr.io/<namespace>/mytodo-<lastname>
       tag: "1.0"
       pullPolicy: Always
 
@@ -78,11 +78,11 @@ Helm is a client/server application :
         ingress.bluemix.net/redirect-to-https: "True"
     path: /
     hosts:
-        - todo.<cluster-name>.<region>.containers.appdomain.cloud
+        - mytodo.<cluster-name>.<region>.containers.appdomain.cloud
     tls:
         - secretName: <cluster-name>
         hosts:
-            - todo.<cluster-name>.<region>.containers.appdomain.cloud
+            - mytodo.<cluster-name>.<region>.containers.appdomain.cloud
 
     resources:
       # We usually recommend not to specify default resources and to leave this as a conscious
@@ -111,12 +111,12 @@ Helm is a client/server application :
 
 1. Install a Helm chart
     ```sh
-    helm upgrade mytodos . --install
+    helm upgrade mytodo . --install
     ```
 
     Results:
     ```
-    NAME:   mytodos
+    NAME:   mytodo
     LAST DEPLOYED: Fri Nov 16 18:51:12 2018
     NAMESPACE: default
     STATUS: DEPLOYED
@@ -124,26 +124,26 @@ Helm is a client/server application :
     RESOURCES:
     ==> v1/Service
     NAME     TYPE       CLUSTER-IP     EXTERNAL-IP  PORT(S)   AGE
-    mytodos  ClusterIP  172.21.52.118  <none>       8080/TCP  0s
+    mytodo  ClusterIP  172.21.52.118  <none>       8080/TCP  0s
 
     ==> v1beta2/Deployment
     NAME     DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE
-    mytodos  3        3        3           0          0s
+    mytodo  3        3        3           0          0s
 
     ==> v1beta1/Ingress
     NAME     HOSTS                                            ADDRESS           PORTS    AGE
-    mytodos  todo.lab-cluster-1.eu-de.containers.appdomain.cloud  149.81.67.38,...  80, 443  0s
+    mytodo  todo.lab-cluster-1.eu-de.containers.appdomain.cloud  149.81.67.38,...  80, 443  0s
 
     ==> v1/Pod(related)
     NAME                      READY  STATUS             RESTARTS  AGE
-    mytodos-86884779d9-4c62z  0/1    ContainerCreating  0         0s
-    mytodos-86884779d9-jzzpt  0/1    ContainerCreating  0         0s
-    mytodos-86884779d9-qxnt2  0/1    ContainerCreating  0         0s
+    mytodo-86884779d9-4c62z  0/1    ContainerCreating  0         0s
+    mytodo-86884779d9-jzzpt  0/1    ContainerCreating  0         0s
+    mytodo-86884779d9-qxnt2  0/1    ContainerCreating  0         0s
     ```
 
 1. Get the status of the helm deployment
     ```
-    helm status mytodos
+    helm status mytodo
     ```
 
 1. Get the application URL by running these commands:
@@ -152,13 +152,13 @@ Helm is a client/server application :
     ```
 
     > To run with local values in debug mode: ```
-    helm install . --name mytodos --values=local-values.yaml --dry-run --debug```
+    helm install . --name mytodo --values=local-values.yaml --dry-run --debug```
 
 ## Delete your deployment
 
 1. To delete your deployment
     ```
-    helm delete --purge mytodos
+    helm delete --purge mytodo
     ```
 
     > Generally, an helm chart is managing many pods, deployments, secrets, volumes and services. So deleting the chart is a quick way to clean up your work.

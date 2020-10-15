@@ -4,7 +4,7 @@ The application was deployed with 2 replicas. Let's scale it to 3 replicas.
 
 1. Let's scale up to 3 replicas
     ```sh
-    kubectl scale --replicas=3 deployment/mytodos
+    kubectl scale --replicas=3 deployment/mytodo
     ```
 
 1. Then, inspect your Pods again.

@@ -29,20 +29,20 @@ In this lab, we will test the **Ingress**.
     apiVersion: apps/v1
     kind: Deployment
     metadata:
-      name: mytodos
+      name: mytodo
     spec:
       replicas: 2 # tells deployment to run 2 pods matching the template
       selector:
         matchLabels:
-          app: mytodos
+          app: mytodo
       template:   # create pods using pod definition in this template
         metadata:
           labels:
-            app: mytodos
+            app: mytodo
             tier: frontend
         spec:
           containers:
-          - name: mytodos
+          - name: mytodo
             image: <registry-region>.icr.io/<registry-namespace-name>/todo-<lastname>:1.0
             imagePullPolicy: Always
             resources:
@@ -59,7 +59,7 @@ In this lab, we will test the **Ingress**.
     apiVersion: extensions/v1beta1
     kind: Ingress
     metadata:
-      name: mytodos-ingress
+      name: mytodo-ingress
       annotations:
         # Force the use of https if the request is http
         ingress.bluemix.net/redirect-to-https: "True"
@@ -74,23 +74,23 @@ In this lab, we will test the **Ingress**.
           paths:
           - path: /
             backend:
-              serviceName: mytodos
+              serviceName: mytodo
               servicePort: 8080
     ---
      # Service to expose frontend
     apiVersion: v1
     kind: Service
     metadata:
-      name: mytodos
+      name: mytodo
       labels:
-        app: mytodos
+        app: mytodo
         tier: frontend
     spec:
       ports:
       - protocol: TCP
         port: 8080
       selector:
-        app: mytodos
+        app: mytodo
         tier: frontend
     ```
 
@@ -100,13 +100,13 @@ In this lab, we will test the **Ingress**.
     ```
     Result:
     ```
-    deployment.apps/mytodos created
-    ingress.extensions/mytodos-ingress created
-    service/mytodos created   
+    deployment.apps/mytodo created
+    ingress.extensions/mytodo-ingress created
+    service/mytodo created
     ```
 
 1. Open a browser and check out the app with the following URL:
     ```
     https://todo.<cluster-name>.eu-de.containers.appdomain.cloud
     ```
-    In this example, the url would be ```https://todo.lab-cluster-1.eu-de.containers.appdomain.cloud```
+    In this example, the url would be ```https://mytodo.lab-cluster-1.eu-de.containers.appdomain.cloud```
