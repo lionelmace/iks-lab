@@ -54,13 +54,7 @@ By default any deployment is done in the namespace **default**. A good practise 
 1. Edit the file `ingress-tls-deploy.yaml`.
 
 1. Replace all the values wrapped in <...> with the appropriate values:
-
-    * registry-region    **de** for Frankfurt
-    * registry-namespace **lab-registry**
-    * cloud-region       **eu-de** for Frankfurt
-    * cluster-name       **lab-11**
   
-    Your YAML file should look as follows:
     ```yaml
     ---
      # Create a Kubernetes namespace
