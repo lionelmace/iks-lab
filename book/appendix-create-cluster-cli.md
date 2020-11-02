@@ -153,18 +153,3 @@ To create a cluster, you have two options either a Lite cluster or a Standard on
     | deployed          | Deploying                                    |
     | deployed          | Deploy Automation Successful                 |
     | normal            | Ready                                        |
-
-
-## Connect to the Kubernetes cluster
-
-1. Connect to the Kubernetes Cluster. Use the kubectl command to check that you are connected:
-
-    ```kubectl get nodes```
-
-
-## Access the cluster via Kubernetes CLI
-
-1. You will need the kubeconfig data and certs to connect to your cluster using kubectl. You can download the config to your local machine via the CLI.
-    ```
-    ibmcloud ks cluster-config <cluster_name_or_id>
-    ```

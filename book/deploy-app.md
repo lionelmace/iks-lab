@@ -6,7 +6,7 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
 
 ## Create a Kubernetes namespace
 
-By default, any deployment is done in the namespace **default**. A best practise is to create a new namespace for this deployment. In order to be able to pull image during the deployement, we also need to set up the Container Registry image pull secret in the new namespace.
+Unless a namespase is specified, any kubernetes deployment is done in the namespace **default**. A best practise is to create a new namespace for this deployment. In order to be able to pull image during the deployment, we need to set up the Container Registry image pull secret in the new namespace.
 
 1. Create a Kubernetes namespace called `mytodo`
     ```
