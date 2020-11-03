@@ -5,36 +5,60 @@ In Cloud Internet Services, an alternate domain name, also known as a CNAME, let
 In this section, we will leverage two IBM Cloud Services:
 * [CIS - Cloud Internet Services](https://cloud.ibm.com/catalog/services/internet-services) which includes Domain Name Service (DNS), Global Load Balancer (GLB), Distributed Denial of Service (DDoS) protection, Web Application Firewall (WAF), etc.
 
-* [Certificate Manager](https://cloud.ibm.com/catalog/services/certificate-manager) to order and manage SSL/TLS certificates for your app.
+* [Certificate Manager](https://cloud.ibm.com/catalog/services/certificate-manager) to order and manage SSL/TLS certificates.
 
 ## Create a custom domain with CIS
 
-1. You will need an Internet Services instance. You can create one for free [CIS - Cloud Internet Services](https://cloud.ibm.com/catalog/services/internet-services)
+To create a custom domain, you will need an instance of CIS and the hostname of your VPC Load Balancer created automatically during the cluster provisioning.
 
-1. Get the hostname of your VPC Load Balancer created automatically for your cluster
+1. You will need an instance of [CIS - Cloud Internet Services](https://cloud.ibm.com/catalog/services/internet-services). You can create one for free.
 
-
-1. To create a new domain, go to Reliability > DNS
+1. Retrieve the cluster ID
 
     ```
-    CNAME mytodo.example.com > URL fo
+    ibmcloud ks cluster get -c iks | grep ID
     ```
+
+1. Retrieve the LB ID
+
+    ```
+    ibmcloud is lbs | grep <cluster-id>
+    ```
+
+1. Retrieve the VPC LB hostname
+
+    ```
+    ibmcloud is lb <vpc-lb-id> --output json | grep hostname
+    ```
+
+1. To create a new domain, go to Reliability > DNS. Add a DNS record with the following information:
+
+    Type:  `CNAME`
+    Name:  `mytodo.example.com`
+    Alias: `Your VPC LB hostname`
+
 
 ## Create a TLS certificate for the new domain
 
 1. Create a free instance of [Certificate Manager](https://cloud.ibm.com/catalog/services/certificate-manager)
 
-1. Vérifier les autorisations IAM pour autoriser l’accès de Certificate Manager à Cloud Internet Services
+1. Authorize Certificate Manager to access Cloud Internet Services
 https://cloud.ibm.com/docs/certificate-manager?topic=certificate-manager-ordering-certificates#cis
 
-1. Aller sur l’instance Certificate Manager du cluster
+1. In the instance of Certificate Manager, order a new Certificate, select Cloud Internet Services.
 
-1. Order Certificate, select Cloud Internet Services. Select sub-domain.
+    ![](./images/cert-mgr.png)
 
-1. Get your new certificate CRN
+1. Select your CIS instance and click sub-domain. You should see the CNAME you created in CIS.
+
+    ![](./images/cert-mgr-order.png)
+
+1. Get your certificate CRN
+
+    ![](./images/cert-mgr-crn.png)
 
 
-## Create a new secret in your cluster to store 
+## Create a new secret in your cluster to store the TLS certificate
 
 1. Get your cluster id
 
@@ -42,15 +66,21 @@ https://cloud.ibm.com/docs/certificate-manager?topic=certificate-manager-orderin
     ibmcloud ks cluster get -c <cluster-name>
     ```
 
-1. Create a new secret
+1. Create a new Kubernetes secret
+
     ```
     ibmcloud ks ingress secret create --name <secret-name> --cluster <cluster-id> --cert-crn <cert-crn>
     ```
-kubectl get secrets -n ibm-cert-store (edited)
+
+1. Verify that your secret was created
+
+    ```
+    kubectl get secrets -n ibm-cert-store (edited)
+    ```
 
 ## Re-deploy your app with the new domain
 
-1. Edit your yaml
+1. Edit your yaml to replace the default domain by the new custom domain.
 
     ```yaml
     ---
@@ -77,8 +107,21 @@ kubectl get secrets -n ibm-cert-store (edited)
               servicePort: 8080
     ```
 
-1. Deploy
+1. Re-deploy
 
     ```sh
     kubectl apply -f mytodo.yaml
     ```
+
+    Output shoud confirm the ingress was changed:
+    ```
+    deployment.apps/mytodo unchanged
+    ingress.extensions/mytodo-ingress configured
+    service/mytodo unchanged
+    ```
+
+## Open your app in a secure way
+
+1. Open the new url that should have this format
+
+    https://<your-custom-domain>
