@@ -7,7 +7,7 @@ In this section, we will leverage two IBM Cloud Services:
 
 * [Certificate Manager](https://cloud.ibm.com/catalog/services/certificate-manager) to order and manage SSL/TLS certificates.
 
-## Create a custom domain with CIS
+## Add a DNS record with CIS
 
 To create a custom domain, you will need an instance of CIS and the hostname of your VPC Load Balancer created automatically during the cluster provisioning.
 
@@ -41,8 +41,7 @@ To create a custom domain, you will need an instance of CIS and the hostname of 
     * Name:  `mytodo.example.com`
     * Alias: `Your VPC LB hostname`
 
-
-## Create a TLS certificate for the new domain
+## Order a TLS certificate for the new domain
 
 1. Create a free instance of [Certificate Manager](https://cloud.ibm.com/catalog/services/certificate-manager)
 
@@ -62,7 +61,7 @@ https://cloud.ibm.com/docs/certificate-manager?topic=certificate-manager-orderin
     ![](./images/cert-mgr-crn.png)
 
 
-## Create a new secret in your cluster to store the TLS certificate
+## Create a new kubernetes secret to store the TLS certificate
 
 1. Get your cluster id
 
@@ -82,7 +81,7 @@ https://cloud.ibm.com/docs/certificate-manager?topic=certificate-manager-orderin
     kubectl get secrets -n ibm-cert-store
     ```
 
-## Re-deploy your app with the new domain
+## Update the ingress with the new domain
 
 1. Edit your yaml to replace the default domain by the new custom domain.
 
@@ -111,7 +110,7 @@ https://cloud.ibm.com/docs/certificate-manager?topic=certificate-manager-orderin
               servicePort: 8080
     ```
 
-1. Re-deploy
+1. Update the new ingress
 
     ```sh
     kubectl apply -f mytodo.yaml
@@ -128,4 +127,4 @@ https://cloud.ibm.com/docs/certificate-manager?topic=certificate-manager-orderin
 
 1. Open the new url that should have this format
 
-    https://<your-custom-domain>
+    https://your-custom-domain.com

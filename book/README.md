@@ -25,12 +25,15 @@ This diagram gives you an overview of the task, services and main command lines 
 
 ![](./images/cli-main-cmds.png)
 
-## Services used
+## Cloud Services used
 
 This tutorial uses the following runtimes and services:
+
 * [IBM Cloud Container Registry](https://cloud.ibm.com/containers-kubernetes/launchRegistryView)
 * [IBM Cloud Kubernetes Service](https://cloud.ibm.com/containers-kubernetes/catalog/cluster)
 * [Continuous Delivery](https://cloud.ibm.com/catalog/services/continuous-delivery)
 * [Cloudant](https://cloud.ibm.com/catalog/services/cloudant)
 * [IBM Log Analysis with LogDNA](https://cloud.ibm.com/observe/logging/create)
 * [IBM Cloud Monitoring with Sysdig](https://cloud.ibm.com/observe/monitoring/create)
+* [Cloud Internet Services](https://cloud.ibm.com/catalog/internet-services)
+* [IBM Certificate Manager](https://cloud.ibm.com/catalog/certificate-manager)
