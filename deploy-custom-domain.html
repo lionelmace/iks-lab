@@ -616,7 +616,7 @@
 <li><p><a href="https://cloud.ibm.com/catalog/services/certificate-manager" target="_blank">Certificate Manager</a> to order and manage SSL/TLS certificates.</p>
 </li>
 </ul>
-<h2 id="create-a-custom-domain-with-cis">Create a custom domain with CIS</h2>
+<h2 id="add-a-dns-record-with-cis">Add a DNS record with CIS</h2>
 <p>To create a custom domain, you will need an instance of CIS and the hostname of your VPC Load Balancer created automatically during the cluster provisioning.</p>
 <ol>
 <li><p>You will need an instance of <a href="https://cloud.ibm.com/catalog/services/internet-services" target="_blank">CIS - Cloud Internet Services</a>. You can create one for free.</p>
@@ -643,7 +643,7 @@
 </ul>
 </li>
 </ol>
-<h2 id="create-a-tls-certificate-for-the-new-domain">Create a TLS certificate for the new domain</h2>
+<h2 id="order-a-tls-certificate-for-the-new-domain">Order a TLS certificate for the new domain</h2>
 <ol>
 <li><p>Create a free instance of <a href="https://cloud.ibm.com/catalog/services/certificate-manager" target="_blank">Certificate Manager</a></p>
 </li>
@@ -666,7 +666,7 @@
      </a></p>
 </li>
 </ol>
-<h2 id="create-a-new-secret-in-your-cluster-to-store-the-tls-certificate">Create a new secret in your cluster to store the TLS certificate</h2>
+<h2 id="create-a-new-kubernetes-secret-to-store-the-tls-certificate">Create a new kubernetes secret to store the TLS certificate</h2>
 <ol>
 <li><p>Get your cluster id</p>
 <pre class="language-"><code class="lang-sh"> ibmcloud ks cluster get -c <span class="token operator">&lt;</span>cluster-name<span class="token operator">&gt;</span>
@@ -679,7 +679,7 @@
 <pre class="language-"><code> kubectl get secrets -n ibm-cert-store
 </code></pre></li>
 </ol>
-<h2 id="re-deploy-your-app-with-the-new-domain">Re-deploy your app with the new domain</h2>
+<h2 id="update-the-ingress-with-the-new-domain">Update the ingress with the new domain</h2>
 <ol>
 <li><p>Edit your yaml to replace the default domain by the new custom domain.</p>
 <pre class="language-"><code class="lang-yaml"> <span class="token punctuation">---</span>
@@ -706,7 +706,7 @@
            <span class="token key atrule">servicePort</span><span class="token punctuation">:</span> <span class="token number">8080</span>
 </code></pre>
 </li>
-<li><p>Re-deploy</p>
+<li><p>Update the new ingress</p>
 <pre class="language-"><code class="lang-sh"> kubectl apply -f mytodo.yaml
 </code></pre>
 <p> Output should confirm the ingress was changed:</p>
@@ -718,7 +718,7 @@
 <h2 id="open-your-app-in-a-secure-way">Open your app in a secure way</h2>
 <ol>
 <li><p>Open the new url that should have this format</p>
-<p> https://<your-custom-domain></your-custom-domain></p>
+<p> <a href="https://your-custom-domain.com" target="_blank">https://your-custom-domain.com</a></p>
 </li>
 </ol>
 
