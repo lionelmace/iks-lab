@@ -630,10 +630,17 @@
 <li><p>Retrieve the VPC LB hostname</p>
 <pre class="language-"><code> ibmcloud is lb <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vpc-lb-id</span><span class="token punctuation">&gt;</span></span> --output json | grep hostname
 </code></pre></li>
-<li><p>To create a new domain, go to Reliability &gt; DNS. Add a DNS record with the following information:</p>
-<p> Type:  <code>CNAME</code>
- Name:  <code>mytodo.example.com</code>
- Alias: <code>Your VPC LB hostname</code></p>
+<li><p>To create a new domain, go to Reliability &gt; DNS.</p>
+<p>      <a href="images/cis-dns.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/cis-dns.png" alt="">
+     </a></p>
+</li>
+<li><p>Add a DNS record with the following information:</p>
+<ul>
+<li>Type:  <code>CNAME</code></li>
+<li>Name:  <code>mytodo.example.com</code></li>
+<li>Alias: <code>Your VPC LB hostname</code></li>
+</ul>
 </li>
 </ol>
 <h2 id="create-a-tls-certificate-for-the-new-domain">Create a TLS certificate for the new domain</h2>
@@ -669,7 +676,7 @@
 <pre class="language-"><code> ibmcloud ks ingress secret create --name <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>secret-name</span><span class="token punctuation">&gt;</span></span> --cluster <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-id</span><span class="token punctuation">&gt;</span></span> --cert-crn <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cert-crn</span><span class="token punctuation">&gt;</span></span>
 </code></pre></li>
 <li><p>Verify that your secret was created</p>
-<pre class="language-"><code> kubectl get secrets -n ibm-cert-store (edited)
+<pre class="language-"><code> kubectl get secrets -n ibm-cert-store
 </code></pre></li>
 </ol>
 <h2 id="re-deploy-your-app-with-the-new-domain">Re-deploy your app with the new domain</h2>
@@ -702,7 +709,7 @@
 <li><p>Re-deploy</p>
 <pre class="language-"><code class="lang-sh"> kubectl apply -f mytodo.yaml
 </code></pre>
-<p> Output shoud confirm the ingress was changed:</p>
+<p> Output should confirm the ingress was changed:</p>
 <pre class="language-"><code> deployment.apps/mytodo unchanged
  ingress.extensions/mytodo-ingress configured
  service/mytodo unchanged
