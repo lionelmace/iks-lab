@@ -117,7 +117,7 @@ https://cloud.ibm.com/docs/certificate-manager?topic=certificate-manager-orderin
     kubectl apply -f mytodo.yaml
     ```
 
-    Output shoud confirm the ingress was changed:
+    Output should confirm the ingress was changed:
     ```
     deployment.apps/mytodo unchanged
     ingress.extensions/mytodo-ingress configured
