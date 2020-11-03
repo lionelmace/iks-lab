@@ -31,11 +31,15 @@ To create a custom domain, you will need an instance of CIS and the hostname of 
     ibmcloud is lb <vpc-lb-id> --output json | grep hostname
     ```
 
-1. To create a new domain, go to Reliability > DNS. Add a DNS record with the following information:
+1. To create a new domain, go to Reliability > DNS.
 
-    Type:  `CNAME`
-    Name:  `mytodo.example.com`
-    Alias: `Your VPC LB hostname`
+    ![](./images/cis-dns.png)
+
+1. Add a DNS record with the following information:
+
+    * Type:  `CNAME`
+    * Name:  `mytodo.example.com`
+    * Alias: `Your VPC LB hostname`
 
 
 ## Create a TLS certificate for the new domain
@@ -75,7 +79,7 @@ https://cloud.ibm.com/docs/certificate-manager?topic=certificate-manager-orderin
 1. Verify that your secret was created
 
     ```
-    kubectl get secrets -n ibm-cert-store (edited)
+    kubectl get secrets -n ibm-cert-store
     ```
 
 ## Re-deploy your app with the new domain
