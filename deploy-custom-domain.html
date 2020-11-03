@@ -613,49 +613,68 @@
 <ul>
 <li><p><a href="https://cloud.ibm.com/catalog/services/internet-services" target="_blank">CIS - Cloud Internet Services</a> which includes Domain Name Service (DNS), Global Load Balancer (GLB), Distributed Denial of Service (DDoS) protection, Web Application Firewall (WAF), etc.</p>
 </li>
-<li><p><a href="https://cloud.ibm.com/catalog/services/certificate-manager" target="_blank">Certificate Manager</a> to order and manage SSL/TLS certificates for your app.</p>
+<li><p><a href="https://cloud.ibm.com/catalog/services/certificate-manager" target="_blank">Certificate Manager</a> to order and manage SSL/TLS certificates.</p>
 </li>
 </ul>
 <h2 id="create-a-custom-domain-with-cis">Create a custom domain with CIS</h2>
+<p>To create a custom domain, you will need an instance of CIS and the hostname of your VPC Load Balancer created automatically during the cluster provisioning.</p>
 <ol>
-<li><p>You will need an Internet Services instance. You can create one for free <a href="https://cloud.ibm.com/catalog/services/internet-services" target="_blank">CIS - Cloud Internet Services</a></p>
+<li><p>You will need an instance of <a href="https://cloud.ibm.com/catalog/services/internet-services" target="_blank">CIS - Cloud Internet Services</a>. You can create one for free.</p>
 </li>
-<li><p>Get the hostname of your VPC Load Balancer created automatically for your cluster</p>
-</li>
-</ol>
-<ol>
-<li><p>To create a new domain, go to Reliability &gt; DNS</p>
-<pre class="language-"><code> CNAME mytodo.example.com &gt; URL fo
+<li><p>Retrieve the cluster ID</p>
+<pre class="language-"><code> ibmcloud ks cluster get -c iks | grep ID
 </code></pre></li>
+<li><p>Retrieve the LB ID</p>
+<pre class="language-"><code> ibmcloud is lbs | grep <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-id</span><span class="token punctuation">&gt;</span></span>
+</code></pre></li>
+<li><p>Retrieve the VPC LB hostname</p>
+<pre class="language-"><code> ibmcloud is lb <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vpc-lb-id</span><span class="token punctuation">&gt;</span></span> --output json | grep hostname
+</code></pre></li>
+<li><p>To create a new domain, go to Reliability &gt; DNS. Add a DNS record with the following information:</p>
+<p> Type:  <code>CNAME</code>
+ Name:  <code>mytodo.example.com</code>
+ Alias: <code>Your VPC LB hostname</code></p>
+</li>
 </ol>
 <h2 id="create-a-tls-certificate-for-the-new-domain">Create a TLS certificate for the new domain</h2>
 <ol>
 <li><p>Create a free instance of <a href="https://cloud.ibm.com/catalog/services/certificate-manager" target="_blank">Certificate Manager</a></p>
 </li>
-<li><p>V&#xE9;rifier les autorisations IAM pour autoriser l&#x2019;acc&#xE8;s de Certificate Manager &#xE0; Cloud Internet Services
+<li><p>Authorize Certificate Manager to access Cloud Internet Services
 <a href="https://cloud.ibm.com/docs/certificate-manager?topic=certificate-manager-ordering-certificates#cis" target="_blank">https://cloud.ibm.com/docs/certificate-manager?topic=certificate-manager-ordering-certificates#cis</a></p>
 </li>
-<li><p>Aller sur l&#x2019;instance Certificate Manager du cluster</p>
+<li><p>In the instance of Certificate Manager, order a new Certificate, select Cloud Internet Services.</p>
+<p>      <a href="images/cert-mgr.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/cert-mgr.png" alt="">
+     </a></p>
 </li>
-<li><p>Order Certificate, select Cloud Internet Services. Select sub-domain.</p>
+<li><p>Select your CIS instance and click sub-domain. You should see the CNAME you created in CIS.</p>
+<p>      <a href="images/cert-mgr-order.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/cert-mgr-order.png" alt="">
+     </a></p>
 </li>
-<li><p>Get your new certificate CRN</p>
+<li><p>Get your certificate CRN</p>
+<p>      <a href="images/cert-mgr-crn.png" rel="grouped" title="" target="_self" class="fancybox">
+       <img src="images/cert-mgr-crn.png" alt="">
+     </a></p>
 </li>
 </ol>
-<h2 id="create-a-new-secret-in-your-cluster-to-store">Create a new secret in your cluster to store</h2>
+<h2 id="create-a-new-secret-in-your-cluster-to-store-the-tls-certificate">Create a new secret in your cluster to store the TLS certificate</h2>
 <ol>
 <li><p>Get your cluster id</p>
 <pre class="language-"><code class="lang-sh"> ibmcloud ks cluster get -c <span class="token operator">&lt;</span>cluster-name<span class="token operator">&gt;</span>
 </code></pre>
 </li>
-<li><p>Create a new secret</p>
+<li><p>Create a new Kubernetes secret</p>
 <pre class="language-"><code> ibmcloud ks ingress secret create --name <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>secret-name</span><span class="token punctuation">&gt;</span></span> --cluster <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-id</span><span class="token punctuation">&gt;</span></span> --cert-crn <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cert-crn</span><span class="token punctuation">&gt;</span></span>
-</code></pre><p>kubectl get secrets -n ibm-cert-store (edited)</p>
-</li>
+</code></pre></li>
+<li><p>Verify that your secret was created</p>
+<pre class="language-"><code> kubectl get secrets -n ibm-cert-store (edited)
+</code></pre></li>
 </ol>
 <h2 id="re-deploy-your-app-with-the-new-domain">Re-deploy your app with the new domain</h2>
 <ol>
-<li><p>Edit your yaml</p>
+<li><p>Edit your yaml to replace the default domain by the new custom domain.</p>
 <pre class="language-"><code class="lang-yaml"> <span class="token punctuation">---</span>
  <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> extensions/v1beta1
  <span class="token key atrule">kind</span><span class="token punctuation">:</span> Ingress
@@ -680,9 +699,19 @@
            <span class="token key atrule">servicePort</span><span class="token punctuation">:</span> <span class="token number">8080</span>
 </code></pre>
 </li>
-<li><p>Deploy</p>
+<li><p>Re-deploy</p>
 <pre class="language-"><code class="lang-sh"> kubectl apply -f mytodo.yaml
 </code></pre>
+<p> Output shoud confirm the ingress was changed:</p>
+<pre class="language-"><code> deployment.apps/mytodo unchanged
+ ingress.extensions/mytodo-ingress configured
+ service/mytodo unchanged
+</code></pre></li>
+</ol>
+<h2 id="open-your-app-in-a-secure-way">Open your app in a secure way</h2>
+<ol>
+<li><p>Open the new url that should have this format</p>
+<p> https://<your-custom-domain></your-custom-domain></p>
 </li>
 </ol>
 
