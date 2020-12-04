@@ -114,8 +114,7 @@ Unless a namespase is specified, any kubernetes deployment is done in the namesp
       name: mytodo-ingress
       namespace: mytodo
       annotations:
-        # Force the use of https if the request is http
-        ingress.bluemix.net/redirect-to-https: "True"
+        kubernetes.io/ingress.class: "public-iks-k8s-nginx"
     spec:
       tls:
       - hosts:
