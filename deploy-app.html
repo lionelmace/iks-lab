@@ -701,8 +701,7 @@
    <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo<span class="token punctuation">-</span>ingress
    <span class="token key atrule">namespace</span><span class="token punctuation">:</span> mytodo
    <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
-     <span class="token comment"># Force the use of https if the request is http</span>
-     <span class="token key atrule">ingress.bluemix.net/redirect-to-https</span><span class="token punctuation">:</span> <span class="token string">&quot;True&quot;</span>
+     <span class="token key atrule">kubernetes.io/ingress.class</span><span class="token punctuation">:</span> <span class="token string">&quot;public-iks-k8s-nginx&quot;</span>
  <span class="token key atrule">spec</span><span class="token punctuation">:</span>
    <span class="token key atrule">tls</span><span class="token punctuation">:</span>
    <span class="token punctuation">-</span> <span class="token key atrule">hosts</span><span class="token punctuation">:</span>
