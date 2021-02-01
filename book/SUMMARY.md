@@ -6,8 +6,6 @@
 
 ## Preparation
 
-* [Pre-Requisites](prepare-prereq.md)
-* [Install Container Plugins](prepare-plugins.md)
 * [Connect to IBM Cloud](connect-to-ibm-cloud.md)
 * [Get a cluster](prepare-get-cluster.md)
 
@@ -42,6 +40,8 @@
 * [Provisioning with Terraform](appendix-terraform.md)
 * [Control traffic with Calico](calico.md)
 * [Appendix](appendix.md)
+* [Pre-Requisites](prepare-prereq.md)
+* [Install Container Plugins](prepare-plugins.md)
 
 ## Resources
 * [Resources](resources.md)
