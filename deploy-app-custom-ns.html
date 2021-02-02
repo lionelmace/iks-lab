@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Deploy with Helm · IBM Cloud Kubernetes Service Lab</title>
+        <title>Deploy app in custom namespace · IBM Cloud Kubernetes Service Lab</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -81,10 +81,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="devops-continuous-delivery.html" />
+    <link rel="next" href="appendix-create-cluster-cli.html" />
     
     
-    <link rel="prev" href="clean-up.html" />
+    <link rel="prev" href="monitor-cluster-metrics.html" />
     
 
     </head>
@@ -361,7 +361,7 @@
         
         
     
-        <li class="chapter active" data-level="4.1" data-path="devops-helm.html">
+        <li class="chapter " data-level="4.1" data-path="devops-helm.html">
             
                 <a href="devops-helm.html">
             
@@ -435,7 +435,7 @@
         
         
     
-        <li class="chapter " data-level="6.1" data-path="deploy-app-custom-ns.html">
+        <li class="chapter active" data-level="6.1" data-path="deploy-app-custom-ns.html">
             
                 <a href="deploy-app-custom-ns.html">
             
@@ -607,7 +607,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Deploy with Helm</a>
+        <a href="." >Deploy app in custom namespace</a>
     </h1>
 </div>
 
@@ -622,151 +622,151 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="deploy-the-app-with-helm-charts">Deploy the app with Helm Charts</h1>
-<p>Helm helps you manage Kubernetes applications &#x2014; Helm Charts helps you define, install, and upgrade even the most complex Kubernetes application.</p>
-<p>During this lab, we are going to install a helm client and configure it. Then we are going to deploy the same app with Helm.</p>
-<p>Charts are easy to create, version, share, and publish &#x2014; so start using Helm and stop the copy-and-paste madness.</p>
-<p>Helm is a client/server application :</p>
-<ul>
-<li>Helm client</li>
-<li>Tiller server.</li>
-</ul>
-<h2 id="initialize-helm--tiller">Initialize Helm &amp; Tiller</h2>
+                                <h1 id="deploy-the-app-in-your-cluster">Deploy the app in your cluster</h1>
+<p>Different ways exist to make your app accessible from the internet. To choose the best networking option for your application, you can follow the decision tree available <a href="https://cloud.ibm.com/docs/containers?topic=containers-cs_network_planning" target="_blank">here</a>.</p>
+<p>In this lab, we will test the <strong>Ingress</strong>, which a NGINX based reverse proxy.</p>
+<h2 id="create-a-kubernetes-namespace">Create a Kubernetes namespace</h2>
+<p>Unless a namespase is specified, any kubernetes deployment is done in the namespace <strong>default</strong>. A best practise is to create a new namespace for this deployment. In order to be able to pull image during the deployment, we need to set up the Container Registry image pull secret in the new namespace.</p>
 <ol>
-<li><p>Initialize Helm by navigating and running the below command in your cluster</p>
-<pre class="language-"><code class="lang-sh"> helm init
-</code></pre>
-<p> Results:</p>
-<pre class="language-"><code> $ helm init
- $HELM_HOME has been configured at /Users/mace/.helm.
-
- Tiller (the Helm server-side component) has been installed into your Kubernetes Cluster.
-
- Please note: by default, Tiller is deployed with an insecure &apos;allow unauthenticated users&apos; policy.
- For more information on securing your installation see: https://docs.helm.sh/using_helm/#securing-your-helm-installation
- Happy Helming!
+<li><p>Create a Kubernetes namespace called <code>mytodo</code></p>
+<pre class="language-"><code> kubectl create namespace mytodo
 </code></pre></li>
-<li><p>Verify that the tiller-deploy pod has a Status of Running in your cluster.</p>
-<pre class="language-"><code class="lang-sh"> kubectl get pods -n kube-system -l <span class="token assign-left variable">app</span><span class="token operator">=</span>helm
-</code></pre>
-<p> Results:</p>
-<pre class="language-"><code> NAME                           READY     STATUS    RESTARTS   AGE
- tiller-deploy-75f5797b-sxmrq   1/1       Running   0          4m
+<li><p>Let&apos;s copy the all-icr-io image pull secret from the default namespace to the new namespace <code>mytodo</code></p>
+<pre class="language-"><code> kubectl get secret all-icr-io -n default -o yaml | sed &apos;s/default/mytodo/g&apos; | kubectl create -n mytodo -f -
+</code></pre></li>
+<li><p>Verify that the secrets are created successfully.</p>
+<pre class="language-"><code> kubectl get secrets -n mytodo | grep icr-io
+</code></pre></li>
+<li><p>To deploy containers, add the image pull secret to the service account of the namespace so that any deployment in the namespace can pull images from the registry.</p>
+<pre class="language-"><code> kubectl patch  -n mytodo serviceaccount/default -p &apos;{&quot;imagePullSecrets&quot;:[{&quot;name&quot;: &quot;all-icr-io&quot;}]}&apos;
+</code></pre></li>
+<li><p>Verify that your image pull secret was added to your default service account.</p>
+<pre class="language-"><code> kubectl describe serviceaccount default -n mytodo
+</code></pre><p> Example output:</p>
+<pre class="language-"><code> Name:                default
+ Namespace:           mytodo
+ Labels:              <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>
+ Annotations:         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>
+ Image pull secrets:  all-icr-io
+ Mountable secrets:   default-token-xs4kr
+ Tokens:              default-token-xs4kr
+ Events:              <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>
 </code></pre></li>
 </ol>
-<h2 id="deploy-the-app-with-helm">Deploy the app with Helm</h2>
+<h2 id="deploy-with-ingress">Deploy with Ingress</h2>
 <ol>
-<li><p>Go to the folder kubernetes/helm/chart</p>
-<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">cd</span> cloud/chart/mytodo
+<li><p>Navigate to the folder <strong>kubernetes</strong>.</p>
+<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">cd</span> cloud/kubernetes
 </code></pre>
 </li>
-<li><p>Edit the file <strong>values.yaml</strong> to change the repository values which includes: the region, the registry namespace, the image name, and the tag (=version).</p>
-<pre class="language-"><code class="lang-yaml">   <span class="token comment"># Default values for mytodo.</span>
-   <span class="token comment"># This is a YAML-formatted file.</span>
-   <span class="token comment"># Declare variables to be passed into your templates.</span>
+<li><p>Retrieve the values of both the ingress subdomain and the ingress secret of your cluster</p>
+<pre class="language-"><code> ibmcloud ks cluster get -c <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span> | grep Ingress
+</code></pre><p> Output example:</p>
+<pre class="language-"><code> Ingress Subdomain:              iks-466821-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+ Ingress Secret:                 iks-466821-483cccd2f0d38128dd40d2b711142ba9-0000
+ Ingress Status:                 healthy
+ Ingress Message:                All Ingress components are healthy
+</code></pre></li>
+<li><p>Edit the file <code>ingress-tls-deploy.yaml</code>.</p>
+</li>
+<li><p>Replace all the values wrapped in &lt;...&gt; with the appropriate values:</p>
+<pre class="language-"><code class="lang-yaml"> <span class="token punctuation">---</span>
+  <span class="token comment"># Create a Kubernetes namespace</span>
+ <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+ <span class="token key atrule">kind</span><span class="token punctuation">:</span> Namespace
+ <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
 
- <span class="token key atrule">replicaCount</span><span class="token punctuation">:</span> <span class="token number">3</span>
-
- <span class="token key atrule">image</span><span class="token punctuation">:</span>
-   <span class="token key atrule">repository</span><span class="token punctuation">:</span> &lt;region<span class="token punctuation">&gt;</span>.icr.io/&lt;namespace<span class="token punctuation">&gt;</span>/mytodo<span class="token punctuation">-</span>&lt;lastname<span class="token punctuation">&gt;</span>
-   <span class="token key atrule">tag</span><span class="token punctuation">:</span> <span class="token string">&quot;1.0&quot;</span>
-   <span class="token key atrule">pullPolicy</span><span class="token punctuation">:</span> Always
-
-  <span class="token comment"># secret:</span>
-  <span class="token comment">#   database: database-credentials</span>
-
- <span class="token key atrule">nameOverride</span><span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span>
- <span class="token key atrule">fullnameOverride</span><span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span>
-
- <span class="token key atrule">service</span><span class="token punctuation">:</span>
-   <span class="token key atrule">type</span><span class="token punctuation">:</span> ClusterIP
-   <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">8080</span>
-
- <span class="token key atrule">ingress</span><span class="token punctuation">:</span>
-   <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+ <span class="token punctuation">---</span>
+  <span class="token comment"># Application to deploy</span>
+ <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+ <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
+ <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
+   <span class="token key atrule">namespace</span><span class="token punctuation">:</span> mytodo
+ <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+   <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">2</span> <span class="token comment"># tells deployment to run 2 pods matching the template</span>
+   <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+     <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+       <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
+   <span class="token key atrule">template</span><span class="token punctuation">:</span>   <span class="token comment"># create pods using pod definition in this template</span>
+     <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+       <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+         <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
+         <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
+     <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+       <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+       <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
+         <span class="token key atrule">image</span><span class="token punctuation">:</span> &lt;registry<span class="token punctuation">-</span>region<span class="token punctuation">&gt;</span>.icr.io/&lt;registry<span class="token punctuation">-</span>namespace<span class="token punctuation">&gt;</span>/mytodo<span class="token punctuation">-</span>&lt;lastname<span class="token punctuation">&gt;</span><span class="token punctuation">:</span><span class="token number">1.0</span>
+         <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> Always
+         <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+           <span class="token key atrule">requests</span><span class="token punctuation">:</span>
+             <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 250m     <span class="token comment"># 250 millicores = 1/4 core</span>
+             <span class="token key atrule">memory</span><span class="token punctuation">:</span> 128Mi <span class="token comment"># 128 MB</span>
+           <span class="token key atrule">limits</span><span class="token punctuation">:</span>
+             <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 500m
+             <span class="token key atrule">memory</span><span class="token punctuation">:</span> 384Mi
+         <span class="token comment"># envFrom:</span>
+         <span class="token comment"># - secretRef:</span>
+         <span class="token comment">#     name: database-credentials</span>
+ <span class="token punctuation">---</span>
+ <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> extensions/v1beta1
+ <span class="token key atrule">kind</span><span class="token punctuation">:</span> Ingress
+ <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo<span class="token punctuation">-</span>ingress
+   <span class="token key atrule">namespace</span><span class="token punctuation">:</span> mytodo
    <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
-     <span class="token comment"># Force the use of https if the request is http</span>
-     <span class="token key atrule">ingress.bluemix.net/redirect-to-https</span><span class="token punctuation">:</span> <span class="token string">&quot;True&quot;</span>
- <span class="token key atrule">path</span><span class="token punctuation">:</span> /
- <span class="token key atrule">hosts</span><span class="token punctuation">:</span>
-     <span class="token punctuation">-</span> mytodo.&lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>.&lt;region<span class="token punctuation">&gt;</span>.containers.appdomain.cloud
- <span class="token key atrule">tls</span><span class="token punctuation">:</span>
-     <span class="token punctuation">-</span> <span class="token key atrule">secretName</span><span class="token punctuation">:</span> &lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>
-     <span class="token key atrule">hosts</span><span class="token punctuation">:</span>
-         <span class="token punctuation">-</span> mytodo.&lt;cluster<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>.&lt;region<span class="token punctuation">&gt;</span>.containers.appdomain.cloud
-
- <span class="token key atrule">resources</span><span class="token punctuation">:</span>
-   <span class="token comment"># We usually recommend not to specify default resources and to leave this as a conscious</span>
-   <span class="token comment"># choice for the user. This also increases chances charts run on environments with little</span>
-   <span class="token comment"># resources, such as Minikube. If you do want to specify resources, uncomment the following</span>
-   <span class="token comment"># lines, adjust them as necessary, and remove the curly braces after &apos;resources:&apos;.</span>
- <span class="token key atrule">limits</span><span class="token punctuation">:</span>
-     <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 500m
-     <span class="token key atrule">memory</span><span class="token punctuation">:</span> 384Mi
- <span class="token key atrule">requests</span><span class="token punctuation">:</span>
-     <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 250m
-     <span class="token key atrule">memory</span><span class="token punctuation">:</span> 128Mi
-
- <span class="token key atrule">nodeSelector</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-
- <span class="token key atrule">tolerations</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-
- <span class="token key atrule">affinity</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+     <span class="token key atrule">kubernetes.io/ingress.class</span><span class="token punctuation">:</span> <span class="token string">&quot;public-iks-k8s-nginx&quot;</span>
+ <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+   <span class="token key atrule">tls</span><span class="token punctuation">:</span>
+   <span class="token punctuation">-</span> <span class="token key atrule">hosts</span><span class="token punctuation">:</span>
+     <span class="token punctuation">-</span> mytodo.&lt;ingress<span class="token punctuation">-</span>subdomain<span class="token punctuation">&gt;</span>
+     <span class="token key atrule">secretName</span><span class="token punctuation">:</span> &lt;ingress<span class="token punctuation">-</span>secret<span class="token punctuation">&gt;</span>
+   <span class="token key atrule">rules</span><span class="token punctuation">:</span>
+   <span class="token punctuation">-</span> <span class="token key atrule">host</span><span class="token punctuation">:</span> mytodo.&lt;ingress<span class="token punctuation">-</span>subdomain<span class="token punctuation">&gt;</span>
+     <span class="token key atrule">http</span><span class="token punctuation">:</span>
+       <span class="token key atrule">paths</span><span class="token punctuation">:</span>
+       <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> /
+         <span class="token key atrule">backend</span><span class="token punctuation">:</span>
+           <span class="token key atrule">serviceName</span><span class="token punctuation">:</span> mytodo
+           <span class="token key atrule">servicePort</span><span class="token punctuation">:</span> <span class="token number">8080</span>
+ <span class="token punctuation">---</span>
+  <span class="token comment"># Service to expose frontend</span>
+ <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+ <span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+ <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
+   <span class="token key atrule">namespace</span><span class="token punctuation">:</span> mytodo
+   <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+     <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
+     <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
+ <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+   <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+   <span class="token punctuation">-</span> <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
+     <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">8080</span>
+   <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+     <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
+     <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
 </code></pre>
 </li>
-<li><p>Helm runs with &quot;default&quot; service account. Set the right permissions to be able to install package</p>
-<pre class="language-"><code> kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
-</code></pre><blockquote>
-<p>Installing package will throw this error if you don&apos;t have the correction permission: <code>Error: UPGRADE FAILED: configmaps is forbidden</code></p>
-</blockquote>
-</li>
-<li><p>Install a Helm chart</p>
-<pre class="language-"><code class="lang-sh"> helm upgrade mytodo <span class="token builtin class-name">.</span> --install
+<li><p>Deploy the app into your Kubernetes cluster.</p>
+<pre class="language-"><code class="lang-sh"> kubectl apply -f ingress-tls-deploy.yaml
 </code></pre>
-<p> Results:</p>
-<pre class="language-"><code> NAME:   mytodo
- LAST DEPLOYED: Fri Nov 16 18:51:12 2018
- NAMESPACE: default
- STATUS: DEPLOYED
-
- RESOURCES:
- ==&gt; v1/Service
- NAME     TYPE       CLUSTER-IP     EXTERNAL-IP  PORT(S)   AGE
- mytodo  ClusterIP  172.21.52.118  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>       8080/TCP  0s
-
- ==&gt; v1beta2/Deployment
- NAME     DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE
- mytodo  3        3        3           0          0s
-
- ==&gt; v1beta1/Ingress
- NAME     HOSTS                                            ADDRESS           PORTS    AGE
- mytodo  todo.lab-cluster-1.eu-de.containers.appdomain.cloud  149.81.67.38,...  80, 443  0s
-
- ==&gt; v1/Pod(related)
- NAME                      READY  STATUS             RESTARTS  AGE
- mytodo-86884779d9-4c62z  0/1    ContainerCreating  0         0s
- mytodo-86884779d9-jzzpt  0/1    ContainerCreating  0         0s
- mytodo-86884779d9-qxnt2  0/1    ContainerCreating  0         0s
+<p> Output example:</p>
+<pre class="language-"><code> namespace/mytodo configured
+ deployment.apps/mytodo created
+ ingress.extensions/mytodo-ingress created
+ service/mytodo created
 </code></pre></li>
-<li><p>Get the status of the helm deployment</p>
-<pre class="language-"><code> helm status mytodo
+<li><p>Open a browser and check out the app with the following URL:</p>
+<pre class="language-"><code> https://mytodo.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ingress-subdomain</span><span class="token punctuation">&gt;</span></span>
 </code></pre></li>
-<li><p>Get the application URL by running these commands:</p>
-<pre class="language-"><code> https://todo.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span>.eu-de.containers.appdomain.cloud/
-</code></pre><blockquote>
-<p>To run with local values in debug mode: <code>helm install . --name mytodo --values=local-values.yaml --dry-run --debug</code></p>
-</blockquote>
-</li>
 </ol>
-<h2 id="delete-your-deployment">Delete your deployment</h2>
-<ol>
-<li><p>To delete your deployment</p>
-<pre class="language-"><code> helm delete --purge mytodo
-</code></pre><blockquote>
-<p>Generally, an helm chart is managing many pods, deployments, secrets, volumes and services. So deleting the chart is a quick way to clean up your work.</p>
-</blockquote>
-</li>
-</ol>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://cloud.ibm.com/docs/containers?topic=containers-registry#copy_imagePullSecret" target="_blank">Copying an existing image pull secret from the default namespace to new namespace</a></li>
+<li><a href="https://cloud.ibm.com/docs/containers?topic=containers-registry#store_imagePullSecret" target="_blank">Storing the image pull secret in the Kubernetes service account for the selected namespace</a></li>
+</ul>
 
                                 
                                 </section>
@@ -794,12 +794,12 @@
 
             
                 
-                <a href="clean-up.html" class="navigation navigation-prev " aria-label="Previous page: Clean up">
+                <a href="monitor-cluster-metrics.html" class="navigation navigation-prev " aria-label="Previous page: Monitoring your cluster">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="devops-continuous-delivery.html" class="navigation navigation-next " aria-label="Next page: Deploy with Continuous Delivery">
+                <a href="appendix-create-cluster-cli.html" class="navigation navigation-next " aria-label="Next page: Create a cluster with CLI">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -810,7 +810,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Deploy with Helm","level":"4.1","depth":1,"next":{"title":"Deploy with Continuous Delivery","level":"4.2","depth":1,"path":"devops-continuous-delivery.md","ref":"devops-continuous-delivery.md","articles":[]},"previous":{"title":"Clean up","level":"3.12","depth":1,"path":"clean-up.md","ref":"clean-up.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"devops-helm.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Deploy app in custom namespace","level":"6.1","depth":1,"next":{"title":"Create a cluster with CLI","level":"6.2","depth":1,"path":"appendix-create-cluster-cli.md","ref":"appendix-create-cluster-cli.md","articles":[]},"previous":{"title":"Monitoring your cluster","level":"5.2","depth":1,"path":"monitor-cluster-metrics.md","ref":"monitor-cluster-metrics.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"deploy-app-custom-ns.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

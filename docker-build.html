@@ -435,12 +435,27 @@
         
         
     
-        <li class="chapter " data-level="6.1" data-path="appendix-create-cluster-cli.html">
+        <li class="chapter " data-level="6.1" data-path="deploy-app-custom-ns.html">
+            
+                <a href="deploy-app-custom-ns.html">
+            
+                    
+                        <b>6.1.</b>
+                    
+                    Deploy app in custom namespace
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="appendix-create-cluster-cli.html">
             
                 <a href="appendix-create-cluster-cli.html">
             
                     
-                        <b>6.1.</b>
+                        <b>6.2.</b>
                     
                     Create a cluster with CLI
             
@@ -450,12 +465,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.2" data-path="weavescope.html">
+        <li class="chapter " data-level="6.3" data-path="weavescope.html">
             
                 <a href="weavescope.html">
             
                     
-                        <b>6.2.</b>
+                        <b>6.3.</b>
                     
                     Weavescope
             
@@ -465,12 +480,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.3" data-path="appendix-terraform.html">
+        <li class="chapter " data-level="6.4" data-path="appendix-terraform.html">
             
                 <a href="appendix-terraform.html">
             
                     
-                        <b>6.3.</b>
+                        <b>6.4.</b>
                     
                     Provisioning with Terraform
             
@@ -480,12 +495,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.4" data-path="calico.html">
+        <li class="chapter " data-level="6.5" data-path="calico.html">
             
                 <a href="calico.html">
             
                     
-                        <b>6.4.</b>
+                        <b>6.5.</b>
                     
                     Control traffic with Calico
             
@@ -495,12 +510,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.5" data-path="appendix.html">
+        <li class="chapter " data-level="6.6" data-path="appendix.html">
             
                 <a href="appendix.html">
             
                     
-                        <b>6.5.</b>
+                        <b>6.6.</b>
                     
                     Appendix
             
@@ -510,12 +525,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.6" data-path="prepare-prereq.html">
+        <li class="chapter " data-level="6.7" data-path="prepare-prereq.html">
             
                 <a href="prepare-prereq.html">
             
                     
-                        <b>6.6.</b>
+                        <b>6.7.</b>
                     
                     Pre-Requisites
             
@@ -525,12 +540,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.7" data-path="prepare-plugins.html">
+        <li class="chapter " data-level="6.8" data-path="prepare-plugins.html">
             
                 <a href="prepare-plugins.html">
             
                     
-                        <b>6.7.</b>
+                        <b>6.8.</b>
                     
                     Install Container Plugins
             
@@ -616,17 +631,19 @@
 <blockquote>
 <p>Region is <strong>de</strong> for the Frankfurt datacenter.</p>
 </blockquote>
-<p> <div class="alert alert-info hints-alert"><div class="hints-icon"><i class="fa fa-info-circle"></i></div><div class="hints-container"><pre class="language-"><code>If you use the Cloud Shell, docker is not available yet. So we&apos;ll use the command:
-ibmcloud cr build . -t <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>region</span><span class="token punctuation">&gt;</span></span>.icr.io/lab-registry/todo-yourlastname:1.0
-</code></pre></div></div></p>
+<p> If you use the Cloud Shell, note that docker is not available yet. So use this command instead.</p>
+<pre class="language-"><code> ibmcloud cr build . -t <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>region</span><span class="token punctuation">&gt;</span></span>.icr.io/lab-registry/todo-yourlastname:1.0
+</code></pre><blockquote>
+<p>This command will run <code>docker build</code> directly on the cloud. So you don&apos;t need to push your image later.</p>
+</blockquote>
 </li>
 <li><p>Verify that the image was successfully added to your local docker registry</p>
 <pre class="language-"><code class="lang-sh"> docker images
 </code></pre>
 <p> Output:</p>
-<pre class="language-"><code> REPOSITORY                         TAG                 IMAGE ID            CREATED             SIZE
- de.icr.io/lab-registry/todo-mace   1.0                 30bd6bcc47bc        42 minutes ago      124MB
- node                               11.13.0-alpine      f34bcc2815ed        6 weeks ago         75.4MB
+<pre class="language-"><code> REPOSITORY                           TAG                 IMAGE ID            CREATED             SIZE
+ de.icr.io/lab-registry/mytodo-mace   1.0                 30bd6bcc47bc        42 minutes ago      124MB
+ node                                 11.13.0-alpine      f34bcc2815ed        6 weeks ago         75.4MB
 </code></pre></li>
 </ol>
 

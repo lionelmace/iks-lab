@@ -435,12 +435,27 @@
         
         
     
-        <li class="chapter " data-level="6.1" data-path="appendix-create-cluster-cli.html">
+        <li class="chapter " data-level="6.1" data-path="deploy-app-custom-ns.html">
+            
+                <a href="deploy-app-custom-ns.html">
+            
+                    
+                        <b>6.1.</b>
+                    
+                    Deploy app in custom namespace
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="appendix-create-cluster-cli.html">
             
                 <a href="appendix-create-cluster-cli.html">
             
                     
-                        <b>6.1.</b>
+                        <b>6.2.</b>
                     
                     Create a cluster with CLI
             
@@ -450,12 +465,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.2" data-path="weavescope.html">
+        <li class="chapter " data-level="6.3" data-path="weavescope.html">
             
                 <a href="weavescope.html">
             
                     
-                        <b>6.2.</b>
+                        <b>6.3.</b>
                     
                     Weavescope
             
@@ -465,12 +480,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.3" data-path="appendix-terraform.html">
+        <li class="chapter " data-level="6.4" data-path="appendix-terraform.html">
             
                 <a href="appendix-terraform.html">
             
                     
-                        <b>6.3.</b>
+                        <b>6.4.</b>
                     
                     Provisioning with Terraform
             
@@ -480,12 +495,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.4" data-path="calico.html">
+        <li class="chapter " data-level="6.5" data-path="calico.html">
             
                 <a href="calico.html">
             
                     
-                        <b>6.4.</b>
+                        <b>6.5.</b>
                     
                     Control traffic with Calico
             
@@ -495,12 +510,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.5" data-path="appendix.html">
+        <li class="chapter " data-level="6.6" data-path="appendix.html">
             
                 <a href="appendix.html">
             
                     
-                        <b>6.5.</b>
+                        <b>6.6.</b>
                     
                     Appendix
             
@@ -510,12 +525,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.6" data-path="prepare-prereq.html">
+        <li class="chapter " data-level="6.7" data-path="prepare-prereq.html">
             
                 <a href="prepare-prereq.html">
             
                     
-                        <b>6.6.</b>
+                        <b>6.7.</b>
                     
                     Pre-Requisites
             
@@ -525,12 +540,12 @@
             
         </li>
     
-        <li class="chapter " data-level="6.7" data-path="prepare-plugins.html">
+        <li class="chapter " data-level="6.8" data-path="prepare-plugins.html">
             
                 <a href="prepare-plugins.html">
             
                     
-                        <b>6.7.</b>
+                        <b>6.8.</b>
                     
                     Install Container Plugins
             
@@ -610,34 +625,6 @@
                                 <h1 id="deploy-the-app-in-your-cluster">Deploy the app in your cluster</h1>
 <p>Different ways exist to make your app accessible from the internet. To choose the best networking option for your application, you can follow the decision tree available <a href="https://cloud.ibm.com/docs/containers?topic=containers-cs_network_planning" target="_blank">here</a>.</p>
 <p>In this lab, we will test the <strong>Ingress</strong>, which a NGINX based reverse proxy.</p>
-<h2 id="create-a-kubernetes-namespace">Create a Kubernetes namespace</h2>
-<p>Unless a namespase is specified, any kubernetes deployment is done in the namespace <strong>default</strong>. A best practise is to create a new namespace for this deployment. In order to be able to pull image during the deployment, we need to set up the Container Registry image pull secret in the new namespace.</p>
-<ol>
-<li><p>Create a Kubernetes namespace called <code>mytodo</code></p>
-<pre class="language-"><code> kubectl create namespace mytodo
-</code></pre></li>
-<li><p>Let&apos;s copy the all-icr-io image pull secret from the default namespace to the new namespace <code>mytodo</code></p>
-<pre class="language-"><code> kubectl get secret all-icr-io -n default -o yaml | sed &apos;s/default/mytodo/g&apos; | kubectl create -n mytodo -f -
-</code></pre></li>
-<li><p>Verify that the secrets are created successfully.</p>
-<pre class="language-"><code> kubectl get secrets -n mytodo | grep icr-io
-</code></pre></li>
-<li><p>To deploy containers, add the image pull secret to the service account of the namespace so that any deployment in the namespace can pull images from the registry.</p>
-<pre class="language-"><code> kubectl patch  -n mytodo serviceaccount/default -p &apos;{&quot;imagePullSecrets&quot;:[{&quot;name&quot;: &quot;all-icr-io&quot;}]}&apos;
-</code></pre></li>
-<li><p>Verify that your image pull secret was added to your default service account.</p>
-<pre class="language-"><code> kubectl describe serviceaccount default -n mytodo
-</code></pre><p> Example output:</p>
-<pre class="language-"><code> Name:                default
- Namespace:           mytodo
- Labels:              <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>
- Annotations:         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>
- Image pull secrets:  all-icr-io
- Mountable secrets:   default-token-xs4kr
- Tokens:              default-token-xs4kr
- Events:              <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>none</span><span class="token punctuation">&gt;</span></span>
-</code></pre></li>
-</ol>
 <h2 id="deploy-with-ingress">Deploy with Ingress</h2>
 <ol>
 <li><p>Navigate to the folder <strong>kubernetes</strong>.</p>
@@ -656,19 +643,11 @@
 </li>
 <li><p>Replace all the values wrapped in &lt;...&gt; with the appropriate values:</p>
 <pre class="language-"><code class="lang-yaml"> <span class="token punctuation">---</span>
-  <span class="token comment"># Create a Kubernetes namespace</span>
- <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
- <span class="token key atrule">kind</span><span class="token punctuation">:</span> Namespace
- <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
-
- <span class="token punctuation">---</span>
   <span class="token comment"># Application to deploy</span>
  <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
  <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
  <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
    <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
-   <span class="token key atrule">namespace</span><span class="token punctuation">:</span> mytodo
  <span class="token key atrule">spec</span><span class="token punctuation">:</span>
    <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">2</span> <span class="token comment"># tells deployment to run 2 pods matching the template</span>
    <span class="token key atrule">selector</span><span class="token punctuation">:</span>
@@ -699,7 +678,6 @@
  <span class="token key atrule">kind</span><span class="token punctuation">:</span> Ingress
  <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
    <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo<span class="token punctuation">-</span>ingress
-   <span class="token key atrule">namespace</span><span class="token punctuation">:</span> mytodo
    <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
      <span class="token key atrule">kubernetes.io/ingress.class</span><span class="token punctuation">:</span> <span class="token string">&quot;public-iks-k8s-nginx&quot;</span>
  <span class="token key atrule">spec</span><span class="token punctuation">:</span>
@@ -721,7 +699,6 @@
  <span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
  <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
    <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
-   <span class="token key atrule">namespace</span><span class="token punctuation">:</span> mytodo
    <span class="token key atrule">labels</span><span class="token punctuation">:</span>
      <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
      <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
@@ -747,6 +724,8 @@
 <pre class="language-"><code> https://mytodo.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ingress-subdomain</span><span class="token punctuation">&gt;</span></span>
 </code></pre></li>
 </ol>
+<p><div class="alert alert-info hints-alert"><div class="hints-icon"><i class="fa fa-info-circle"></i></div><div class="hints-container"><p>Unless a namespase is specified, any kubernetes deployment is done in the namespace <strong>default</strong>. A best practise is to create a new namespace for this deployment. To learn how to use a custom namespace, you can later follow those <a href="deploy-app-custom-ns">Pre-Requisites</a>. </p>
+</div></div></p>
 <h2 id="resources">Resources</h2>
 <ul>
 <li><a href="https://cloud.ibm.com/docs/containers?topic=containers-registry#copy_imagePullSecret" target="_blank">Copying an existing image pull secret from the default namespace to new namespace</a></li>
