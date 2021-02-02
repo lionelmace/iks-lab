@@ -8,10 +8,11 @@ Before you can deploy the application on the cluster, you first need to build th
     ```
     > Region is **de** for the Frankfurt datacenter.
 
-    {% hint style='info' %}
-    If you use the Cloud Shell, docker is not available yet. So we'll use the command:
+    If you use the Cloud Shell, note that docker is not available yet. So use this command instead.
+    ```
     ibmcloud cr build . -t <region>.icr.io/lab-registry/todo-yourlastname:1.0
-    {% endhint %}
+    ```
+    > This command will run `docker build` directly on the cloud. So you don't need to push your image later.
 
 1. Verify that the image was successfully added to your local docker registry
     ```sh
@@ -19,7 +20,7 @@ Before you can deploy the application on the cluster, you first need to build th
     ```
     Output:
     ```
-    REPOSITORY                         TAG                 IMAGE ID            CREATED             SIZE
-    de.icr.io/lab-registry/todo-mace   1.0                 30bd6bcc47bc        42 minutes ago      124MB
-    node                               11.13.0-alpine      f34bcc2815ed        6 weeks ago         75.4MB
+    REPOSITORY                           TAG                 IMAGE ID            CREATED             SIZE
+    de.icr.io/lab-registry/mytodo-mace   1.0                 30bd6bcc47bc        42 minutes ago      124MB
+    node                                 11.13.0-alpine      f34bcc2815ed        6 weeks ago         75.4MB
     ``` 

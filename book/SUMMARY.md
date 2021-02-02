@@ -35,6 +35,7 @@
 * [Monitoring your cluster](monitor-cluster-metrics.md)
 
 ## Advanced
+* [Deploy app in custom namespace](deploy-app-custom-ns.md)
 * [Create a cluster with CLI](appendix-create-cluster-cli.md)
 * [Weavescope](weavescope.md)
 * [Provisioning with Terraform](appendix-terraform.md)
