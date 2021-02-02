@@ -626,6 +626,10 @@
 <pre class="language-"><code class="lang-sh"> ibmcloud ks cluster config -c <span class="token operator">&lt;</span>cluster-name<span class="token operator">&gt;</span>
 </code></pre>
 </li>
+<li><p>The cluster configuration is visible in the folder <code>.kube</code> </p>
+<pre class="language-"><code class="lang-sh"> <span class="token function">more</span> .kube/config
+</code></pre>
+</li>
 <li><p>You can now execute &apos;kubectl&apos; commands against your cluster. For example, get the worker nodes of your cluster:</p>
 <pre class="language-"><code class="lang-sh"> kubectl get nodes
 </code></pre>
