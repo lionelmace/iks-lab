@@ -114,7 +114,7 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
     https://mytodo.<ingress-subdomain>
     ```
 
-{% hint style='info' %}Unless a namespase is specified, any kubernetes deployment is done in the namespace **default**. A best practise is to create a new namespace for this deployment. To learn how to use a custom namespace, you can later follow those [Pre-Requisites](./deploy-app-custom-ns). {% endhint %}
+{% hint style='info' %}Unless a namespase is specified, any kubernetes deployment is done in the namespace **default**. A best practise is to create a new namespace for this deployment. To learn how to use a custom namespace, you can follow those [instructions](./deploy-app-custom-ns). {% endhint %}
 
 ## Resources
 
