@@ -4,9 +4,14 @@ Before you can deploy the application on the cluster, you first need to build th
 
 1. **Build** a Docker image. Make sure to replace the value region and namespace
     ```sh
-    docker build . -t <region>.icr.io/lab-registry/todo-<lastname>:1.0
+    docker build . -t <region>.icr.io/lab-registry/todo-<yourlastname>:1.0
     ```
     > Region is **de** for the Frankfurt datacenter.
+
+    {% hint style='info' %}
+    If you use the Cloud Shell, docker is not available yet. So we'll use the command:
+    ibmcloud cr build . -t <region>.icr.io/lab-registry/todo-yourlastname:1.0
+    {% endhint %}
 
 1. Verify that the image was successfully added to your local docker registry
     ```sh

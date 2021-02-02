@@ -22,6 +22,11 @@ You need to target a Resource Group (RG) to view your cluster or to add a servic
     ibmcloud ks cluster config -c <cluster-name>
     ```
 
+1. The cluster configuration is visible in the folder `.kube` 
+    ```sh
+    more .kube/config
+    ```
+
 1. You can now execute 'kubectl' commands against your cluster. For example, get the worker nodes of your cluster:
     ```sh
     kubectl get nodes
