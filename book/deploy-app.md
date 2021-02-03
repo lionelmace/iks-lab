@@ -97,13 +97,12 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
         tier: frontend
     ```
 
-1. Deploy the app into your Kubernetes cluster.
+1. Deploy the app into your cluster.
     ```sh
     kubectl apply -f ingress-tls-deploy.yaml
     ```
     Output example:
     ```
-    namespace/mytodo configured
     deployment.apps/mytodo created
     ingress.extensions/mytodo-ingress created
     service/mytodo created
