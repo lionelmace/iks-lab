@@ -683,10 +683,10 @@
  <span class="token key atrule">spec</span><span class="token punctuation">:</span>
    <span class="token key atrule">tls</span><span class="token punctuation">:</span>
    <span class="token punctuation">-</span> <span class="token key atrule">hosts</span><span class="token punctuation">:</span>
-     <span class="token punctuation">-</span> mytodo.&lt;ingress<span class="token punctuation">-</span>subdomain<span class="token punctuation">&gt;</span>
+     <span class="token punctuation">-</span> &lt;ingress<span class="token punctuation">-</span>subdomain<span class="token punctuation">&gt;</span>
      <span class="token key atrule">secretName</span><span class="token punctuation">:</span> &lt;ingress<span class="token punctuation">-</span>secret<span class="token punctuation">&gt;</span>
    <span class="token key atrule">rules</span><span class="token punctuation">:</span>
-   <span class="token punctuation">-</span> <span class="token key atrule">host</span><span class="token punctuation">:</span> mytodo.&lt;ingress<span class="token punctuation">-</span>subdomain<span class="token punctuation">&gt;</span>
+   <span class="token punctuation">-</span> <span class="token key atrule">host</span><span class="token punctuation">:</span> &lt;ingress<span class="token punctuation">-</span>subdomain<span class="token punctuation">&gt;</span>
      <span class="token key atrule">http</span><span class="token punctuation">:</span>
        <span class="token key atrule">paths</span><span class="token punctuation">:</span>
        <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> /
@@ -711,17 +711,18 @@
      <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
 </code></pre>
 </li>
-<li><p>Deploy the app into your Kubernetes cluster.</p>
+<li><p>Deploy the app into your cluster.</p>
 <pre class="language-"><code class="lang-sh"> kubectl apply -f ingress-tls-deploy.yaml
 </code></pre>
 <p> Output example:</p>
-<pre class="language-"><code> namespace/mytodo configured
- deployment.apps/mytodo created
+<pre class="language-"><code> deployment.apps/mytodo created
  ingress.extensions/mytodo-ingress created
  service/mytodo created
 </code></pre></li>
 <li><p>Open a browser and check out the app with the following URL:</p>
-<pre class="language-"><code> https://mytodo.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ingress-subdomain</span><span class="token punctuation">&gt;</span></span>
+<pre class="language-"><code> https://<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ingress-subdomain</span><span class="token punctuation">&gt;</span></span>
+</code></pre><p> Example:</p>
+<pre class="language-"><code> https://iks-871966-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud/
 </code></pre></li>
 </ol>
 <p><div class="alert alert-info hints-alert"><div class="hints-icon"><i class="fa fa-info-circle"></i></div><div class="hints-container"><p>Unless a namespase is specified, any kubernetes deployment is done in the namespace <strong>default</strong>. A best practise is to create a new namespace for this deployment. To learn how to use a custom namespace, you can follow those <a href="deploy-app-custom-ns">instructions</a>. </p>
