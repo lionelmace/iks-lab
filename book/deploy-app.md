@@ -69,10 +69,10 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
     spec:
       tls:
       - hosts:
-        - mytodo.<ingress-subdomain>
+        - <ingress-subdomain>
         secretName: <ingress-secret>
       rules:
-      - host: mytodo.<ingress-subdomain>
+      - host: <ingress-subdomain>
         http:
           paths:
           - path: /
@@ -111,7 +111,11 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
 
 1. Open a browser and check out the app with the following URL:
     ```
-    https://mytodo.<ingress-subdomain>
+    https://<ingress-subdomain>
+    ```
+    Example:
+    ```
+    https://iks-871966-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud/
     ```
 
 {% hint style='info' %}Unless a namespase is specified, any kubernetes deployment is done in the namespace **default**. A best practise is to create a new namespace for this deployment. To learn how to use a custom namespace, you can follow those [instructions](./deploy-app-custom-ns). {% endhint %}
