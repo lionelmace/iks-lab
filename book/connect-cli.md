@@ -2,10 +2,10 @@
 
 You need to target a Resource Group (RG) to view your cluster or to add a service (e.g. Cloudant Database). Access to the group and the resources within it are managed by using Identity and Access Management (IAM).
 
-1. In this lab, the Resource Group **hec-iks-group** has been created. Select this resource group.
+1. In this lab, the Resource Group **lab** has been created. Select this resource group.
 
     ```sh
-    ibmcloud target -g hec-iks-group
+    ibmcloud target -g lab
     ```
 
 1. Verify you can see your cluster.
