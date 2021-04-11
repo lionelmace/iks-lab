@@ -24,20 +24,21 @@ To create a cluster, you have two options either a Lite cluster or a Standard on
     ibmcloud ks workers <cluster_name_or_id>
     ```
 
-
 ## Create a Standard cluster
 
 1. Select the Kubernetes version
+    
     ```
     ibmcloud ks versions
     ```
+
     Output
     ```
     Kubernetes Versions
-    1.16.15
-    1.17.12
-    1.18.9 (default)
-    1.19.2
+    1.17.17
+    1.18.17
+    1.19.9 (default)
+    1.20.5
     ```
 
 1. Review the data centers that are available.
@@ -53,32 +54,23 @@ To create a cluster, you have two options either a Lite cluster or a Standard on
 
 1. Review the machine types available in the data center
     ```
-    ic ks flavors --zone <zone>
+    ibmcloud ks flavors --zone <zone>
     ```
     Output for eu-de-1:
     ```
     Name         Cores   Memory   Network Speed   OS             Server Type   Storage   Secondary Storage   Provider
-    b2.16x64†    16      64GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
-    b2.32x128†   32      128GB    1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
-    b2.4x16†     4       16GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
-    b2.8x32†     8       32GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
     bx2.16x64    16      64GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
     bx2.2x8†     2       8GB      4Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
     bx2.32x128   32      128GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
     bx2.48x192   48      192GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
     bx2.4x16     4       16GB     8Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
     bx2.8x32     8       32GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
-    c2.16x32†    16      32GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
-    c2.2x4†      2       4GB      1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
-    c2.32x64†    32      64GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
     cx2.16x32    16      32GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
     cx2.2x4†     2       4GB      4Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
     cx2.32x64    32      64GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
     cx2.48x96    48      96GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
     cx2.4x8†     4       8GB      8Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
     cx2.8x16     8       16GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
-    m2.16x128†   16      128GB    1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
-    m2.8x64†     8       64GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
     mx2.16x128   16      128GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
     mx2.2x16†    2       16GB     4Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
     mx2.32x256   32      256GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
@@ -101,7 +93,7 @@ To create a cluster, you have two options either a Lite cluster or a Standard on
 
 1. Get the available subnet for the vpc above
     ```
-    ic is subnets
+    ibmcloud is subnets
     ```
 
 1. Create cluster
@@ -138,18 +130,18 @@ To create a cluster, you have two options either a Lite cluster or a Standard on
     ibmcloud ks workers <cluster_name_or_id>
     ```
     
-    > The cluster creation process is as follow:
+> The cluster creation process is as follow:
 
-    | State             | Status                                       |
-    | ----------------- | -------------------------------------------- |
-    | provision_pending | Waiting for master to be deployed            |
-    | provisioning      | Provisioning in progress                     |
-    | deploying         | Starting worker deployment                   |
-    | deploying         | Installing Docker Runtime                    |
-    | deploying         | Configuring Kubectl CLI                      |
-    | deploying         | Preparing Worker for Calico Networking Setup |
-    | deploying         | Starting Kube Worker Services                |
-    | deploying         | Configuring Calico-Workers                   |
-    | deployed          | Deploying                                    |
-    | deployed          | Deploy Automation Successful                 |
-    | normal            | Ready                                        |
+| State             | Status                                       |
+| ----------------- | -------------------------------------------- |
+| provision_pending | Waiting for master to be deployed            |
+| provisioning      | Provisioning in progress                     |
+| deploying         | Starting worker deployment                   |
+| deploying         | Installing Docker Runtime                    |
+| deploying         | Configuring Kubectl CLI                      |
+| deploying         | Preparing Worker for Calico Networking Setup |
+| deploying         | Starting Kube Worker Services                |
+| deploying         | Configuring Calico-Workers                   |
+| deployed          | Deploying                                    |
+| deployed          | Deploy Automation Successful                 |
+| normal            | Ready                                        |

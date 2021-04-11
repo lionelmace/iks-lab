@@ -6,7 +6,6 @@
 
 1. Locate your cluster in the list. You may need to select the resource group and the location in the filter bar.
 
-    
 1. Select the cluster.
 
 The **Overview** page provides critical information about your cluster like:
