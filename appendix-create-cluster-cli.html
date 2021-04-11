@@ -649,10 +649,10 @@
 <pre class="language-"><code> ibmcloud ks versions
 </code></pre><p> Output</p>
 <pre class="language-"><code> Kubernetes Versions
- 1.16.15
- 1.17.12
- 1.18.9 (default)
- 1.19.2
+ 1.17.17
+ 1.18.17
+ 1.19.9 (default)
+ 1.20.5
 </code></pre></li>
 <li><p>Review the data centers that are available.</p>
 <pre class="language-"><code> ibmcloud ks zones --provider vpc-gen2
@@ -662,30 +662,21 @@
  eu-de-3      eu-de-3      Frankfurt         -
 </code></pre></li>
 <li><p>Review the machine types available in the data center</p>
-<pre class="language-"><code> ic ks flavors --zone <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>zone</span><span class="token punctuation">&gt;</span></span>
+<pre class="language-"><code> ibmcloud ks flavors --zone <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>zone</span><span class="token punctuation">&gt;</span></span>
 </code></pre><p> Output for eu-de-1:</p>
 <pre class="language-"><code> Name         Cores   Memory   Network Speed   OS             Server Type   Storage   Secondary Storage   Provider
- b2.16x64&#x2020;    16      64GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
- b2.32x128&#x2020;   32      128GB    1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
- b2.4x16&#x2020;     4       16GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
- b2.8x32&#x2020;     8       32GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
  bx2.16x64    16      64GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
  bx2.2x8&#x2020;     2       8GB      4Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
  bx2.32x128   32      128GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
  bx2.48x192   48      192GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
  bx2.4x16     4       16GB     8Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
  bx2.8x32     8       32GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- c2.16x32&#x2020;    16      32GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
- c2.2x4&#x2020;      2       4GB      1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
- c2.32x64&#x2020;    32      64GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
  cx2.16x32    16      32GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
  cx2.2x4&#x2020;     2       4GB      4Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
  cx2.32x64    32      64GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
  cx2.48x96    48      96GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
  cx2.4x8&#x2020;     4       8GB      8Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
  cx2.8x16     8       16GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- m2.16x128&#x2020;   16      128GB    1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
- m2.8x64&#x2020;     8       64GB     1000Mbps        UBUNTU_18_64   virtual       100GB     0B                  vpc-classic
  mx2.16x128   16      128GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
  mx2.2x16&#x2020;    2       16GB     4Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
  mx2.32x256   32      256GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
@@ -704,7 +695,7 @@
 </blockquote>
 </li>
 <li><p>Get the available subnet for the vpc above</p>
-<pre class="language-"><code> ic is subnets
+<pre class="language-"><code> ibmcloud is subnets
 </code></pre></li>
 <li><p>Create cluster</p>
 <pre class="language-"><code> ibmcloud ks cluster create vpc-gen2 \
@@ -730,24 +721,65 @@
 </code></pre></li>
 <li><p>Check the status of the worker node(s).</p>
 <pre class="language-"><code> ibmcloud ks workers <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster_name_or_id</span><span class="token punctuation">&gt;</span></span>
-</code></pre><blockquote>
+</code></pre></li>
+</ol>
+<blockquote>
 <p>The cluster creation process is as follow:</p>
 </blockquote>
-<p> | State             | Status                                       |
- | ----------------- | -------------------------------------------- |
- | provision_pending | Waiting for master to be deployed            |
- | provisioning      | Provisioning in progress                     |
- | deploying         | Starting worker deployment                   |
- | deploying         | Installing Docker Runtime                    |
- | deploying         | Configuring Kubectl CLI                      |
- | deploying         | Preparing Worker for Calico Networking Setup |
- | deploying         | Starting Kube Worker Services                |
- | deploying         | Configuring Calico-Workers                   |
- | deployed          | Deploying                                    |
- | deployed          | Deploy Automation Successful                 |
- | normal            | Ready                                        |</p>
-</li>
-</ol>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>provision_pending</td>
+<td>Waiting for master to be deployed</td>
+</tr>
+<tr>
+<td>provisioning</td>
+<td>Provisioning in progress</td>
+</tr>
+<tr>
+<td>deploying</td>
+<td>Starting worker deployment</td>
+</tr>
+<tr>
+<td>deploying</td>
+<td>Installing Docker Runtime</td>
+</tr>
+<tr>
+<td>deploying</td>
+<td>Configuring Kubectl CLI</td>
+</tr>
+<tr>
+<td>deploying</td>
+<td>Preparing Worker for Calico Networking Setup</td>
+</tr>
+<tr>
+<td>deploying</td>
+<td>Starting Kube Worker Services</td>
+</tr>
+<tr>
+<td>deploying</td>
+<td>Configuring Calico-Workers</td>
+</tr>
+<tr>
+<td>deployed</td>
+<td>Deploying</td>
+</tr>
+<tr>
+<td>deployed</td>
+<td>Deploy Automation Successful</td>
+</tr>
+<tr>
+<td>normal</td>
+<td>Ready</td>
+</tr>
+</tbody>
+</table>
 
                                 
                                 </section>
