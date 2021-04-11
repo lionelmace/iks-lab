@@ -97,6 +97,7 @@ To create a cluster, you have two options either a Lite cluster or a Standard on
     ```
 
 1. Create cluster
+
     ```
     ibmcloud ks cluster create vpc-gen2 \
       --name <cluster-name> \
@@ -117,7 +118,6 @@ To create a cluster, you have two options either a Lite cluster or a Standard on
       --workers 2 \
       --vpc-id r006-809f4e33-36fb-4bdd-a026-bd2a4918eeee \
       --subnet-id 0717-30090a05-434a-42e3-973f-dde7999acb2c
-
     ```
 
 1. Verify that the creation of the cluster was requested.

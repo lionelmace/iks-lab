@@ -6,16 +6,16 @@ In this section, you will either use your own cluster or get access to a IBM Clo
 
 ## Create a Kubernetes cluster
 
-1. Create a Standard cluster [https://cloud.ibm.com/kubernetes/catalog/about](https://cloud.ibm.com/kubernetes/catalog/about)
+1. Create a Standard cluster [https://cloud.ibm.com/kubernetes/catalog/create](https://cloud.ibm.com/kubernetes/catalog/create)
 
     * Number of worker: 1
-    * Worker flavor: u3c.2x4
-    * Kube version: 1.17.4
+    * Worker flavor: cx2.2x4
+    * Kube version: 1.20.5
 
 
 1. The cluster can be created by CLI
     ```
-    ibmcloud ks cluster create classic --name mycluster --zone fra04 --flavor u3c.2x4 --workers 1 --version 1.17.4
+    ibmcloud ks cluster create classic --name mycluster --zone fra04 --flavor cx2.2x4 --workers 1 --version 1.20.5
     ```
     If you already have a public and private vlans, you would need this command
     ```

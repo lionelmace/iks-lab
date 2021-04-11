@@ -26,11 +26,9 @@ We will use a web application for managing todos. The front end is written in An
     ```
     Results:
     ```
-    > mytodo@2.0.0 start /Users/mace/Box Sync/Bluemix/technos/temp/mytodo
+    > mytodo@2.0.0 start /home/lionel_mace/mytodo
     > node server.js
 
-    Cannot find module ./vcap-local.json
-    Cannot find credentials.env
     Using In Memory
     server starting on http://localhost:8080
     ```
@@ -45,4 +43,4 @@ We will use a web application for managing todos. The front end is written in An
 
 1. Type a new todo to validate. This todo is being stored in memory. Thus restarting the app will delete any todo.
 
-1. Finally, you can stop the app using `Ctrl+C`.
+1. Finally, you can stop the app using `Ctrl + C`.
