@@ -1,8 +1,10 @@
 # Summary
 
-* [Introduction](README.md)
+## Introduction
 
-## Lab 1 - Access the cluster
+* [Lab Overview](README.md)
+
+## Lab 2 - Access the cluster
 
 * [Get a cluster](01-get-cluster.md)
 * [View your cluster in the Console](01-view-cluster.md)
@@ -10,7 +12,7 @@
 * [Connect to IBM Cloud](01-connect-to-ibm-cloud.md)
 * [Access your cluster](01-connect-cli.md)
 
-## Lab 2 - Deploy an app
+## Lab 3 - Deploy an app
 
 * [Get and run the app locally](02-run-app.md)
 * [Build docker image](02-docker-build.md)
@@ -22,12 +24,12 @@
 * [Optional: Use a custom domain](02-deploy-custom-domain.md)
 * [Clean up](02-clean-up.md)
 
-## Lab 3 - DevOps and Helm charts
+## Lab 4 - DevOps and Helm charts
 
 * [Deploy with Helm](devops-helm.md)
 * [Deploy with Continuous Delivery](devops-continuous-delivery.md)
 
-## Lab 4 - Monitor your cluster
+## Lab 5 - Monitor your cluster
 
 * [Cluster Logs](monitor-cluster-logs.md)
 * [Monitoring your cluster](monitor-cluster-metrics.md)
