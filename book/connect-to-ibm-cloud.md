@@ -2,17 +2,18 @@
 
 In this section, you will use the IBM Cloud CLI to connect to the cluster.
 
-{% hint style='info' %} IBM Cloud comes with a built-in hosted web shell with all the necessary tools. If you prefer to use your own terminal, make sure to perform the [Pre-Requisites](./prepare-prereq.md). {% endhint %}
+{% hint style='info' %} IBM Cloud gives you a personal cloud-based shell workspace with the full IBM Cloud CLI and tons of command-line tools - no installation needed.
+ If you prefer to use your own terminal, make sure to perform the [Pre-Requisites](./prepare-prereq.md). {% endhint %}
 
 # Connect to IBM Cloud using the Cloud Shell
 
-1. Make sure youre logged in to the IBM Cloud.
+1. Make sure youre logged in to the [IBM Cloud](http://cloud.ibm.com).
 
-1. Click on the top right terminal icon to launch the IBM Cloud Shell.
+1. To get started, click the Cloud Shell icon in the IBM Cloud console menu bar.
 
     ![](./images/cloudshell.png)
 
-1. You are now logged in IBM Cloud and you can run commands such git, kubectl
+1. A new windonw will open. You are now logged in IBM Cloud and you can run commands such git, kubectl
 
     ![](./images/cloudshell-login.png)
 
