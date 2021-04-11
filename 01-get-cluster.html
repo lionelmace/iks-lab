@@ -137,9 +137,9 @@
         
         
     
-        <li class="chapter active" data-level="2.1" data-path="01-prepare-get-cluster.html">
+        <li class="chapter active" data-level="2.1" data-path="01-get-cluster.html">
             
-                <a href="01-prepare-get-cluster.html">
+                <a href="01-get-cluster.html">
             
                     
                         <b>2.1.</b>
@@ -624,24 +624,8 @@
                                 
                                 <h1 id="get-a-cluster">Get a cluster</h1>
 <p>In this section, you will either use your own cluster or get access to a IBM Cloud Lab account which contains pre-provisioned clusters. Each lab attendee should have access to one cluster.</p>
-<p><div class="alert alert-info hints-alert"><div class="hints-icon"><i class="fa fa-info-circle"></i></div><div class="hints-container"><p> If you&apos;re doing this lab on your own, you will need to create your own cluster by following the next section <strong>Create a Kubernetes cluster</strong> to create your own cluster.</p>
+<p><div class="alert alert-info hints-alert"><div class="hints-icon"><i class="fa fa-info-circle"></i></div><div class="hints-container"><p> If you&apos;re doing this lab on your own, you will need to create your own cluster by following the section <a href="appendix-create-cluster-cli.html"><strong>Create a Kubernetes cluster</strong></a> to create your own cluster.</p>
 </div></div></p>
-<h2 id="create-a-kubernetes-cluster">Create a Kubernetes cluster</h2>
-<ol>
-<li><p>Create a Standard cluster <a href="https://cloud.ibm.com/kubernetes/catalog/create" target="_blank">https://cloud.ibm.com/kubernetes/catalog/create</a></p>
-<ul>
-<li>Number of worker: 1</li>
-<li>Worker flavor: cx2.2x4</li>
-<li>Kube version: 1.20.5</li>
-</ul>
-</li>
-</ol>
-<ol>
-<li>The cluster can be created by CLI<pre class="language-"><code> ibmcloud ks cluster create classic --name mycluster --zone fra04 --flavor cx2.2x4 --workers 1 --version 1.20.5
-</code></pre> If you already have a public and private vlans, you would need this command<pre class="language-"><code> ibmcloud ks cluster create classic --name mycluster --zone <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>zone</span><span class="token punctuation">&gt;</span></span> --flavor <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>flavor</span><span class="token punctuation">&gt;</span></span> --workers 1 --version <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span> --private-vlan <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vlan-id</span><span class="token punctuation">&gt;</span></span> --public-vlan <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vlan-id</span><span class="token punctuation">&gt;</span></span>
-</code></pre> For example:<pre class="language-"><code> ibmcloud ks cluster create classic --name mycluster --zone fra04 --flavor u3c.2x4 --workers 1 --version 1.17.4 --private-vlan 2700262 --public-vlan 2700260
-</code></pre></li>
-</ol>
 <h2 id="get-a-kubernetes-cluster">Get a Kubernetes cluster</h2>
 <ol>
 <li><p>Go to the web page given by the instructor and enter your IBM ID (the email you used to sign up) and the lab key given by the trainer.</p>
@@ -655,29 +639,6 @@
      </a></p>
 </li>
 </ol>
-<h2 id="verify-your-access-to-the-cluster">Verify your access to the cluster</h2>
-<ol>
-<li><p>Refresh your <a href="http://cloud.ibm.com" target="_blank">IBM Cloud Dashboard</a></p>
-</li>
-<li><p>Select the lab account when you have been invited by clicking on the account selection drop down in the top nav bar.</p>
-</li>
-<li><p>Click on <strong>View all</strong> in the Resource Summary tile.</p>
-</li>
-<li><p>Under <strong>Kubernetes Clusters</strong>, click on the cluster that has been assigned to you.</p>
-</li>
-<li><p>Launch the <strong>Kubernetes Clusters</strong> and have a look around! You can come back to this dashboard throughout your lab.</p>
-<p>      <a href="images/resource-list.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/resource-list.png" alt="">
-     </a></p>
-</li>
-</ol>
-<p>You will use this cluster for this lab. Note that this is a Standard/Paid cluster (as opposed to a FREE cluster.)</p>
-<p>With a standard cluster, you can:</p>
-<ul>
-<li>Guard against zone failures with mutltizone clusters.</li>
-<li>React to workload changes with automatic load balancing and scaling of apps and worker nodes.</li>
-<li>Expose apps with stable IPs and domains, and manage network traffic with Istio.</li>
-</ul>
 
                                 
                                 </section>
@@ -721,7 +682,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Get a cluster","level":"2.1","depth":1,"next":{"title":"View your cluster in the Console","level":"2.2","depth":1,"path":"01-view-cluster.md","ref":"01-view-cluster.md","articles":[]},"previous":{"title":"Lab Overview","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"01-prepare-get-cluster.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Get a cluster","level":"2.1","depth":1,"next":{"title":"View your cluster in the Console","level":"2.2","depth":1,"path":"01-view-cluster.md","ref":"01-view-cluster.md","articles":[]},"previous":{"title":"Lab Overview","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"01-get-cluster.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

@@ -137,9 +137,9 @@
         
         
     
-        <li class="chapter " data-level="2.1" data-path="01-prepare-get-cluster.html">
+        <li class="chapter " data-level="2.1" data-path="01-get-cluster.html">
             
-                <a href="01-prepare-get-cluster.html">
+                <a href="01-get-cluster.html">
             
                     
                         <b>2.1.</b>
@@ -627,13 +627,19 @@
 <ul>
 <li><p>A <strong>Lite cluster</strong> is a free cluster comes with a single worker node to deploy container pods upon. A worker node is the compute host, typically a virtual machine, that your apps run on. Go to Step <em>Create a Lite cluster</em></p>
 </li>
-<li><p>A <strong>Standard cluster</strong> is a production-ready cluster with as many worker nodes as you want. A Standard cluster requires requires a IBM Cloud Infrastructure account. Go to Step <em>Create a Standard cluster</em>.</p>
+<li><p>A <strong>Standard cluster</strong> is a production-ready cluster with as many worker nodes as you want. A Standard cluster requires a VPC. Go to Step <em>Create a Standard cluster</em>.</p>
 </li>
+</ul>
+<p>With a standard cluster, you can:</p>
+<ul>
+<li>Guard against zone failures with mutltizone clusters.</li>
+<li>React to workload changes with automatic load balancing and scaling of apps and worker nodes.</li>
+<li>Expose apps with stable IPs and domains, and manage network traffic with Istio.</li>
 </ul>
 <h2 id="create-a-lite-cluster">Create a Lite cluster</h2>
 <ol>
 <li><p>Create your Lite cluster.</p>
-<pre class="language-"><code> ibmcloud ks cluster-create --name <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>your-cluster-name</span><span class="token punctuation">&gt;</span></span>
+<pre class="language-"><code> ibmcloud ks cluster create classic --name <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>your-cluster-name</span><span class="token punctuation">&gt;</span></span>
 </code></pre><p> Once the cluster reaches the <strong>deployed</strong> state you can provision pods, but they will be enqueued until the cluster&#x2019;s pods are finished provisioning. Note that it takes up to 15 minutes for the worker node machine to be ordered and for the cluster to be set up and provisioned.</p>
 </li>
 <li><p>Verify that the creation of the cluster was requested.</p>
