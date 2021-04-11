@@ -631,96 +631,112 @@
 <pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">cd</span> cloud/kubernetes
 </code></pre>
 </li>
-<li><p>Retrieve the values of both the ingress subdomain and the ingress secret of your cluster</p>
-<pre class="language-"><code> ibmcloud ks cluster get -c <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span> | grep Ingress
-</code></pre><p> Output example:</p>
-<pre class="language-"><code> Ingress Subdomain:              iks-466821-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
- Ingress Secret:                 iks-466821-483cccd2f0d38128dd40d2b711142ba9-0000
- Ingress Status:                 healthy
- Ingress Message:                All Ingress components are healthy
-</code></pre></li>
-<li><p>Edit the file <code>ingress-tls-deploy.yaml</code>.</p>
+<li><p>Set the cluster name</p>
+<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">export</span> <span class="token assign-left variable">IKS_CLUSTER_NAME</span><span class="token operator">=</span><span class="token operator">&lt;</span>mycluster-name<span class="token operator">&gt;</span>
+</code></pre>
 </li>
-<li><p>Replace all the values wrapped in &lt;...&gt; with the appropriate values:</p>
-<pre class="language-"><code class="lang-yaml"> <span class="token punctuation">---</span>
+<li><p>View the details of a cluster</p>
+<pre class="language-"><code class="lang-sh"> ibmcloud ks cluster get -c <span class="token variable">$IKS_CLUSTER_NAME</span>
+</code></pre>
+</li>
+<li><p>Set the values of both the ingress subdomain and the ingress secret of your cluster. Those values will be used in the deployment yaml later.</p>
+<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">export</span> <span class="token assign-left variable">IKS_INGRESS_URL</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>ic ks cluster get -c $IKS_CLUSTER_NAME <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">&quot;Ingress Subdomain&quot;</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">&apos;{print tolower(<span class="token variable">$3</span>)}&apos;</span><span class="token variable">)</span></span>
+ <span class="token builtin class-name">export</span> <span class="token assign-left variable">IKS_INGRESS_SECRET</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>ic ks cluster get -c $IKS_CLUSTER_NAME <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">&quot;Ingress Secret&quot;</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">&apos;{print tolower(<span class="token variable">$3</span>)}&apos;</span><span class="token variable">)</span></span>
+</code></pre>
+</li>
+<li><p>Verify the values you set</p>
+<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">echo</span> <span class="token variable">$IKS_INGRESS_URL</span>
+ <span class="token builtin class-name">echo</span> <span class="token variable">$IKS_INGRESS_SECRET</span>
+</code></pre>
+<p> Output should be similar to this</p>
+<pre class="language-"><code> iks-325510-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+ iks-325510-483cccd2f0d38128dd40d2b711142ba9-0000
+</code></pre></li>
+<li><p>Set the path to the docker image in the IBM Cloud Container Registry</p>
+<pre class="language-"><code> export DOCKER_IMG=<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>registry-region</span><span class="token punctuation">&gt;</span></span>.icr.io/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>registry-namespace</span><span class="token punctuation">&gt;</span></span>/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>docker-image-name</span><span class="token punctuation">&gt;</span></span>:<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>docker-tag</span><span class="token punctuation">&gt;</span></span>
+</code></pre><p> Example:</p>
+<pre class="language-"><code> export DOCKER_IMG=de.icr.io/mace/mytodo:1.0
+</code></pre></li>
+<li><p>Deploy the container into your cluster.</p>
+<pre class="language-"><code class="lang-sh"> kubectl apply -f - <span class="token operator">&lt;&lt;</span>EOF
+ ---
   <span class="token comment"># Application to deploy</span>
- <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
- <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
- <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
- <span class="token key atrule">spec</span><span class="token punctuation">:</span>
-   <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">2</span> <span class="token comment"># tells deployment to run 2 pods matching the template</span>
-   <span class="token key atrule">selector</span><span class="token punctuation">:</span>
-     <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
-       <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
-   <span class="token key atrule">template</span><span class="token punctuation">:</span>   <span class="token comment"># create pods using pod definition in this template</span>
-     <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-       <span class="token key atrule">labels</span><span class="token punctuation">:</span>
-         <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
-         <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
-     <span class="token key atrule">spec</span><span class="token punctuation">:</span>
-       <span class="token key atrule">containers</span><span class="token punctuation">:</span>
-       <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
-         <span class="token key atrule">image</span><span class="token punctuation">:</span> &lt;registry<span class="token punctuation">-</span>region<span class="token punctuation">&gt;</span>.icr.io/&lt;registry<span class="token punctuation">-</span>namespace<span class="token punctuation">&gt;</span>/mytodo<span class="token punctuation">-</span>&lt;lastname<span class="token punctuation">&gt;</span><span class="token punctuation">:</span><span class="token number">1.0</span>
-         <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> Always
-         <span class="token key atrule">resources</span><span class="token punctuation">:</span>
-           <span class="token key atrule">requests</span><span class="token punctuation">:</span>
-             <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 250m     <span class="token comment"># 250 millicores = 1/4 core</span>
-             <span class="token key atrule">memory</span><span class="token punctuation">:</span> 128Mi <span class="token comment"># 128 MB</span>
-           <span class="token key atrule">limits</span><span class="token punctuation">:</span>
-             <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 500m
-             <span class="token key atrule">memory</span><span class="token punctuation">:</span> 384Mi
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: mytodo
+ spec:
+   replicas: <span class="token number">2</span> <span class="token comment"># tells deployment to run 2 pods matching the template</span>
+   selector:
+     matchLabels:
+       app: mytodo
+   template:   <span class="token comment"># create pods using pod definition in this template</span>
+     metadata:
+       labels:
+         app: mytodo
+         tier: frontend
+     spec:
+       containers:
+       - name: mytodo
+         image: <span class="token variable">$DOCKER_IMG</span>
+         imagePullPolicy: Always
+         resources:
+           requests:
+             cpu: 250m     <span class="token comment"># 250 millicores = 1/4 core</span>
+             memory: 128Mi <span class="token comment"># 128 MB</span>
+           limits:
+             cpu: 500m
+             memory: 384Mi
          <span class="token comment"># envFrom:</span>
          <span class="token comment"># - secretRef:</span>
          <span class="token comment">#     name: database-credentials</span>
- <span class="token punctuation">---</span>
- <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> extensions/v1beta1
- <span class="token key atrule">kind</span><span class="token punctuation">:</span> Ingress
- <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo<span class="token punctuation">-</span>ingress
-   <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
-     <span class="token key atrule">kubernetes.io/ingress.class</span><span class="token punctuation">:</span> <span class="token string">&quot;public-iks-k8s-nginx&quot;</span>
- <span class="token key atrule">spec</span><span class="token punctuation">:</span>
-   <span class="token key atrule">tls</span><span class="token punctuation">:</span>
-   <span class="token punctuation">-</span> <span class="token key atrule">hosts</span><span class="token punctuation">:</span>
-     <span class="token punctuation">-</span> &lt;ingress<span class="token punctuation">-</span>subdomain<span class="token punctuation">&gt;</span>
-     <span class="token key atrule">secretName</span><span class="token punctuation">:</span> &lt;ingress<span class="token punctuation">-</span>secret<span class="token punctuation">&gt;</span>
-   <span class="token key atrule">rules</span><span class="token punctuation">:</span>
-   <span class="token punctuation">-</span> <span class="token key atrule">host</span><span class="token punctuation">:</span> &lt;ingress<span class="token punctuation">-</span>subdomain<span class="token punctuation">&gt;</span>
-     <span class="token key atrule">http</span><span class="token punctuation">:</span>
-       <span class="token key atrule">paths</span><span class="token punctuation">:</span>
-       <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> /
-         <span class="token key atrule">backend</span><span class="token punctuation">:</span>
-           <span class="token key atrule">serviceName</span><span class="token punctuation">:</span> mytodo
-           <span class="token key atrule">servicePort</span><span class="token punctuation">:</span> <span class="token number">8080</span>
- <span class="token punctuation">---</span>
+ ---
+ apiVersion: extensions/v1beta1
+ kind: Ingress
+ metadata:
+   name: mytodo-ingress
+   annotations:
+     kubernetes.io/ingress.class: <span class="token string">&quot;public-iks-k8s-nginx&quot;</span>
+     <span class="token comment"># kubernetes.io/ingress.class: &quot;private-iks-k8s-nginx&quot;</span>
+ spec:
+   tls:
+   - hosts:
+     - <span class="token variable">$IKS_INGRESS_URL</span>
+     secretName: <span class="token variable">$IKS_INGRESS_SECRET</span>
+   rules:
+   - host: <span class="token variable">$IKS_INGRESS_URL</span>
+     http:
+       paths:
+       - path: /
+         backend:
+           serviceName: mytodo
+           servicePort: <span class="token number">8080</span>
+ ---
   <span class="token comment"># Service to expose frontend</span>
- <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
- <span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
- <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
-   <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
-   <span class="token key atrule">labels</span><span class="token punctuation">:</span>
-     <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
-     <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
- <span class="token key atrule">spec</span><span class="token punctuation">:</span>
-   <span class="token key atrule">ports</span><span class="token punctuation">:</span>
-   <span class="token punctuation">-</span> <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
-     <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">8080</span>
-   <span class="token key atrule">selector</span><span class="token punctuation">:</span>
-     <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
-     <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
+ apiVersion: v1
+ kind: Service
+ metadata:
+   name: mytodo
+   labels:
+     app: mytodo
+     tier: frontend
+ spec:
+   ports:
+   - protocol: TCP
+     port: <span class="token number">8080</span>
+   selector:
+     app: mytodo
+     tier: frontend
+ EOF
 </code></pre>
-</li>
-<li><p>Deploy the app into your cluster.</p>
-<pre class="language-"><code class="lang-sh"> kubectl apply -f ingress-tls-deploy.yaml
-</code></pre>
-<p> Output example:</p>
-<pre class="language-"><code> deployment.apps/mytodo created
+<pre class="language-"><code> Output example:
+</code></pre><p> deployment.apps/mytodo created
  ingress.extensions/mytodo-ingress created
  service/mytodo created
-</code></pre></li>
+ ```</p>
+</li>
 <li><p>Open a browser and check out the app with the following URL:</p>
-<pre class="language-"><code> https://<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ingress-subdomain</span><span class="token punctuation">&gt;</span></span>
+<pre class="language-"><code> open https://$IKS_INGRESS_URL
 </code></pre><p> Example:</p>
 <pre class="language-"><code> https://iks-871966-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud/
 </code></pre></li>
