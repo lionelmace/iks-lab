@@ -5,10 +5,13 @@
 1. Open a command line utility.
 
 1. Before installing any plugin, you need to add the repository hosting IBM Cloud CLI plug-ins.
+
     ```sh
     ibmcloud plugin repos
     ```
+
     Output:
+
     ```
     Listing added plug-in repositories...
 
@@ -17,6 +20,7 @@
     ```
 
 1. If you don't see a repository, run the following command:
+
     ```sh
     ibmcloud plugin repo-add "IBM Cloud" https://plugins.cloud.ibm.com
     ```
@@ -25,11 +29,13 @@
 To create Kubernetes clusters, and manage worker nodes, install the Kubernetes Service plug-in.
 
 1. To install the Kubernetes Service plugin, run the following command:
+
     ```sh
     ibmcloud plugin install kubernetes-service
     ```
 
 1. Log in to IKS. The prefix for running commands by using the Kubernetes Service plug-in is **ibmcloud ks**.
+
     ```sh
     ibmcloud ks init
     ```

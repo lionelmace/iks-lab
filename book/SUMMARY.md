@@ -6,7 +6,7 @@
 
 ## Lab 1 - Access the cluster
 
-* [Get a cluster](01-prepare-get-cluster.md)
+* [Get a cluster](01-get-cluster.md)
 * [View your cluster in the Console](01-view-cluster.md)
 * [Kubernetes Dashboard](01-kube-dashboard.md)
 * [Connect to IBM Cloud](01-connect-to-ibm-cloud.md)
