@@ -1,4 +1,4 @@
-# Deploy the app in your cluster
+# Deploy the app in a custom kubernetes namespace
 
 Different ways exist to make your app accessible from the internet. To choose the best networking option for your application, you can follow the decision tree available [here](https://cloud.ibm.com/docs/containers?topic=containers-cs_network_planning).
 

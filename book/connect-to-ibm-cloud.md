@@ -2,7 +2,7 @@
 
 In this section, you will use the IBM Cloud CLI to connect to the cluster.
 
-{% hint style='info' %} IBM Cloud comes with a built-in hosted web shell with all the necessary tools. If you prefer to use your own terminal, make sure to perform the [Pre-Requisites](../prepare-prereq.md). {% endhint %}
+{% hint style='info' %} IBM Cloud comes with a built-in hosted web shell with all the necessary tools. If you prefer to use your own terminal, make sure to perform the [Pre-Requisites](./prepare-prereq.md). {% endhint %}
 
 # Connect to IBM Cloud using the Cloud Shell
 

@@ -7,27 +7,59 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
 ## Deploy with Ingress
 
 1. Navigate to the folder **kubernetes**.
+
     ```sh
     cd cloud/kubernetes
     ```
 
-1. Retrieve the values of both the ingress subdomain and the ingress secret of your cluster
-    ```
-    ibmcloud ks cluster get -c <cluster-name> | grep Ingress
-    ```
-    Output example:
-    ```
-    Ingress Subdomain:              iks-466821-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
-    Ingress Secret:                 iks-466821-483cccd2f0d38128dd40d2b711142ba9-0000
-    Ingress Status:                 healthy
-    Ingress Message:                All Ingress components are healthy
+1. Set the cluster name
+
+    ```sh
+    export IKS_CLUSTER_NAME=<mycluster-name>
     ```
 
-1. Edit the file `ingress-tls-deploy.yaml`.
+1. View the details of a cluster
 
-1. Replace all the values wrapped in <...> with the appropriate values:
+    ```sh
+    ibmcloud ks cluster get -c $IKS_CLUSTER_NAME
+    ```
+
+1. Set the values of both the ingress subdomain and the ingress secret of your cluster. Those values will be used in the deployment yaml later.
+
+    ```sh
+    export IKS_INGRESS_URL=$(ic ks cluster get -c $IKS_CLUSTER_NAME | grep "Ingress Subdomain" | awk '{print tolower($3)}')
+    export IKS_INGRESS_SECRET=$(ic ks cluster get -c $IKS_CLUSTER_NAME | grep "Ingress Secret" | awk '{print tolower($3)}')
+    ```
+
+1. Verify the values you set
+
+    ```sh
+    echo $IKS_INGRESS_URL
+    echo $IKS_INGRESS_SECRET
+    ```
+
+    Output should be similar to this
+
+    ```
+    iks-325510-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+    iks-325510-483cccd2f0d38128dd40d2b711142ba9-0000
+    ```
+
+1. Set the path to the docker image in the IBM Cloud Container Registry
+
+    ```
+    export DOCKER_IMG=<registry-region>.icr.io/<registry-namespace>/<docker-image-name>:<docker-tag>
+    ```
+    
+    Example:
+    ```
+    export DOCKER_IMG=de.icr.io/mace/mytodo:1.0
+    ```
+
+1. Deploy the container into your cluster.
   
-    ```yaml
+    ```sh
+    kubectl apply -f - <<EOF
     ---
      # Application to deploy
     apiVersion: apps/v1
@@ -47,7 +79,7 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
         spec:
           containers:
           - name: mytodo
-            image: <registry-region>.icr.io/<registry-namespace>/mytodo-<lastname>:1.0
+            image: $DOCKER_IMG
             imagePullPolicy: Always
             resources:
               requests:
@@ -66,13 +98,14 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
       name: mytodo-ingress
       annotations:
         kubernetes.io/ingress.class: "public-iks-k8s-nginx"
+        # kubernetes.io/ingress.class: "private-iks-k8s-nginx"
     spec:
       tls:
       - hosts:
-        - <ingress-subdomain>
-        secretName: <ingress-secret>
+        - $IKS_INGRESS_URL
+        secretName: $IKS_INGRESS_SECRET
       rules:
-      - host: <ingress-subdomain>
+      - host: $IKS_INGRESS_URL
         http:
           paths:
           - path: /
@@ -95,11 +128,9 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
       selector:
         app: mytodo
         tier: frontend
+    EOF
     ```
 
-1. Deploy the app into your cluster.
-    ```sh
-    kubectl apply -f ingress-tls-deploy.yaml
     ```
     Output example:
     ```
@@ -109,10 +140,13 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
     ```
 
 1. Open a browser and check out the app with the following URL:
+
     ```
-    https://<ingress-subdomain>
+    open https://$IKS_INGRESS_URL
     ```
+    
     Example:
+    
     ```
     https://iks-871966-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud/
     ```
