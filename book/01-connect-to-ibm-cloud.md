@@ -5,7 +5,7 @@ In this section, you will use the IBM Cloud CLI to connect to the cluster.
 {% hint style='info' %} IBM Cloud gives you a personal cloud-based shell workspace with the full IBM Cloud CLI and tons of command-line tools - no installation needed.
  If you prefer to use your own terminal, make sure to perform the [Pre-Requisites](./prepare-prereq.md). {% endhint %}
 
-# Connect to IBM Cloud using the Cloud Shell
+# Use the Cloud Shell
 
 1. Make sure youre logged in to the [IBM Cloud](http://cloud.ibm.com).
 

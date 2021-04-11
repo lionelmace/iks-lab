@@ -10,7 +10,7 @@
 * [View your cluster in the Console](01-view-cluster.md)
 * [Kubernetes Dashboard](01-kube-dashboard.md)
 * [Connect to IBM Cloud](01-connect-to-ibm-cloud.md)
-* [Access your cluster through the CLI](01-connect-cli.md)
+* [Access your cluster](01-connect-cli.md)
 
 ## Lab 2 - Deploy an app
 
