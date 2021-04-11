@@ -74,8 +74,7 @@ Helm is a client/server application :
     ingress:
       enabled: true
       annotations:
-        # Force the use of https if the request is http
-        ingress.bluemix.net/redirect-to-https: "True"
+        kubernetes.io/ingress.class: "public-iks-k8s-nginx"
     path: /
     hosts:
         - mytodo.<cluster-name>.<region>.containers.appdomain.cloud

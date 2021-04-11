@@ -1,8 +1,6 @@
 # Summary
 
-## Introduction
-
-* [Lab Overview](README.md)
+* [Introduction](README.md)
 
 ## Lab 1 - Access the cluster
 
