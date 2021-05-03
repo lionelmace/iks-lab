@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Access your cluster · IBM Cloud Kubernetes Service Lab</title>
+        <title>Using Gitlab Registry with Kubernetes · IBM Cloud Kubernetes Service Lab</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -81,10 +81,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="02-run-app.html" />
+    <link rel="next" href="appendix-create-cluster-cli.html" />
     
     
-    <link rel="prev" href="01-connect-to-ibm-cloud.html" />
+    <link rel="prev" href="deploy-app-custom-ns.html" />
     
 
     </head>
@@ -197,7 +197,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="2.5" data-path="01-connect-cli.html">
+        <li class="chapter " data-level="2.5" data-path="01-connect-cli.html">
             
                 <a href="01-connect-cli.html">
             
@@ -450,7 +450,7 @@
             
         </li>
     
-        <li class="chapter " data-level="6.2" data-path="gitlab-registry.html">
+        <li class="chapter active" data-level="6.2" data-path="gitlab-registry.html">
             
                 <a href="gitlab-registry.html">
             
@@ -622,7 +622,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Access your cluster</a>
+        <a href="." >Using Gitlab Registry with Kubernetes</a>
     </h1>
 </div>
 
@@ -637,31 +637,123 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="access-your-cluster">Access your cluster</h1>
-<p>You need to target a Resource Group (RG) to view your cluster or to add a service (e.g. Cloudant Database). Access to the group and the resources within it are managed by using Identity and Access Management (IAM).</p>
+                                <h1 id="using-gitlab-registry-with-kubernetes">Using Gitlab Registry with Kubernetes</h1>
+<p>First of all, you will push a docker image into the Gitlab registry. Then, we will pull this image from the registry to deploy it into our kubernetes cluster.</p>
+<h2 id="push-an-image-to-the-gitlab-registry">Push an image to the Gitlab registry</h2>
 <ol>
-<li><p>In this lab, the Resource Group <strong>lab</strong> has been created. Select this resource group.</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud target -g lab
+<li><p>Login to the Gitlab Container Registry</p>
+<pre class="language-"><code class="lang-sh"> docker login registry.gitlab.com
 </code></pre>
 </li>
-<li><p>Verify you can see your cluster.</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud ks clusters
+<li><p>Build a docker image</p>
+<pre class="language-"><code class="lang-sh"> docker build -t registry.gitlab.com/lionelmace/minitodo <span class="token builtin class-name">.</span>
 </code></pre>
-<p> Output
-      <a href="images/cli-cluster-list.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/cli-cluster-list.png" alt="">
+</li>
+<li><p>Push a docker image to the Gitlab Container Registry</p>
+<pre class="language-"><code class="lang-sh"> docker push registry.gitlab.com/lionelmace/minitodo
+</code></pre>
+</li>
+</ol>
+<h2 id="acess-the-gitlab-container-registry-from-iks">Acess the GitLab Container Registry from IKS</h2>
+<ol>
+<li><p>Create a Deploy Token with only <code>read_registry</code> box ticked. To do so, go to the repository Advanced Settings.</p>
+<p>      <a href="images/gitlab-settings-token.png" rel="grouped" title="Settings" target="_self" class="fancybox">
+       <img src="images/gitlab-settings-token.png" alt="Settings">
      </a></p>
 </li>
-<li><p>Download the Kubernetes configuration files and certificates to connect to your cluster by using kubectl commands</p>
-<pre class="language-"><code class="lang-sh"> ibmcloud ks cluster config -c <span class="token operator">&lt;</span>cluster-name<span class="token operator">&gt;</span>
+<li><p>Store the token values in those variables</p>
+<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">export</span> <span class="token assign-left variable">REGISTRY_USERNAME</span><span class="token operator">=</span>
+ <span class="token builtin class-name">export</span> <span class="token assign-left variable">REGISTRY_PASSWORD</span><span class="token operator">=</span>
+ <span class="token builtin class-name">export</span> <span class="token assign-left variable">REGISTRY_EMAIL</span><span class="token operator">=</span>
 </code></pre>
 </li>
-<li><p>The cluster configuration is visible in the folder <code>.kube</code> </p>
-<pre class="language-"><code class="lang-sh"> <span class="token function">more</span> .kube/config
+<li><p>Store the credentials in a base64 encoded format.</p>
+<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">export</span> <span class="token assign-left variable">BASE_64_BASIC_AUTH_CREDENTIALS</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">echo</span> -n <span class="token string">&quot;<span class="token variable">$REGISTRY_USERNAME</span>:<span class="token variable">$REGISTRY_PASSWORD</span>&quot;</span> <span class="token operator">|</span> base64<span class="token variable">)</span></span>
 </code></pre>
 </li>
-<li><p>You can now execute &apos;kubectl&apos; commands against your cluster. For example, get the worker nodes of your cluster:</p>
-<pre class="language-"><code class="lang-sh"> kubectl get nodes
+<li><p>Create a file <code>.dockerconfigjson</code></p>
+<pre class="language-"><code class="lang-sh"> <span class="token function">touch</span> .dockerconfigjson
+</code></pre>
+</li>
+<li><p>Populate the mentioned json format below</p>
+<pre class="language-"><code class="lang-sh"> <span class="token function">cat</span> <span class="token operator">&lt;&lt;</span> EOF <span class="token operator">&gt;</span> .dockerconfigjson
+ <span class="token punctuation">{</span>
+     <span class="token string">&quot;auths&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+         <span class="token string">&quot;https://registry.gitlab.com&quot;</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+             <span class="token string">&quot;username&quot;</span><span class="token builtin class-name">:</span><span class="token string">&quot;<span class="token variable">$REGISTRY_USERNAME</span>&quot;</span>,
+             <span class="token string">&quot;password&quot;</span><span class="token builtin class-name">:</span><span class="token string">&quot;<span class="token variable">$REGISTRY_PASSWORD</span>&quot;</span>,
+             <span class="token string">&quot;email&quot;</span><span class="token builtin class-name">:</span><span class="token string">&quot;<span class="token variable">$REGISTRY_EMAIL</span>&quot;</span>,
+             <span class="token string">&quot;auth&quot;</span><span class="token builtin class-name">:</span><span class="token string">&quot;<span class="token variable">$BASE_64_BASIC_AUTH_CREDENTIALS</span>&quot;</span>
+         <span class="token punctuation">}</span>
+     <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span>
+ EOF
+</code></pre>
+</li>
+<li><p>Encode the file in base64 for the Kubernetes secret</p>
+<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">export</span> <span class="token assign-left variable">BASE_64_ENCODED_DOCKER_FILE</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span><span class="token function">cat</span> .dockerconfigjson <span class="token operator">|</span> base64<span class="token variable">)</span></span>
+</code></pre>
+</li>
+<li><p>Create a Kubernetes secret</p>
+<pre class="language-"><code class="lang-yaml"> cat &lt;&lt;EOF <span class="token punctuation">|</span> kubectl apply <span class="token punctuation">-</span>f <span class="token punctuation">-</span>
+ <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+ <span class="token key atrule">kind</span><span class="token punctuation">:</span> Secret
+ <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+   <span class="token key atrule">name</span><span class="token punctuation">:</span> registry<span class="token punctuation">-</span>credentials
+   <span class="token key atrule">namespace</span><span class="token punctuation">:</span> default
+ <span class="token key atrule">type</span><span class="token punctuation">:</span> kubernetes.io/dockerconfigjson
+ <span class="token key atrule">data</span><span class="token punctuation">:</span>
+   <span class="token key atrule">.dockerconfigjson</span><span class="token punctuation">:</span> $BASE_64_ENCODED_DOCKER_FILE
+ EOF
+</code></pre>
+</li>
+<li><p>Add the ImagePullSecrets to the cluster by specifying the default service account with imagePullSecrets</p>
+<pre class="language-"><code class="lang-yaml"> cat &lt;&lt;EOF <span class="token punctuation">|</span> kubectl apply <span class="token punctuation">-</span>f <span class="token punctuation">-</span>
+ <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+ <span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+ <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+   <span class="token key atrule">name</span><span class="token punctuation">:</span> default
+   <span class="token key atrule">namespace</span><span class="token punctuation">:</span> default
+ <span class="token key atrule">imagePullSecrets</span><span class="token punctuation">:</span>
+ <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> registry<span class="token punctuation">-</span>credentials
+ EOF
+</code></pre>
+</li>
+</ol>
+<h2 id="deploy-the-app">Deploy the app</h2>
+<ol>
+<li><p>Update the deployment file to reference the docker image in the Gitlab registry. The deployment should look somethin like this:</p>
+<pre class="language-"><code class="lang-yaml"> <span class="token punctuation">---</span>
+ <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+ <span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
+ <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+ <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
+ <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+ <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">2</span>
+ <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+     <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+     <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
+ <span class="token key atrule">template</span><span class="token punctuation">:</span>
+     <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+     <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+         <span class="token key atrule">app</span><span class="token punctuation">:</span> mytodo
+         <span class="token key atrule">tier</span><span class="token punctuation">:</span> frontend
+     <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+     <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+     <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
+         <span class="token key atrule">image</span><span class="token punctuation">:</span> registry.gitlab.com/&lt;my<span class="token punctuation">-</span>docker<span class="token punctuation">-</span>image<span class="token punctuation">&gt;</span><span class="token punctuation">:</span><span class="token number">1.0</span>
+         <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> Always
+         <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+         <span class="token key atrule">requests</span><span class="token punctuation">:</span>
+             <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 250m     <span class="token comment"># 250 millicores = 1/4 core</span>
+             <span class="token key atrule">memory</span><span class="token punctuation">:</span> 128Mi <span class="token comment"># 128 MB</span>
+         <span class="token key atrule">limits</span><span class="token punctuation">:</span>
+             <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 500m
+             <span class="token key atrule">memory</span><span class="token punctuation">:</span> 384Mi
+</code></pre>
+</li>
+<li><p>Redeploy your app</p>
+<pre class="language-"><code class="lang-sh"> kubectl apply -f iks/my-deploy-app.yml
 </code></pre>
 </li>
 </ol>
@@ -692,12 +784,12 @@
 
             
                 
-                <a href="01-connect-to-ibm-cloud.html" class="navigation navigation-prev " aria-label="Previous page: Connect to IBM Cloud">
+                <a href="deploy-app-custom-ns.html" class="navigation navigation-prev " aria-label="Previous page: Deploy app in custom namespace">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="02-run-app.html" class="navigation navigation-next " aria-label="Next page: Get and run the app locally">
+                <a href="appendix-create-cluster-cli.html" class="navigation navigation-next " aria-label="Next page: Create a cluster with CLI">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -708,7 +800,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Access your cluster","level":"2.5","depth":1,"next":{"title":"Get and run the app locally","level":"3.1","depth":1,"path":"02-run-app.md","ref":"02-run-app.md","articles":[]},"previous":{"title":"Connect to IBM Cloud","level":"2.4","depth":1,"path":"01-connect-to-ibm-cloud.md","ref":"01-connect-to-ibm-cloud.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"01-connect-cli.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Using Gitlab Registry with Kubernetes","level":"6.2","depth":1,"next":{"title":"Create a cluster with CLI","level":"6.3","depth":1,"path":"appendix-create-cluster-cli.md","ref":"appendix-create-cluster-cli.md","articles":[]},"previous":{"title":"Deploy app in custom namespace","level":"6.1","depth":1,"path":"deploy-app-custom-ns.md","ref":"deploy-app-custom-ns.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"gitlab-registry.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
