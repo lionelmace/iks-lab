@@ -36,6 +36,7 @@
 
 ## Advanced
 * [Deploy app in custom namespace](deploy-app-custom-ns.md)
+* [Using Gitlab Registry with Kubernetes](gitlab-registry.md)
 * [Create a cluster with CLI](appendix-create-cluster-cli.md)
 * [Weavescope](weavescope.md)
 * [Provisioning with Terraform](appendix-terraform.md)
