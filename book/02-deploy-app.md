@@ -14,10 +14,10 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
     cd cloud/kubernetes
     ```
 
-1. Set the cluster name
+1. Replace <cluster-name> (including <>) with the the cluster name.
 
     ```sh
-    export IKS_CLUSTER_NAME=<mycluster-name>
+    export IKS_CLUSTER_NAME=<cluster-name>
     ```
 
 1. View the details of a cluster
@@ -42,19 +42,20 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
 
     Output should be similar to this
 
-    ```
+    ```txt
     iks-325510-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
     iks-325510-483cccd2f0d38128dd40d2b711142ba9-0000
     ```
 
-1. Set the path to the docker image in the IBM Cloud Container Registry
+1. Set the path to the docker image in the IBM Cloud Container Registry. Replace <registry-region> and <registry-namespace> (including <>).
 
-    ```
+    ```sh
     export DOCKER_IMG=<registry-region>.icr.io/<registry-namespace>/<docker-image-name>:<docker-tag>
     ```
-    
+  
     Example:
-    ```
+
+    ```sh
     export DOCKER_IMG=de.icr.io/mace/mytodo:1.0
     ```
 
@@ -140,10 +141,10 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
 
 1. Open a browser and check out the app with the following URL:
 
-    ```
+    ```sh
     open https://$IKS_INGRESS_URL
     ```
-    
+  
     Example:
     https://iks-871966-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud/
 
