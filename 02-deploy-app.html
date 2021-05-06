@@ -649,8 +649,8 @@
 <pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">cd</span> cloud/kubernetes
 </code></pre>
 </li>
-<li><p>Set the cluster name</p>
-<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">export</span> <span class="token assign-left variable">IKS_CLUSTER_NAME</span><span class="token operator">=</span><span class="token operator">&lt;</span>mycluster-name<span class="token operator">&gt;</span>
+<li><p>Replace <cluster-name> (including &lt;&gt;) with the the cluster name.</cluster-name></p>
+<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">export</span> <span class="token assign-left variable">IKS_CLUSTER_NAME</span><span class="token operator">=</span><span class="token operator">&lt;</span>cluster-name<span class="token operator">&gt;</span>
 </code></pre>
 </li>
 <li><p>View the details of a cluster</p>
@@ -667,14 +667,17 @@
  <span class="token builtin class-name">echo</span> <span class="token variable">$IKS_INGRESS_SECRET</span>
 </code></pre>
 <p> Output should be similar to this</p>
-<pre class="language-"><code> iks-325510-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+<pre class="language-"><code class="lang-txt"> iks-325510-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
  iks-325510-483cccd2f0d38128dd40d2b711142ba9-0000
-</code></pre></li>
-<li><p>Set the path to the docker image in the IBM Cloud Container Registry</p>
-<pre class="language-"><code> export DOCKER_IMG=<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>registry-region</span><span class="token punctuation">&gt;</span></span>.icr.io/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>registry-namespace</span><span class="token punctuation">&gt;</span></span>/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>docker-image-name</span><span class="token punctuation">&gt;</span></span>:<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>docker-tag</span><span class="token punctuation">&gt;</span></span>
-</code></pre><p> Example:</p>
-<pre class="language-"><code> export DOCKER_IMG=de.icr.io/mace/mytodo:1.0
-</code></pre></li>
+</code></pre>
+</li>
+<li><p>Set the path to the docker image in the IBM Cloud Container Registry. Replace <registry-region> and <registry-namespace> (including &lt;&gt;).</registry-namespace></registry-region></p>
+<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">export</span> <span class="token assign-left variable">DOCKER_IMG</span><span class="token operator">=</span><span class="token operator">&lt;</span>registry-region<span class="token operator">&gt;</span>.icr.io/<span class="token operator">&lt;</span>registry-namespace<span class="token operator">&gt;</span>/<span class="token operator">&lt;</span>docker-image-name<span class="token operator">&gt;</span>:<span class="token operator">&lt;</span>docker-tag<span class="token operator">&gt;</span>
+</code></pre>
+<p> Example:</p>
+<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">export</span> <span class="token assign-left variable">DOCKER_IMG</span><span class="token operator">=</span>de.icr.io/mace/mytodo:1.0
+</code></pre>
+</li>
 <li><p>Deploy the container into your cluster.</p>
 <pre class="language-"><code class="lang-sh"> kubectl apply -f - <span class="token operator">&lt;&lt;</span>EOF
  ---
@@ -753,8 +756,9 @@
  service/mytodo created</p>
 </li>
 <li><p>Open a browser and check out the app with the following URL:</p>
-<pre class="language-"><code> open https://$IKS_INGRESS_URL
-</code></pre><p> Example:
+<pre class="language-"><code class="lang-sh"> <span class="token function">open</span> https://<span class="token variable">$IKS_INGRESS_URL</span>
+</code></pre>
+<p> Example:
  <a href="https://iks-871966-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud/" target="_blank">https://iks-871966-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud/</a></p>
 </li>
 </ol>
