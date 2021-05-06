@@ -14,7 +14,7 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
     cd cloud/kubernetes
     ```
 
-1. Replace <cluster-name> (including <>) with the the cluster name.
+1. Replace the cluster-name (including <>) with the the cluster name.
 
     ```sh
     export IKS_CLUSTER_NAME=<cluster-name>
@@ -47,7 +47,7 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
     iks-325510-483cccd2f0d38128dd40d2b711142ba9-0000
     ```
 
-1. Set the path to the docker image in the IBM Cloud Container Registry. Replace <registry-region> and <registry-namespace> (including <>).
+1. Set the path to the docker image in the IBM Cloud Container Registry. Replace the registry-region and the registry-namespace (including <>).
 
     ```sh
     export DOCKER_IMG=<registry-region>.icr.io/<registry-namespace>/<docker-image-name>:<docker-tag>
