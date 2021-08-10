@@ -59,7 +59,7 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
     export DOCKER_IMG=de.icr.io/mace/mytodo:1.0
     ```
 
-1. Deploy the container into your cluster.
+1. Deploy the container into the cluster.
   
     ```sh
     kubectl apply -f - <<EOF
