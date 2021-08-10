@@ -93,9 +93,9 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
                 memory: 384Mi
             # envFrom:
             # - secretRef:
-            #     name: database-credentials
+            #     name: database-credentials    
     ---
-    apiVersion: extensions/v1beta1
+    apiVersion: networking.k8s.io/v1
     kind: Ingress
     metadata:
       name: mytodo-ingress
@@ -112,9 +112,12 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
         http:
           paths:
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: mytodo
-              servicePort: 8080
+              service:
+                name: mytodo
+                port:
+                  number: 8080
     ---
      # Service to expose frontend
     apiVersion: v1
