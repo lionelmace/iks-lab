@@ -640,8 +640,8 @@
                                 <h1 id="deploy-the-app-in-your-cluster">Deploy the app in your cluster</h1>
 <p>Different ways exist to make your app accessible from the internet. To choose the best networking option for your application, you can follow the decision tree available <a href="https://cloud.ibm.com/docs/containers?topic=containers-cs_network_planning" target="_blank">here</a>.</p>
 <p>In this lab, we will test the <strong>Ingress</strong>, which a NGINX based reverse proxy.</p>
-<p>     <a href="images/k8s-yaml.png" rel="grouped" title="" target="_self" class="fancybox">
-       <img src="images/k8s-yaml.png" alt="">
+<p>     <a href="images/k8s-yaml.png" rel="grouped" title="architecture" target="_self" class="fancybox">
+       <img src="images/k8s-yaml.png" alt="architecture">
      </a></p>
 <h2 id="deploy-with-ingress">Deploy with Ingress</h2>
 <ol>
@@ -658,8 +658,8 @@
 </code></pre>
 </li>
 <li><p>Set the values of both the ingress subdomain and the ingress secret of your cluster. Those values will be used in the deployment yaml later.</p>
-<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">export</span> <span class="token assign-left variable">IKS_INGRESS_URL</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>ic ks cluster get -c $IKS_CLUSTER_NAME <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">&quot;Ingress Subdomain&quot;</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">&apos;{print tolower(<span class="token variable">$3</span>)}&apos;</span><span class="token variable">)</span></span>
- <span class="token builtin class-name">export</span> <span class="token assign-left variable">IKS_INGRESS_SECRET</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>ic ks cluster get -c $IKS_CLUSTER_NAME <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">&quot;Ingress Secret&quot;</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">&apos;{print tolower(<span class="token variable">$3</span>)}&apos;</span><span class="token variable">)</span></span>
+<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">export</span> <span class="token assign-left variable">IKS_INGRESS_URL</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>ic ks cluster get -c $IKS_CLUSTER_NAME <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">&quot;Ingress Subdomain&quot;</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">&apos;{print tolower($3)}&apos;</span><span class="token variable">)</span></span>
+ <span class="token builtin class-name">export</span> <span class="token assign-left variable">IKS_INGRESS_SECRET</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$(</span>ic ks cluster get -c $IKS_CLUSTER_NAME <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">&quot;Ingress Secret&quot;</span> <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">&apos;{print tolower($3)}&apos;</span><span class="token variable">)</span></span>
 </code></pre>
 </li>
 <li><p>Verify the values you set</p>
@@ -710,9 +710,9 @@
              memory: 384Mi
          <span class="token comment"># envFrom:</span>
          <span class="token comment"># - secretRef:</span>
-         <span class="token comment">#     name: database-credentials</span>
+         <span class="token comment">#     name: database-credentials    </span>
  ---
- apiVersion: extensions/v1beta1
+ apiVersion: networking.k8s.io/v1
  kind: Ingress
  metadata:
    name: mytodo-ingress
@@ -729,9 +729,12 @@
      http:
        paths:
        - path: /
+         pathType: Prefix
          backend:
-           serviceName: mytodo
-           servicePort: <span class="token number">8080</span>
+           service:
+             name: mytodo
+             port:
+               number: <span class="token number">8080</span>
  ---
   <span class="token comment"># Service to expose frontend</span>
  apiVersion: v1
