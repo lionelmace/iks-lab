@@ -74,7 +74,7 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
       selector:
         matchLabels:
           app: mytodo
-      template:   # create pods using pod definition in this template
+      template:
         metadata:
           labels:
             app: mytodo
