@@ -70,7 +70,7 @@ In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
     metadata:
       name: mytodo
     spec:
-      replicas: 2 # tells deployment to run 2 pods matching the template
+      replicas: 2
       selector:
         matchLabels:
           app: mytodo
