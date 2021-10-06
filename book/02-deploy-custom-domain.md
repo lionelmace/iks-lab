@@ -3,9 +3,9 @@
 In Cloud Internet Services, an alternate domain name, also known as a CNAME, lets you use your own domain name (for example, www.example.com) in your app’ URL instead of using the domain name that IKS assigns to your cluster.
 
 In this section, we will leverage two IBM Cloud Services:
-* [CIS - Cloud Internet Services](https://cloud.ibm.com/catalog/services/internet-services) which includes Domain Name Service (DNS), Global Load Balancer (GLB), Distributed Denial of Service (DDoS) protection, Web Application Firewall (WAF), etc.
+    * [CIS - Cloud Internet Services](https://cloud.ibm.com/catalog/services/internet-services) which includes Domain Name Service (DNS), Global Load Balancer (GLB), Distributed Denial of Service (DDoS) protection, Web Application Firewall (WAF), etc.
 
-* [Certificate Manager](https://cloud.ibm.com/catalog/services/certificate-manager) to order and manage SSL/TLS certificates.
+    * [Certificate Manager](https://cloud.ibm.com/catalog/services/certificate-manager) to order and manage SSL/TLS certificates.
 
 ## Add a DNS record with CIS
 
@@ -15,19 +15,19 @@ To create a custom domain, you will need an instance of CIS and the hostname of 
 
 1. Retrieve the cluster ID
 
-    ```
-    ibmcloud ks cluster get -c iks | grep ID
+    ```sh
+    ibmcloud ks cluster get -c <cluster-name> | grep ID
     ```
 
 1. Retrieve the LB ID
 
-    ```
+    ```sh
     ibmcloud is lbs | grep <cluster-id>
     ```
 
 1. Retrieve the VPC LB hostname
 
-    ```
+    ```sh
     ibmcloud is lb <vpc-lb-id> --output json | grep hostname
     ```
 
@@ -60,8 +60,7 @@ https://cloud.ibm.com/docs/certificate-manager?topic=certificate-manager-orderin
 
     ![](./images/cert-mgr-crn.png)
 
-
-## Create a new kubernetes secret to store the TLS certificate
+## Create a Kubernetes secret to store the TLS certificate
 
 1. Get your cluster id
 
@@ -71,13 +70,19 @@ https://cloud.ibm.com/docs/certificate-manager?topic=certificate-manager-orderin
 
 1. Create a new Kubernetes secret
 
-    ```
+    ```sh
     ibmcloud ks ingress secret create --name <secret-name> --cluster <cluster-id> --cert-crn <cert-crn>
+    ```
+
+    Example:
+
+    ```sh
+    ibmcloud ks ingress secret create --name mytodo-iks-cert --cluster c5di7erf0mv7dsr142dg --cert-crn crn:v1:bluemix:public:cloudcerts:eu-de:a/0b5a00334eaf9eb9339d2ab48f7326b4:d1698ea4-6209-444e-a21c-8d38c6b88c49:certificate:42b44eada278448bce72c6a74685ffd3
     ```
 
 1. Verify that your secret was created
 
-    ```
+    ```sh
     kubectl get secrets -n ibm-cert-store
     ```
 
@@ -87,27 +92,32 @@ https://cloud.ibm.com/docs/certificate-manager?topic=certificate-manager-orderin
 
     ```yaml
     ---
-    apiVersion: extensions/v1beta1
+    apiVersion: networking.k8s.io/v1
     kind: Ingress
     metadata:
       name: mytodo-ingress
-      namespace: mytodo
+      namespace: default
       annotations:
+        kubernetes.io/ingress.class: "public-iks-k8s-nginx"
+        # kubernetes.io/ingress.class: "private-iks-k8s-nginx"
         # Force the use of https if the request is http
         ingress.bluemix.net/redirect-to-https: "True"
     spec:
       tls:
       - hosts:
         - <your-custom-domain>
-        secretName: <new-cert-secret>
+        secretName: <secret-name>
       rules:
       - host: <your-custom-domain>
         http:
           paths:
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: mytodo
-              servicePort: 8080
+              service:
+                name: mytodo
+                port:
+                  number: 8080
     ```
 
 1. Update the new ingress
