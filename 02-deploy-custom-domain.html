@@ -640,26 +640,26 @@
                                 <h1 id="using-custom-urls-for-your-app-by-adding-alternate-domain-names-cnames">Using Custom URLs for your app by adding Alternate Domain Names (CNAMEs)</h1>
 <p>In Cloud Internet Services, an alternate domain name, also known as a CNAME, lets you use your own domain name (for example, www.example.com) in your app&#x2019; URL instead of using the domain name that IKS assigns to your cluster.</p>
 <p>In this section, we will leverage two IBM Cloud Services:</p>
-<ul>
-<li><p><a href="https://cloud.ibm.com/catalog/services/internet-services" target="_blank">CIS - Cloud Internet Services</a> which includes Domain Name Service (DNS), Global Load Balancer (GLB), Distributed Denial of Service (DDoS) protection, Web Application Firewall (WAF), etc.</p>
-</li>
-<li><p><a href="https://cloud.ibm.com/catalog/services/certificate-manager" target="_blank">Certificate Manager</a> to order and manage SSL/TLS certificates.</p>
-</li>
-</ul>
-<h2 id="add-a-dns-record-with-cis">Add a DNS record with CIS</h2>
+<pre class="language-"><code>* [CIS - Cloud Internet Services](https://cloud.ibm.com/catalog/services/internet-services) which includes Domain Name Service (DNS), Global Load Balancer (GLB), Distributed Denial of Service (DDoS) protection, Web Application Firewall (WAF), etc.
+
+* [Certificate Manager](https://cloud.ibm.com/catalog/services/certificate-manager) to order and manage SSL/TLS certificates.
+</code></pre><h2 id="add-a-dns-record-with-cis">Add a DNS record with CIS</h2>
 <p>To create a custom domain, you will need an instance of CIS and the hostname of your VPC Load Balancer created automatically during the cluster provisioning.</p>
 <ol>
 <li><p>You will need an instance of <a href="https://cloud.ibm.com/catalog/services/internet-services" target="_blank">CIS - Cloud Internet Services</a>. You can create one for free.</p>
 </li>
 <li><p>Retrieve the cluster ID</p>
-<pre class="language-"><code> ibmcloud ks cluster get -c iks | grep ID
-</code></pre></li>
+<pre class="language-"><code class="lang-sh"> ibmcloud ks cluster get -c <span class="token operator">&lt;</span>cluster-name<span class="token operator">&gt;</span> <span class="token operator">|</span> <span class="token function">grep</span> ID
+</code></pre>
+</li>
 <li><p>Retrieve the LB ID</p>
-<pre class="language-"><code> ibmcloud is lbs | grep <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-id</span><span class="token punctuation">&gt;</span></span>
-</code></pre></li>
+<pre class="language-"><code class="lang-sh"> ibmcloud is lbs <span class="token operator">|</span> <span class="token function">grep</span> <span class="token operator">&lt;</span>cluster-id<span class="token operator">&gt;</span>
+</code></pre>
+</li>
 <li><p>Retrieve the VPC LB hostname</p>
-<pre class="language-"><code> ibmcloud is lb <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vpc-lb-id</span><span class="token punctuation">&gt;</span></span> --output json | grep hostname
-</code></pre></li>
+<pre class="language-"><code class="lang-sh"> ibmcloud is lb <span class="token operator">&lt;</span>vpc-lb-id<span class="token operator">&gt;</span> --output json <span class="token operator">|</span> <span class="token function">grep</span> <span class="token function">hostname</span>
+</code></pre>
+</li>
 <li><p>To create a new domain, go to Reliability &gt; DNS.</p>
 <p>      <a href="images/cis-dns.png" rel="grouped" title="" target="_self" class="fancybox">
        <img src="images/cis-dns.png" alt="">
@@ -696,44 +696,54 @@
      </a></p>
 </li>
 </ol>
-<h2 id="create-a-new-kubernetes-secret-to-store-the-tls-certificate">Create a new kubernetes secret to store the TLS certificate</h2>
+<h2 id="create-a-kubernetes-secret-to-store-the-tls-certificate">Create a Kubernetes secret to store the TLS certificate</h2>
 <ol>
 <li><p>Get your cluster id</p>
 <pre class="language-"><code class="lang-sh"> ibmcloud ks cluster get -c <span class="token operator">&lt;</span>cluster-name<span class="token operator">&gt;</span>
 </code></pre>
 </li>
 <li><p>Create a new Kubernetes secret</p>
-<pre class="language-"><code> ibmcloud ks ingress secret create --name <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>secret-name</span><span class="token punctuation">&gt;</span></span> --cluster <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-id</span><span class="token punctuation">&gt;</span></span> --cert-crn <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cert-crn</span><span class="token punctuation">&gt;</span></span>
-</code></pre></li>
+<pre class="language-"><code class="lang-sh"> ibmcloud ks ingress secret create --name <span class="token operator">&lt;</span>secret-name<span class="token operator">&gt;</span> --cluster <span class="token operator">&lt;</span>cluster-id<span class="token operator">&gt;</span> --cert-crn <span class="token operator">&lt;</span>cert-crn<span class="token operator">&gt;</span>
+</code></pre>
+<p> Example:</p>
+<pre class="language-"><code class="lang-sh"> ibmcloud ks ingress secret create --name mytodo-iks-cert --cluster c5di7erf0mv7dsr142dg --cert-crn crn:v1:bluemix:public:cloudcerts:eu-de:a/0b5a00334eaf9eb9339d2ab48f7326b4:d1698ea4-6209-444e-a21c-8d38c6b88c49:certificate:42b44eada278448bce72c6a74685ffd3
+</code></pre>
+</li>
 <li><p>Verify that your secret was created</p>
-<pre class="language-"><code> kubectl get secrets -n ibm-cert-store
-</code></pre></li>
+<pre class="language-"><code class="lang-sh"> kubectl get secrets -n ibm-cert-store
+</code></pre>
+</li>
 </ol>
 <h2 id="update-the-ingress-with-the-new-domain">Update the ingress with the new domain</h2>
 <ol>
 <li><p>Edit your yaml to replace the default domain by the new custom domain.</p>
 <pre class="language-"><code class="lang-yaml"> <span class="token punctuation">---</span>
- <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> extensions/v1beta1
+ <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> networking.k8s.io/v1
  <span class="token key atrule">kind</span><span class="token punctuation">:</span> Ingress
  <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
    <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo<span class="token punctuation">-</span>ingress
-   <span class="token key atrule">namespace</span><span class="token punctuation">:</span> mytodo
+   <span class="token key atrule">namespace</span><span class="token punctuation">:</span> default
    <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
+     <span class="token key atrule">kubernetes.io/ingress.class</span><span class="token punctuation">:</span> <span class="token string">&quot;public-iks-k8s-nginx&quot;</span>
+     <span class="token comment"># kubernetes.io/ingress.class: &quot;private-iks-k8s-nginx&quot;</span>
      <span class="token comment"># Force the use of https if the request is http</span>
      <span class="token key atrule">ingress.bluemix.net/redirect-to-https</span><span class="token punctuation">:</span> <span class="token string">&quot;True&quot;</span>
  <span class="token key atrule">spec</span><span class="token punctuation">:</span>
    <span class="token key atrule">tls</span><span class="token punctuation">:</span>
    <span class="token punctuation">-</span> <span class="token key atrule">hosts</span><span class="token punctuation">:</span>
      <span class="token punctuation">-</span> &lt;your<span class="token punctuation">-</span>custom<span class="token punctuation">-</span>domain<span class="token punctuation">&gt;</span>
-     <span class="token key atrule">secretName</span><span class="token punctuation">:</span> &lt;new<span class="token punctuation">-</span>cert<span class="token punctuation">-</span>secret<span class="token punctuation">&gt;</span>
+     <span class="token key atrule">secretName</span><span class="token punctuation">:</span> &lt;secret<span class="token punctuation">-</span>name<span class="token punctuation">&gt;</span>
    <span class="token key atrule">rules</span><span class="token punctuation">:</span>
    <span class="token punctuation">-</span> <span class="token key atrule">host</span><span class="token punctuation">:</span> &lt;your<span class="token punctuation">-</span>custom<span class="token punctuation">-</span>domain<span class="token punctuation">&gt;</span>
      <span class="token key atrule">http</span><span class="token punctuation">:</span>
        <span class="token key atrule">paths</span><span class="token punctuation">:</span>
        <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> /
+         <span class="token key atrule">pathType</span><span class="token punctuation">:</span> Prefix
          <span class="token key atrule">backend</span><span class="token punctuation">:</span>
-           <span class="token key atrule">serviceName</span><span class="token punctuation">:</span> mytodo
-           <span class="token key atrule">servicePort</span><span class="token punctuation">:</span> <span class="token number">8080</span>
+           <span class="token key atrule">service</span><span class="token punctuation">:</span>
+             <span class="token key atrule">name</span><span class="token punctuation">:</span> mytodo
+             <span class="token key atrule">port</span><span class="token punctuation">:</span>
+               <span class="token key atrule">number</span><span class="token punctuation">:</span> <span class="token number">8080</span>
 </code></pre>
 </li>
 <li><p>Update the new ingress</p>
