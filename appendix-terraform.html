@@ -640,107 +640,85 @@
                                 <h1 id="deploy-the-solution-using-terraform">Deploy the solution using Terraform</h1>
 <p><a href="https://www.terraform.io/" target="_blank">Terraform</a> enables you to safely and predictably create, change, and improve infrastructure. It is an open source tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.</p>
 <p>The IBM Cloud Terraform Provider is available on <a href="https://registry.terraform.io/providers/IBM-Cloud/ibm" target="_blank">HashiCorp Terraform Registry</a>.</p>
-<p>In this tutorial, you will use a sample configuration to provision a <strong>VPC</strong>, a <strong>Kubernetes cluster</strong> and, a <strong>Postgres</strong> database. Finish by deleting all of the resources created by the configuration.</p>
+<p>In this tutorial, you will use a sample configuration to provision a <strong>VPC</strong>, a <strong>Kubernetes cluster</strong>, an <strong>OpenShift</strong> cluster, a <strong>Mongo</strong> database, a <strong>LogDNA</strong> instance, a <strong>Sysdig</strong> instance and a <strong>COS</strong> instance. Both LogDNA and Sysdig instance will be attached to both clusters.</p>
+<p>Finish by deleting all of the resources created by the configuration.</p>
 <h2 id="install-terraform">Install Terraform</h2>
 <ol>
 <li><p>Download and install Terraform for your system. <a href="https://learn.hashicorp.com/terraform/getting-started/install.html" target="_blank">https://learn.hashicorp.com/terraform/getting-started/install.html</a></p>
 </li>
 <li><p>On MacOS, Terraform can also be installed using Terraform version manager <code>tfenv</code></p>
-<pre class="language-"><code> brew install tfenv
-</code></pre><pre class="language-"><code> tfenv install <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>
-</code></pre><p> For example:</p>
-<pre class="language-"><code> tfenv install 0.12.24
-</code></pre></li>
+<pre class="language-"><code class="lang-sh"> brew <span class="token function">install</span> tfenv
+</code></pre>
+<pre class="language-"><code class="lang-sh"> tfenv <span class="token function">install</span> <span class="token operator">&lt;</span>version<span class="token operator">&gt;</span>
+</code></pre>
+<p> For example:</p>
+<pre class="language-"><code class="lang-sh"> tfenv <span class="token function">install</span> <span class="token number">1.0</span>.8
+</code></pre>
+</li>
+<li><p>Once installed, switch to a version to use</p>
+<pre class="language-"><code class="lang-sh"> tfenv use <span class="token number">1.0</span>.8
+</code></pre>
+</li>
 <li><p>Check Terraform installation by running <code>terraform</code> in your terminal. You should see a list of <strong>Common commands</strong>.</p>
 </li>
 </ol>
-<h2 id="provision-a-vpc-to-host-your-cluster">Provision a VPC to host your cluster</h2>
+<h2 id="provision-all-resources">Provision all resources</h2>
 <ol>
 <li><p>Export API credential tokens as environment variables</p>
-<pre class="language-"><code> export TF_VAR_ibmcloud_api_key=&quot;Your IBM Cloud API Key&quot;
-</code></pre></li>
+<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">export</span> <span class="token assign-left variable">TF_VAR_ibmcloud_api_key</span><span class="token operator">=</span><span class="token string">&quot;Your IBM Cloud API Key&quot;</span>
+</code></pre>
+</li>
 <li><p>Go to the terraform folder</p>
-<pre class="language-"><code> cd cloud/terraform/02-vpc
-</code></pre></li>
+<pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">cd</span> cloud/terraform
+</code></pre>
+</li>
 <li><p>Terraform must initialize the provider before it can be used.</p>
-<pre class="language-"><code> terraform init
-</code></pre><p> Output</p>
-<pre class="language-"><code> Initializing the backend...
+<pre class="language-"><code class="lang-sh"> terraform init
+</code></pre>
+<p> Output</p>
+<pre class="language-"><code class="lang-sh"> Initializing modules<span class="token punctuation">..</span>.
 
- Initializing provider plugins...
- - Finding ibm-cloud/ibm versions matching &quot;1.12.0&quot;...
- - Installing ibm-cloud/ibm v1.12.0...
- - Installed ibm-cloud/ibm v1.12.0 (self-signed, key ID AAD3B791C49CC253)
+ Initializing the backend<span class="token punctuation">..</span>.
 
- Partner and community providers are signed by their developers.
- If you&apos;d like to know more about provider signing, you can read about it here:
- https://www.terraform.io/docs/plugins/signing.html
-
- Terraform has been successfully initialized!
-
- You may now begin working with Terraform. Try running &quot;terraform plan&quot; to see
- any changes that are required for your infrastructure. All Terraform commands
- should now work.
-
- If you ever set or change modules or backend configuration for Terraform,
- rerun this command to reinitialize your working directory. If you forget, other
- commands will detect it and remind you to do so if necessary.
-</code></pre></li>
-<li><p>Start provisioning</p>
-<pre class="language-"><code> terraform apply
-</code></pre></li>
-</ol>
-<h2 id="provision-a-kubernetes-cluster">Provision a Kubernetes cluster</h2>
-<ol>
-<li><p>Go to the terraform folder</p>
-<pre class="language-"><code> cd cloud/terraform/03-iks
-</code></pre></li>
-<li><p>Terraform must initialize the provider before it can be used.</p>
-<pre class="language-"><code> terraform init
-</code></pre><p> Output</p>
-<pre class="language-"><code> Initializing the backend...
-
- Initializing provider plugins...
- - Finding ibm-cloud/ibm versions matching &quot;1.12.0&quot;...
- - Installing ibm-cloud/ibm v1.12.0...
- - Installed ibm-cloud/ibm v1.12.0 (self-signed, key ID AAD3B791C49CC253)
-
- Partner and community providers are signed by their developers.
- If you&apos;d like to know more about provider signing, you can read about it here:
- https://www.terraform.io/docs/plugins/signing.html
-
- Terraform has been successfully initialized!
-
- You may now begin working with Terraform. Try running &quot;terraform plan&quot; to see
- any changes that are required for your infrastructure. All Terraform commands
- should now work.
-
- If you ever set or change modules or backend configuration for Terraform,
- rerun this command to reinitialize your working directory. If you forget, other
- commands will detect it and remind you to do so if necessary.
-</code></pre></li>
+ Initializing provider plugins<span class="token punctuation">..</span>.
+ - Reusing previous version of sysdiglabs/sysdig from the dependency lock <span class="token function">file</span>
+ - Reusing previous version of ibm-cloud/ibm from the dependency lock <span class="token function">file</span>
+ - Using previously-installed sysdiglabs/sysdig v0.5.10
+ - Using previously-installed ibm-cloud/ibm v1.31.0
+ Terraform has been successfully initialized<span class="token operator">!</span>
+</code></pre>
+</li>
 <li><p>Perform a dry run to show what infrastructure terraform intends to create</p>
-<pre class="language-"><code> terraform plan
-</code></pre><blockquote>
+<pre class="language-"><code class="lang-sh"> terraform plan
+</code></pre>
+<blockquote>
 <p>You can activate debug log by running: <em>export TF_LOG=TRACE</em></p>
 </blockquote>
 </li>
 <li><p>Start provisioning</p>
-<pre class="language-"><code> terraform apply
- terraform apply -target=ibm_container_cluster.cluster
-</code></pre></li>
+<pre class="language-"><code class="lang-sh"> terraform apply
+</code></pre>
+<blockquote>
+<p>You can apply to a single resource <code>terraform apply -target=ibm_container_cluster.cluster</code></p>
+</blockquote>
+</li>
 <li><p>Once provisioned, reads and outputs a Terraform state or plan file in a human-readable form.</p>
-<pre class="language-"><code> terraform show
-</code></pre></li>
+<pre class="language-"><code class="lang-sh"> terraform show
+</code></pre>
+</li>
+</ol>
+<h2 id="remove-all-resources">Remove all resources</h2>
+<ol>
 <li><p>Clean up</p>
-<pre class="language-"><code> terraform destroy
-</code></pre></li>
+<pre class="language-"><code class="lang-sh"> terraform destroy
+</code></pre>
+</li>
 </ol>
 <h2 id="resources">Resources</h2>
 <p>For additional resources pay close attention to the following:</p>
 <ul>
-<li><a href="https://cloud.ibm.com/docs/tutorials?topic=solution-tutorials-infrastructure-as-code-terraform#setup" target="_blank">Tutorial: Deploy a LAMP stack using Terraform</a></li>
-<li><a href="https://cloud.ibm.com/docs/tutorials/plan-create-update-deployments.html#plan-create-and-update-deployment-environments" target="_blank">Tutorial: Plan, create and update deployment environments</a></li>
+<li><a href="https://registry.terraform.io/providers/IBM-Cloud/ibm/latest" target="_blank">Hashicorp Terraform Registry</a></li>
+<li><a href="https://cloud.ibm.com/docs/solution-tutorials?topic=solution-tutorials-plan-create-update-deployments" target="_blank">Solution Tutorial: Plan, create and update deployment environments</a></li>
 </ul>
 
                                 
