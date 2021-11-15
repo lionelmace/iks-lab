@@ -26,8 +26,8 @@
 
 ## Lab 4 - DevOps and Helm charts
 
-* [Deploy with Helm](devops-helm.md)
-* [Deploy with Continuous Delivery](devops-continuous-delivery.md)
+* [Deploy with Helm](03-devops-helm.md)
+* [Deploy with Continuous Delivery](03-devops-continuous-delivery.md)
 
 ## Lab 5 - Monitor your cluster
 

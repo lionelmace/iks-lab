@@ -1,4 +1,4 @@
-## Deploy using a Continuous Delivery Pipeline
+# Deploy using a Continuous Delivery Pipeline
 
 In this tutorial, you create an open toolchain and use it to deploy the web app, package it into a Docker container, and then deploy the app to a Kubernetes cluster using Helm charts.
 
@@ -13,25 +13,25 @@ The toolchain includes:
 * Vulnerability Advisor to ensure the container we're deploying is secure.
 * Deployment to IBM Cloud Kubernetes with Helm.
 
-# Create a Toolchain
+## Create a Toolchain
 
 1. Open the creation page for the toolchain by clicking **[Create toolchain](https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master)**
 
 1. The diagram of the toolchain shows each tool integration in its lifecycle phase in the toolchain.
 
-    ![](./images/toolchain-landing.png)
+    ![landing](./images/toolchain-landing.png)
 
 1. Review the default information for the toolchain settings. Select the region **Frankfurt** and the Resource Group **lab**.
 
-    ![](./images/toolchain-name-param.png)
+    ![param](./images/toolchain-name-param.png)
 
 1. Keep the default options for the git configuration. This should like the following:
 
-    ![](./images/toolchain-git.png)
+    ![git](./images/toolchain-git.png)
 
 1. Click Delivery Pipeline.
 
-    ![](./images/toolchain-pipeline-config.png)
+    ![config](./images/toolchain-pipeline-config.png)
 
     * **App name**: Enter the name for your application. The app name must be unique (if you want, you can just use the default value provided).
 
@@ -49,9 +49,9 @@ The toolchain includes:
 
 1. Click **Create**. After a few moments, your new toolchain's Overview page opens.
 
-    ![](./images/toolchain-created.png)
+    ![created](./images/toolchain-created.png)
 
-# Explore Delivery Pipeline in your toolchain
+## Explore Delivery Pipeline in your toolchain
 
 Explore Delivery Pipeline in your toolchain. The pipeline is automatically triggered on every Git commit push.
 
@@ -59,7 +59,7 @@ A delivery pipeline automates the continuous deployment of a project. In a proje
 
 1. On the toolchain's Overview page, click **Delivery Pipeline** to see your toolchain as it is being built and deployed. Your pipeline might still be running.
 
-    ![](./images/toolchain-pipeline.png)
+    ![pipeline](./images/toolchain-pipeline.png)
 
 1. Review the BUILD stage. On the BUILD stage, click the Configure Stage icon to explore the stage.
 
@@ -101,19 +101,21 @@ A delivery pipeline automates the continuous deployment of a project. In a proje
 
 1. On the PROD stage, click **View logs and history** and then click the **Deploy Helm chart** job. This job deploys the app into the Kubernetes cluster. At the end of the log file, find the link to the running application.
 
-    ![](./images/toolchain-pipeline-deploy.png)
+    ![deploy](./images/toolchain-pipeline-deploy.png)
 
-1. Browse to the given url to see the running application. The url should look similar to this https://todo.lab-cluster-2.eu-de.containers.appdomain.cloud/.
+1. Browse to the given url to see the running application. The url should look similar to this [https://todo.lab-cluster-2.eu-de.containers.appdomain.cloud/](https://todo.lab-cluster-2.eu-de.containers.appdomain.cloud/).
 
-# Troubleshooting your pipeline
+## Troubleshooting your pipeline
 
 1. If you face the following error in the step **Pre-deploy check 1**
-    ```
+
+    ```sh
     CHECKING HELM releases in this namespace: prod
-Error: configmaps is forbidden: User "system:serviceaccount:kube-system:default" cannot list resource "configmaps" in API group "" in the namespace "kube-system"
+    Error: configmaps is forbidden: User "system:serviceaccount:kube-system:default" cannot list resource "configmaps" in API group "" in the namespace "kube-system"
     ```
 
     Set the right permissions to be able to install package
-    ```
+
+    ```sh
     kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
     ```
