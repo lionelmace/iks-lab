@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Create a cluster with CLI · IBM Cloud Kubernetes Service Lab</title>
+        <title>Deploy with Continuous Delivery · IBM Cloud Kubernetes Service Lab</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -81,10 +81,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="weavescope.html" />
+    <link rel="next" href="monitor-cluster-logs.html" />
     
     
-    <link rel="prev" href="gitlab-registry.html" />
+    <link rel="prev" href="03-devops-helm.html" />
     
 
     </head>
@@ -376,7 +376,7 @@
             
         </li>
     
-        <li class="chapter " data-level="4.2" data-path="03-devops-continuous-delivery.html">
+        <li class="chapter active" data-level="4.2" data-path="03-devops-continuous-delivery.html">
             
                 <a href="03-devops-continuous-delivery.html">
             
@@ -465,7 +465,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="6.3" data-path="appendix-create-cluster-cli.html">
+        <li class="chapter " data-level="6.3" data-path="appendix-create-cluster-cli.html">
             
                 <a href="appendix-create-cluster-cli.html">
             
@@ -622,7 +622,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Create a cluster with CLI</a>
+        <a href="." >Deploy with Continuous Delivery</a>
     </h1>
 </div>
 
@@ -637,170 +637,135 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="create-a-kubernetes-cluster-using-the-cli">Create a kubernetes cluster using the CLI</h1>
-<p>To create a cluster, you have two options either a Lite cluster or a Standard one.</p>
+                                <h1 id="deploy-using-a-continuous-delivery-pipeline">Deploy using a Continuous Delivery Pipeline</h1>
+<p>In this tutorial, you create an open toolchain and use it to deploy the web app, package it into a Docker container, and then deploy the app to a Kubernetes cluster using Helm charts.</p>
+<p>IBM Cloud Continuous Delivery supports Helm functions in the Delivery Pipeline. </p>
+<p>The toolchain used for this tutorial is configured out of the box to perform sanity checks before build or deploy activities, and manages development privacy by using a private image registry and configurable namespaces (both in the container registry and Kubernetes cluster).</p>
+<p>The toolchain includes:</p>
 <ul>
-<li><p>A <strong>Lite cluster</strong> is a free cluster comes with a single worker node to deploy container pods upon. A worker node is the compute host, typically a virtual machine, that your apps run on. Go to Step <em>Create a Lite cluster</em></p>
+<li>Git Repos and Issue Tracking for source control and issue tracking.</li>
+<li>Eclipse Orion Web IDE for online editing.</li>
+<li>Vulnerability Advisor to ensure the container we&apos;re deploying is secure.</li>
+<li>Deployment to IBM Cloud Kubernetes with Helm.</li>
+</ul>
+<h2 id="create-a-toolchain">Create a Toolchain</h2>
+<ol>
+<li><p>Open the creation page for the toolchain by clicking <strong><a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&amp;branch=master" target="_blank">Create toolchain</a></strong></p>
 </li>
-<li><p>A <strong>Standard cluster</strong> is a production-ready cluster with as many worker nodes as you want. A Standard cluster requires a VPC. Go to Step <em>Create a Standard cluster</em>.</p>
+<li><p>The diagram of the toolchain shows each tool integration in its lifecycle phase in the toolchain.</p>
+<p>      <a href="images/toolchain-landing.png" rel="grouped" title="landing" target="_self" class="fancybox">
+       <img src="images/toolchain-landing.png" alt="landing">
+     </a></p>
+</li>
+<li><p>Review the default information for the toolchain settings. Select the region <strong>Frankfurt</strong> and the Resource Group <strong>lab</strong>.</p>
+<p>      <a href="images/toolchain-name-param.png" rel="grouped" title="param" target="_self" class="fancybox">
+       <img src="images/toolchain-name-param.png" alt="param">
+     </a></p>
+</li>
+<li><p>Keep the default options for the git configuration. This should like the following:</p>
+<p>      <a href="images/toolchain-git.png" rel="grouped" title="git" target="_self" class="fancybox">
+       <img src="images/toolchain-git.png" alt="git">
+     </a></p>
+</li>
+<li><p>Click Delivery Pipeline.</p>
+<p>      <a href="images/toolchain-pipeline-config.png" rel="grouped" title="config" target="_self" class="fancybox">
+       <img src="images/toolchain-pipeline-config.png" alt="config">
+     </a></p>
+<ul>
+<li><p><strong>App name</strong>: Enter the name for your application. The app name must be unique (if you want, you can just use the default value provided).</p>
+</li>
+<li><p><strong>Container Registry Region</strong>: Select the region you want the docker images to be created into.</p>
+</li>
+<li><p><strong>Container Registry Namespace</strong>: This is your folder in the global image registry in a region, used to manage your own set of images. It must be a unique name.</p>
+</li>
+<li><p><strong>IBM Cloud API Key</strong>: Create a new IBM Cloud API Key.</p>
+</li>
+<li><p><strong>Cluster Region</strong>: Select the region for the target cluster. </p>
+</li>
+<li><p><strong>Cluster Name</strong>: The name of the Kubernetes  cluster that you got assigned. Exemple: <code>lab-cluster-1</code></p>
+</li>
+<li><p><strong>Cluster Namespace</strong>: It is a best practice to use explicit namespaces in clusters to separate deployed resources. For instance, we use &#x2018;prod&#x2019; to denote a prod environment within this cluster. Later in the tutorial, we will add a &#x2018;staging&#x2019; environment within the same cluster. You can leave this setting at its default &apos;prod&apos; value.</p>
 </li>
 </ul>
-<p>With a standard cluster, you can:</p>
+</li>
+<li><p>Click <strong>Create</strong>. After a few moments, your new toolchain&apos;s Overview page opens.</p>
+<p>      <a href="images/toolchain-created.png" rel="grouped" title="created" target="_self" class="fancybox">
+       <img src="images/toolchain-created.png" alt="created">
+     </a></p>
+</li>
+</ol>
+<h2 id="explore-delivery-pipeline-in-your-toolchain">Explore Delivery Pipeline in your toolchain</h2>
+<p>Explore Delivery Pipeline in your toolchain. The pipeline is automatically triggered on every Git commit push.</p>
+<p>A delivery pipeline automates the continuous deployment of a project. In a project&apos;s pipeline, sequences of stages retrieve input and run jobs, such as builds, tests, and deployments. You can use a pipeline to facilitate everything that is required for a DevOps project.</p>
+<ol>
+<li><p>On the toolchain&apos;s Overview page, click <strong>Delivery Pipeline</strong> to see your toolchain as it is being built and deployed. Your pipeline might still be running.</p>
+<p>      <a href="images/toolchain-pipeline.png" rel="grouped" title="pipeline" target="_self" class="fancybox">
+       <img src="images/toolchain-pipeline.png" alt="pipeline">
+     </a></p>
+</li>
+<li><p>Review the BUILD stage. On the BUILD stage, click the Configure Stage icon to explore the stage.</p>
 <ul>
-<li>Guard against zone failures with mutltizone clusters.</li>
-<li>React to workload changes with automatic load balancing and scaling of apps and worker nodes.</li>
-<li>Expose apps with stable IPs and domains, and manage network traffic with Istio.</li>
+<li><p>The <strong>Pre-build check</strong> job checks for mandatory files (the Dockerfile and Helm chart), lints the files, and creates the image registry namespace.</p>
+</li>
+<li><p>The <strong>Build Docker image</strong> job creates the Docker image by using the IBM Cloud Container Registry build service through the bx cr build CLI script. The script stores the output image into the private IBM Cloud Container Registry and copies the Helm chart and other app scripts with the build results into the ARCHIVE_DIR folder.</p>
+</li>
+<li><p>The build scripts also record a few environment variables into a build.properties file.</p>
+</li>
 </ul>
-<h2 id="create-a-lite-cluster">Create a Lite cluster</h2>
-<ol>
-<li><p>Create your Lite cluster.</p>
-<pre class="language-"><code> ibmcloud ks cluster create classic --name <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>your-cluster-name</span><span class="token punctuation">&gt;</span></span>
-</code></pre><p> Once the cluster reaches the <strong>deployed</strong> state you can provision pods, but they will be enqueued until the cluster&#x2019;s pods are finished provisioning. Note that it takes up to 15 minutes for the worker node machine to be ordered and for the cluster to be set up and provisioned.</p>
 </li>
-<li><p>Verify that the creation of the cluster was requested.</p>
-<pre class="language-"><code> ibmcloud ks clusters
-</code></pre></li>
-<li><p>Check the status of the worker node(s).</p>
-<pre class="language-"><code> ibmcloud ks workers <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster_name_or_id</span><span class="token punctuation">&gt;</span></span>
-</code></pre></li>
-</ol>
-<h2 id="create-a-standard-cluster">Create a Standard cluster</h2>
-<ol>
-<li><p>Select the Kubernetes version</p>
-<pre class="language-"><code> ibmcloud ks versions
-</code></pre><p> Output</p>
-<pre class="language-"><code> Kubernetes Versions
- 1.17.17
- 1.18.17
- 1.19.9 (default)
- 1.20.5
-</code></pre></li>
-<li><p>Review the data centers that are available.</p>
-<pre class="language-"><code> ibmcloud ks zones --provider vpc-gen2
-</code></pre><p> Output for Frankfurt:</p>
-<pre class="language-"><code> eu-de-1      eu-de-1      Frankfurt         -
- eu-de-2      eu-de-2      Frankfurt         -
- eu-de-3      eu-de-3      Frankfurt         -
-</code></pre></li>
-<li><p>Review the machine types available in the data center</p>
-<pre class="language-"><code> ibmcloud ks flavors --zone <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>zone</span><span class="token punctuation">&gt;</span></span>
-</code></pre><p> Output for eu-de-1:</p>
-<pre class="language-"><code> Name         Cores   Memory   Network Speed   OS             Server Type   Storage   Secondary Storage   Provider
- bx2.16x64    16      64GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- bx2.2x8&#x2020;     2       8GB      4Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- bx2.32x128   32      128GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- bx2.48x192   48      192GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- bx2.4x16     4       16GB     8Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- bx2.8x32     8       32GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- cx2.16x32    16      32GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- cx2.2x4&#x2020;     2       4GB      4Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- cx2.32x64    32      64GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- cx2.48x96    48      96GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- cx2.4x8&#x2020;     4       8GB      8Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- cx2.8x16     8       16GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- mx2.16x128   16      128GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- mx2.2x16&#x2020;    2       16GB     4Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- mx2.32x256   32      256GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- mx2.48x384   48      384GB    16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- mx2.4x32     4       32GB     8Gbps           UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
- mx2.8x64     8       64GB     16Gbps          UBUNTU_18_64   virtual       100GB     0B                  vpc-gen2
-</code></pre></li>
-<li><p>Get the available VPCs in your account</p>
-<pre class="language-"><code> ibmcloud is vpcs
-</code></pre><p> Output for fra02:</p>
-<pre class="language-"><code> Listing vpcs for generation 2 compute in resource group demo and region eu-de under account ACME as user lionel.mace@fr.ibm.com...
- ID                                          Name            Status      Classic access   Default network ACL   Default security group   Resource group
- r010-68dfdcd1-a8ca-4302-83a1-a14d7408ab7c   vpc-eu-de-iks   available   false            vpc-eu-de-iks-acl     vpc-eu-de-iks-sg         demo
-</code></pre><blockquote>
-<p> When you create a Kube cluster with no vlans in create command, those should get created for you.</p>
-</blockquote>
+<li><p>Click <strong>CANCEL</strong> to return to the pipeline.</p>
 </li>
-<li><p>Get the available subnet for the vpc above</p>
-<pre class="language-"><code> ibmcloud is subnets
-</code></pre></li>
-<li><p>Create cluster</p>
-<pre class="language-"><code> ibmcloud ks cluster create vpc-gen2 \
-   --name <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster-name</span><span class="token punctuation">&gt;</span></span> \
-   --zone <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>zone</span><span class="token punctuation">&gt;</span></span> \
-   --workers <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>number-of-workers</span><span class="token punctuation">&gt;</span></span> \
-   --flavor <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>machine-type</span><span class="token punctuation">&gt;</span></span> \
-   --version <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>kubernetes-version</span><span class="token punctuation">&gt;</span></span> \
-   --vpc-id <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vpc-id</span><span class="token punctuation">&gt;</span></span> \
-   --subnet-id <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>subnet-id</span><span class="token punctuation">&gt;</span></span>
-</code></pre><p> For example:</p>
-<pre class="language-"><code> ibmcloud ks cluster create vpc-gen2 \
-   --name mycluster \
-   --zone eu-de-1 \
-   --version 1.18.9 \
-   --flavor cx2.2x4  \
-   --workers 2 \
-   --vpc-id r006-809f4e33-36fb-4bdd-a026-bd2a4918eeee \
-   --subnet-id 0717-30090a05-434a-42e3-973f-dde7999acb2c
-</code></pre></li>
-<li><p>Verify that the creation of the cluster was requested.</p>
-<pre class="language-"><code> ibmcloud ks clusters
-</code></pre></li>
-<li><p>Check the status of the worker node(s).</p>
-<pre class="language-"><code> ibmcloud ks workers <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cluster_name_or_id</span><span class="token punctuation">&gt;</span></span>
-</code></pre></li>
+<li><p>On the BUILD stage, click <strong>View logs and history</strong>. Notice that the stage is building the container and copying the Kubernetes deploy manifest file into build artifacts.</p>
+</li>
+<li><p>On the pipeline&apos;s log page, click the <strong>Back</strong> arrow to return to the pipeline page.</p>
+</li>
+<li><p>On the VALIDATE stage, click the <strong>Configure Stage</strong> icon to explore the stage.</p>
+<ul>
+<li><p>This toolchain prevents you from deploying unsafe Docker images using IBM Cloud Vulnerability Advisor. This is performed by the pipeline job Vulnerability Advisor which runs the container registry command bx cr va ${PIPELINE_IMAGE_URL}. Notice how the VALIDATE stage is configured to receives the build.properties file from the build result, which will automatically recreate the respective environment properties.</p>
+</li>
+<li><p>When security issues are discovered, a report will be printed in the job log.</p>
+</li>
+<li><p>The <strong>Use the container image from the stage input</strong> check box is selected.</p>
+</li>
+<li><p>The VALIDATE stage is configured to be advisory so that if it fails, it does not block the pipeline. You can change this behavior by selecting the <strong>Stop running this stage if this job fails</strong> check box. </p>
+</li>
+</ul>
+</li>
+<li><p>Click <strong>CANCEL</strong> to return to the pipeline.</p>
+</li>
+<li><p>On the VALIDATE stage, click <strong>View logs and history</strong>. This stage runs the Vulnerability Advisor on the image to check for known vulnerabilities. If it finds a vulnerability, the stage fails, preventing the image from being deployed. This safety feature prevents apps with security holes from being deployed. The image has no vulnerabilities, so it passes.</p>
+</li>
+<li><p>On the pipeline&apos;s log page, click the <strong>Back</strong> arrow to return to the pipeline page.</p>
+</li>
+<li><p>On the PROD stage, click the <strong>Configure Stage</strong> icon to explore the stage.</p>
+<ul>
+<li><p>The &quot;Pre-deploy check&quot; job checks for cluster readiness and namespace existence, configures the cluster namespace, grants access to the private image registry, configures tiller, and checks the Helm releases in the namespace.</p>
+</li>
+<li><p>The &quot;Deploy Helm chart&quot; job sets environment variables and deploys the Helm chart into the Kubernetes cluster.</p>
+</li>
+</ul>
+</li>
+<li><p>Click <strong>CANCEL</strong> to return to the pipeline.</p>
+</li>
+<li><p>On the PROD stage, click <strong>View logs and history</strong> and then click the <strong>Deploy Helm chart</strong> job. This job deploys the app into the Kubernetes cluster. At the end of the log file, find the link to the running application.</p>
+<p>      <a href="images/toolchain-pipeline-deploy.png" rel="grouped" title="deploy" target="_self" class="fancybox">
+       <img src="images/toolchain-pipeline-deploy.png" alt="deploy">
+     </a></p>
+</li>
+<li><p>Browse to the given url to see the running application. The url should look similar to this <a href="https://todo.lab-cluster-2.eu-de.containers.appdomain.cloud/" target="_blank">https://todo.lab-cluster-2.eu-de.containers.appdomain.cloud/</a>.</p>
+</li>
 </ol>
-<blockquote>
-<p>The cluster creation process is as follow:</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>State</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>provision_pending</td>
-<td>Waiting for master to be deployed</td>
-</tr>
-<tr>
-<td>provisioning</td>
-<td>Provisioning in progress</td>
-</tr>
-<tr>
-<td>deploying</td>
-<td>Starting worker deployment</td>
-</tr>
-<tr>
-<td>deploying</td>
-<td>Installing Docker Runtime</td>
-</tr>
-<tr>
-<td>deploying</td>
-<td>Configuring Kubectl CLI</td>
-</tr>
-<tr>
-<td>deploying</td>
-<td>Preparing Worker for Calico Networking Setup</td>
-</tr>
-<tr>
-<td>deploying</td>
-<td>Starting Kube Worker Services</td>
-</tr>
-<tr>
-<td>deploying</td>
-<td>Configuring Calico-Workers</td>
-</tr>
-<tr>
-<td>deployed</td>
-<td>Deploying</td>
-</tr>
-<tr>
-<td>deployed</td>
-<td>Deploy Automation Successful</td>
-</tr>
-<tr>
-<td>normal</td>
-<td>Ready</td>
-</tr>
-</tbody>
-</table>
+<h2 id="troubleshooting-your-pipeline">Troubleshooting your pipeline</h2>
+<ol>
+<li><p>If you face the following error in the step <strong>Pre-deploy check 1</strong></p>
+<pre class="language-"><code class="lang-sh"> CHECKING HELM releases <span class="token keyword">in</span> this namespace: prod
+ Error: configmaps is forbidden: User <span class="token string">&quot;system:serviceaccount:kube-system:default&quot;</span> cannot list resource <span class="token string">&quot;configmaps&quot;</span> <span class="token keyword">in</span> API group <span class="token string">&quot;&quot;</span> <span class="token keyword">in</span> the namespace <span class="token string">&quot;kube-system&quot;</span>
+</code></pre>
+<p> Set the right permissions to be able to install package</p>
+<pre class="language-"><code class="lang-sh"> kubectl create clusterrolebinding add-on-cluster-admin --clusterrole<span class="token operator">=</span>cluster-admin --serviceaccount<span class="token operator">=</span>kube-system:default
+</code></pre>
+</li>
+</ol>
 
                                 
                                 </section>
@@ -828,12 +793,12 @@
 
             
                 
-                <a href="gitlab-registry.html" class="navigation navigation-prev " aria-label="Previous page: Using Gitlab Registry with Kubernetes">
+                <a href="03-devops-helm.html" class="navigation navigation-prev " aria-label="Previous page: Deploy with Helm">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="weavescope.html" class="navigation navigation-next " aria-label="Next page: Weavescope">
+                <a href="monitor-cluster-logs.html" class="navigation navigation-next " aria-label="Next page: Cluster Logs">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -844,7 +809,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Create a cluster with CLI","level":"6.3","depth":1,"next":{"title":"Weavescope","level":"6.4","depth":1,"path":"weavescope.md","ref":"weavescope.md","articles":[]},"previous":{"title":"Using Gitlab Registry with Kubernetes","level":"6.2","depth":1,"path":"gitlab-registry.md","ref":"gitlab-registry.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"appendix-create-cluster-cli.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Deploy with Continuous Delivery","level":"4.2","depth":1,"next":{"title":"Cluster Logs","level":"5.1","depth":1,"path":"monitor-cluster-logs.md","ref":"monitor-cluster-logs.md","articles":[]},"previous":{"title":"Deploy with Helm","level":"4.1","depth":1,"path":"03-devops-helm.md","ref":"03-devops-helm.md","articles":[]},"dir":"ltr"},"config":{"plugins":["prism","-highlight","collapsible-chapters","hints","copy-code-button","back-to-top-button","fancybox","web-header"],"root":"book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"webheader":{"headerTitle":"IBM Cloud Kubernetes Service (IKS) Lab"},"prism":{"css":["prismjs/themes/prism-tomorrow.css"]},"fancybox":{"helpers":{"buttons":{}},"openEffect":"elastic","closeEffect":"elastic"},"web-header":{},"search":{},"collapsible-chapters":{},"hints":{"danger":"fa fa-exclamation-circle","info":"fa fa-info-circle","tip":"fa fa-mortar-board","working":"fa fa-wrench"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"back-to-top-button":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"IBM Cloud Kubernetes Service Lab","gitbook":"3.2.3"},"file":{"path":"03-devops-continuous-delivery.md","mtime":"2018-11-11T11:11:11.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-11T11:11:11.000Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
