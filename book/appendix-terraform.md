@@ -50,7 +50,7 @@ Finish by deleting all of the resources created by the configuration.
     cd cloud/terraform
     ```
 
-1. Terraform must initialize the provider before it can be used.
+1. Terraform must fetch the IBM Cloud provider plug-in for Terraform from the Terraform Registry.
 
     ```sh
     terraform init
@@ -71,10 +71,12 @@ Finish by deleting all of the resources created by the configuration.
     Terraform has been successfully initialized!
     ```
 
+1. Edit the variables in `testing.tfvars` if you want to change some services name.
+
 1. Perform a dry run to show what infrastructure terraform intends to create
 
     ```sh
-    terraform plan
+    terraform plan -var-file="testing.tfvars"
     ```
 
     > You can activate debug log by running: *export TF_LOG=TRACE*
@@ -82,7 +84,7 @@ Finish by deleting all of the resources created by the configuration.
 1. Start provisioning
 
     ```sh
-    terraform apply
+    terraform apply -var-file="testing.tfvars"
     ```
 
     > You can apply to a single resource `terraform apply -target=ibm_container_cluster.cluster`
@@ -98,7 +100,7 @@ Finish by deleting all of the resources created by the configuration.
 1. Clean up
 
     ```sh
-    terraform destroy
+    terraform destroy -var-file="testing.tfvars"
     ```
 
 ## Resources
