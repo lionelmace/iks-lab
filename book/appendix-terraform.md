@@ -6,7 +6,7 @@ The IBM Cloud Terraform Provider is available on [HashiCorp Terraform Registry](
 
 In this tutorial, you will use a sample configuration to provision a **VPC**, a **Kubernetes cluster**, an **OpenShift** cluster, a **Mongo** database, a **LogDNA** instance, a **Sysdig** instance and a **COS** instance. Both LogDNA and Sysdig instance will be attached to both clusters.
 
-Finish by deleting all of the resources created by the configuration.
+Finish by deleting all of the resources created by the configuration to minimize cost.
 
 ## Install Terraform
 
