@@ -672,7 +672,7 @@
 <pre class="language-"><code class="lang-sh"> <span class="token builtin class-name">cd</span> cloud/terraform
 </code></pre>
 </li>
-<li><p>Terraform must initialize the provider before it can be used.</p>
+<li><p>Terraform must fetch the IBM Cloud provider plug-in for Terraform from the Terraform Registry.</p>
 <pre class="language-"><code class="lang-sh"> terraform init
 </code></pre>
 <p> Output</p>
@@ -688,15 +688,17 @@
  Terraform has been successfully initialized<span class="token operator">!</span>
 </code></pre>
 </li>
+<li><p>Edit the variables in <code>testing.tfvars</code> if you want to change some services name.</p>
+</li>
 <li><p>Perform a dry run to show what infrastructure terraform intends to create</p>
-<pre class="language-"><code class="lang-sh"> terraform plan
+<pre class="language-"><code class="lang-sh"> terraform plan -var-file<span class="token operator">=</span><span class="token string">&quot;testing.tfvars&quot;</span>
 </code></pre>
 <blockquote>
 <p>You can activate debug log by running: <em>export TF_LOG=TRACE</em></p>
 </blockquote>
 </li>
 <li><p>Start provisioning</p>
-<pre class="language-"><code class="lang-sh"> terraform apply
+<pre class="language-"><code class="lang-sh"> terraform apply -var-file<span class="token operator">=</span><span class="token string">&quot;testing.tfvars&quot;</span>
 </code></pre>
 <blockquote>
 <p>You can apply to a single resource <code>terraform apply -target=ibm_container_cluster.cluster</code></p>
@@ -710,7 +712,7 @@
 <h2 id="remove-all-resources">Remove all resources</h2>
 <ol>
 <li><p>Clean up</p>
-<pre class="language-"><code class="lang-sh"> terraform destroy
+<pre class="language-"><code class="lang-sh"> terraform destroy -var-file<span class="token operator">=</span><span class="token string">&quot;testing.tfvars&quot;</span>
 </code></pre>
 </li>
 </ol>
