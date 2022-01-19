@@ -1,4 +1,4 @@
-# Use a Kubernetes Secret to connect to a managed Database service.
+# Connect to Cloudant DBaaS
 
 The initial version of the application uses an in-memory database to store the todo. Yet, the web application can be configured to store the todo in either a Cloudant or a Mongo DBaaS.
 We will use a Cloudant DB to demonstrate how to connnect the web app to the  Cloudant service using the Kubernetes Secret.
