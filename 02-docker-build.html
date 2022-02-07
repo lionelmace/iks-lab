@@ -656,7 +656,7 @@
 <p>Before you can deploy the application on the cluster, you first need to build the Docker image.</p>
 <ol>
 <li><p><strong>Build</strong> a Docker image. Make sure to replace the value region and namespace</p>
-<pre class="language-"><code class="lang-sh"> docker build <span class="token builtin class-name">.</span> -t <span class="token operator">&lt;</span>region<span class="token operator">&gt;</span>.icr.io/lab-registry/todo-<span class="token operator">&lt;</span>yourlastname<span class="token operator">&gt;</span>:1.0
+<pre class="language-"><code class="lang-sh"> <span class="token function">docker</span> build <span class="token builtin class-name">.</span> -t <span class="token operator">&lt;</span>region<span class="token operator">&gt;</span>.icr.io/lab-registry/todo-<span class="token operator">&lt;</span>yourlastname<span class="token operator">&gt;</span>:1.0
 </code></pre>
 <blockquote>
 <p>Region is <strong>de</strong> for the Frankfurt datacenter.</p>
@@ -668,7 +668,7 @@
 </blockquote>
 </li>
 <li><p>Verify that the image was successfully added to your local docker registry</p>
-<pre class="language-"><code class="lang-sh"> docker images
+<pre class="language-"><code class="lang-sh"> <span class="token function">docker</span> images
 </code></pre>
 <p> Output:</p>
 <pre class="language-"><code> REPOSITORY                           TAG                 IMAGE ID            CREATED             SIZE

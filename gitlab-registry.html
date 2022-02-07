@@ -657,15 +657,15 @@
 <h2 id="push-an-image-to-the-gitlab-registry">Push an image to the Gitlab registry</h2>
 <ol>
 <li><p>Login to the Gitlab Container Registry</p>
-<pre class="language-"><code class="lang-sh"> docker login registry.gitlab.com
+<pre class="language-"><code class="lang-sh"> <span class="token function">docker</span> login registry.gitlab.com
 </code></pre>
 </li>
 <li><p>Build a docker image</p>
-<pre class="language-"><code class="lang-sh"> docker build -t registry.gitlab.com/lionelmace/minitodo <span class="token builtin class-name">.</span>
+<pre class="language-"><code class="lang-sh"> <span class="token function">docker</span> build -t registry.gitlab.com/lionelmace/minitodo <span class="token builtin class-name">.</span>
 </code></pre>
 </li>
 <li><p>Push a docker image to the Gitlab Container Registry</p>
-<pre class="language-"><code class="lang-sh"> docker push registry.gitlab.com/lionelmace/minitodo
+<pre class="language-"><code class="lang-sh"> <span class="token function">docker</span> push registry.gitlab.com/lionelmace/minitodo
 </code></pre>
 </li>
 </ol>
