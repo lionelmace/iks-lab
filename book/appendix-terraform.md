@@ -25,13 +25,13 @@ Finish by deleting all of the resources created by the configuration to minimize
     For example:
 
     ```sh
-    tfenv install 1.0.8
+    tfenv install 1.0.11
     ```
 
 1. Once installed, switch to a version to use
 
     ```sh
-    tfenv use 1.0.8
+    tfenv use 1.0.11
     ```
 
 1. Check Terraform installation by running `terraform` in your terminal. You should see a list of **Common commands**.
