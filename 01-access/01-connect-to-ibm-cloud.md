@@ -11,11 +11,11 @@ In this section, you will use the IBM Cloud CLI to connect to the cluster.
 
 1. To get started, click the Cloud Shell icon in the IBM Cloud console menu bar.
 
-    ![](./images/cloudshell.png)
+    ![](../images/cloudshell.png)
 
 1. A new windonw will open. You are now logged in IBM Cloud and you can run commands such git, kubectl
 
-    ![](./images/cloudshell-login.png)
+    ![](../images/cloudshell-login.png)
 
 1. List the clusters in the account
 

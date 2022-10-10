@@ -8,8 +8,8 @@ In this section, you will either use your own cluster or get access to a IBM Clo
 
 1. Go to the web page given by the instructor and enter your IBM ID (the email you used to sign up) and the lab key given by the trainer.
 
-    ![](./images/request-cluster.png)
+    ![](../images/request-cluster.png)
 
 1. **Submit**. You will be added to the Lab account and granted access to a cluster.
 
-    ![](./images/get-cluster.png)
+    ![](../images/get-cluster.png)

@@ -4,7 +4,7 @@ Different ways exist to make your app accessible from the internet. To choose th
 
 In this lab, we will test the **Ingress**, which a NGINX based reverse proxy.
 
-![architecture](./images/k8s-yaml.png)
+![architecture](../images/k8s-yaml.png)
 
 ## Deploy with Ingress
 

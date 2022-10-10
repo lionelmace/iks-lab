@@ -2,7 +2,7 @@
 
 [Weave scope](https://www.weave.works/docs/scope/latest/introducing/) provides a visual diagram of your resources within the kube cluster including services, pods, containers, processes, nodes, etc. Scope provides you interactive metrics for CPU and Memory and provides tools to tail and exec into a container. Scope is a powerful tool that you do not want to expose on the public internet.
 
-![](./images/weavescope.png)
+![](../images/weavescope.png)
 
 To use weave scope securely with your Kubernetes cluster you can follow these steps.
 

@@ -4,13 +4,13 @@ Log Analysis with LogDNA is a third-party service that you can include as part o
 
 In order to configure cluster-level logging for a Kubernetes cluster, you must provision an instance of Log Analysis with LogDNA service.
 
-![](./images/logdna-architecture.png)
+![](../images/logdna-architecture.png)
 
 ## Provision an instance of Log Analysis with LogDNA service
 
 1. Navigate to the [**Observability**](https://cloud.ibm.com/observe) page
 
-    ![](./images/observe-landing.png)
+    ![](../images/observe-landing.png)
 
 1. Under **Logging**, click **Create instance**.
 
@@ -18,13 +18,13 @@ In order to configure cluster-level logging for a Kubernetes cluster, you must p
 
 1. Choose a **region/location** and select a **resource group**.
 
-    ![](./images/logging-creation.png)
+    ![](../images/logging-creation.png)
 
     > To better govern your services, it is recommended to use the same Resource Group than the one your cluster is in.
 
 1. Select **Lite** as your plan and click **Create**.
 
-    ![](./images/logging-plan.png)
+    ![](../images/logging-plan.png)
 
 1. The Observability dashboard opens and shows the details for your service.
 
@@ -34,11 +34,11 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
 
 1. Click on **Edit log sources** next to the service which you created earlier.
 
-    ![](./images/logging-configure.png)
+    ![](../images/logging-configure.png)
 
 1. Select **Kubernetes**.
 
-    ![](./images/logdna-agents.png)
+    ![](../images/logdna-agents.png)
 
 1. Copy and run the first command on a terminal where you have set the KUBECONFIG environment variable to create a kubernetes secret with the LogDNA ingestion key for your service instance.
 
@@ -54,7 +54,7 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
     ```
     Output:
 
-    ![](./images/logdna-agent-pods.png)
+    ![](../images/logdna-agent-pods.png)
 
     The deployment is successful when you see one or more LogDNA pods. The number of LogDNA pods equals the number of worker nodes in your cluster. All pods must be in a Running state.
 
@@ -81,7 +81,7 @@ To configure your Kubernetes cluster to send logs to your IBM Log Analysis with 
 
 1. As you go through the next steps, keep an eye on the LogDNA console for new log statements coming from your apps deployed in this namespace.
 
-    ![LogDNA dashboard](./images/logdna-console.png)
+    ![LogDNA dashboard](../images/logdna-console.png)
 
 ## Resources
 

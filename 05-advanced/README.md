@@ -11,7 +11,7 @@ In this tutorial, you act as a developper. You configure a custom Kubernetes clu
 
 ## Architecture
 
-![](./images/kubelabarchi.png)
+![](../images/kubelabarchi.png)
 
 1. A developer clone an existing web application from Github.
 1. Run the application locally and produce a Docker container image.
@@ -23,7 +23,7 @@ In this tutorial, you act as a developper. You configure a custom Kubernetes clu
 
 This diagram gives you an overview of the task, services and main command lines you will be using during the lab.
 
-![](./images/cli-main-cmds.png)
+![](../images/cli-main-cmds.png)
 
 ## Cloud Services used
 

@@ -15,7 +15,7 @@ You need to target a Resource Group (RG) to view your cluster or to add a servic
     ```
 
     Output
-    ![](./images/cli-cluster-list.png)
+    ![](../images/cli-cluster-list.png)
 
 1. Download the Kubernetes configuration files and certificates to connect to your cluster by using kubectl commands
 

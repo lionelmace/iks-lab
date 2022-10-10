@@ -11,15 +11,15 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 
 1. Create an instance of the service with the plan **Lite**
 
-    ![](./images/cloudant-create.png)
+    ![](../images/cloudant-create.png)
 
 1. Create the credentials to access the service.
 
-    ![](./images/cloudant-credentials.png)
+    ![](../images/cloudant-credentials.png)
 
 1. Click **New Credentials** and keep all the default options
 
-    ![](./images/cloudant-credentials2.png)
+    ![](../images/cloudant-credentials2.png)
 
 1. Duplicate the file `credentials.template.env` in the root folder to a new file `credentials.env`
 
@@ -54,7 +54,7 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 
 1. You can view the secret in the Kubernetes Dashboard 
 
-    ![](./images/k8s-secret.png)
+    ![](../images/k8s-secret.png)
 
 
 ## Redeploy the app
@@ -104,12 +104,12 @@ We will use a Cloudant DB to demonstrate how to connnect the web app to the  Clo
 
 1. Create a new todo in the web app.
 
-    ![](./images/webapp-db.png)
+    ![](../images/webapp-db.png)
 
 1. Check the Cloudant Dashboard to validate this new todo has been persisted in the DB.
 
-    ![](./images/cloudant-dashboard-launch.png)
+    ![](../images/cloudant-dashboard-launch.png)
 
-    ![](./images/cloudant-db.png)
+    ![](../images/cloudant-db.png)
 
-    ![](./images/cloudant-record.png)
+    ![](../images/cloudant-record.png)

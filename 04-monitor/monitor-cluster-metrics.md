@@ -4,13 +4,13 @@ Sysdig Monitor is part of Sysdig’s container intelligence platform. Sysdig use
 
 Once the agent has started sending metrics to Sysdig for your environment, you can use the Sysdig Monitor UI to view and analyze that data.
 
-![](./images/log-monitor.png)
+![](../images/log-monitor.png)
 
 ## Provision an instance of Monitoring with Sysdig service
 
 1. Go to the [**Observability** category](https://cloud.ibm.com/observe)
 
-    ![](./images/observe-landing.png)
+    ![](../images/observe-landing.png)
 
 1. Select the category **Monitoring**
 
@@ -20,11 +20,11 @@ Once the agent has started sending metrics to Sysdig for your environment, you c
 
 1. Select the resource group that your cluster is in. By default, the Default resource group is set for you.
 
-    ![](./images/logging-creation.png)
+    ![](../images/logging-creation.png)
 
 1. Choose a service plan for your service instance. By default, the Lite plan is selected for you. The Lite plan is good enough to continue the lab.
 
-    ![](./images/sysdig-plan.png)
+    ![](../images/sysdig-plan.png)
 
 1. Click **Create**. The Observability dashboard opens and shows the details for your service.
 
@@ -32,11 +32,11 @@ Once the agent has started sending metrics to Sysdig for your environment, you c
 
 1. Click **Edit sources**
 
-    ![](./images/sysdig-edit.png)
+    ![](../images/sysdig-edit.png)
 
 1. Run the following command to install the agent.
 
-    ![](./images/sysdig-install.png)
+    ![](../images/sysdig-install.png)
 
 1. If the installation is successfull you should see the following message:
 
@@ -69,13 +69,13 @@ To Configure Sysdig to monitor health and performance of your cluster:
 
 1. Click **View Sysdig** and you should see the sysdig monitor UI.
 
-    ![](./images/sysdig-welcome.png)
+    ![](../images/sysdig-welcome.png)
 
 1. On the welcome page, click **Next**.
 
 1. Click **Complete onboarding** to see the Explore tab of Sysdig UI.
 
-    ![](./images/sysdig-onboarding.png)
+    ![](../images/sysdig-onboarding.png)
 
 ## Monitor your cluster
 To check the health and performance of your app amd cluster:
@@ -87,7 +87,7 @@ To check the health and performance of your app amd cluster:
 
 1. Expand <cluster-name> on the left pane > expand **default** namespace > click on **app-log-analysis-deployment** to see the Request count, Response Time etc., on the Sysdig monitor wizard.
 
-    ![](./images/sysdig-explore.png)
+    ![](../images/sysdig-explore.png)
 
 1. To check the HTTP request-response codes, click on the arrow next to **Kubernetes Pod Health** on the top bar and select **HTTP** under **Applications**. Change the interval to **10 M** on the bottom bar of the Sysdig UI.
 

@@ -19,19 +19,19 @@ The toolchain includes:
 
 1. The diagram of the toolchain shows each tool integration in its lifecycle phase in the toolchain.
 
-    ![landing](./images/toolchain-landing.png)
+    ![landing](../images/toolchain-landing.png)
 
 1. Review the default information for the toolchain settings. Select the region **Frankfurt** and the Resource Group **lab**.
 
-    ![param](./images/toolchain-name-param.png)
+    ![param](../images/toolchain-name-param.png)
 
 1. Keep the default options for the git configuration. This should like the following:
 
-    ![git](./images/toolchain-git.png)
+    ![git](../images/toolchain-git.png)
 
 1. Click Delivery Pipeline.
 
-    ![config](./images/toolchain-pipeline-config.png)
+    ![config](../images/toolchain-pipeline-config.png)
 
     * **App name**: Enter the name for your application. The app name must be unique (if you want, you can just use the default value provided).
 
@@ -49,7 +49,7 @@ The toolchain includes:
 
 1. Click **Create**. After a few moments, your new toolchain's Overview page opens.
 
-    ![created](./images/toolchain-created.png)
+    ![created](../images/toolchain-created.png)
 
 ## Explore Delivery Pipeline in your toolchain
 
@@ -59,7 +59,7 @@ A delivery pipeline automates the continuous deployment of a project. In a proje
 
 1. On the toolchain's Overview page, click **Delivery Pipeline** to see your toolchain as it is being built and deployed. Your pipeline might still be running.
 
-    ![pipeline](./images/toolchain-pipeline.png)
+    ![pipeline](../images/toolchain-pipeline.png)
 
 1. Review the BUILD stage. On the BUILD stage, click the Configure Stage icon to explore the stage.
 
@@ -101,7 +101,7 @@ A delivery pipeline automates the continuous deployment of a project. In a proje
 
 1. On the PROD stage, click **View logs and history** and then click the **Deploy Helm chart** job. This job deploys the app into the Kubernetes cluster. At the end of the log file, find the link to the running application.
 
-    ![deploy](./images/toolchain-pipeline-deploy.png)
+    ![deploy](../images/toolchain-pipeline-deploy.png)
 
 1. Browse to the given url to see the running application. The url should look similar to this [https://todo.lab-cluster-2.eu-de.containers.appdomain.cloud/](https://todo.lab-cluster-2.eu-de.containers.appdomain.cloud/).
 

@@ -45,4 +45,4 @@ Before you can deploy the application on the cluster, you first need to push the
 
 1. The image is also visible in the IBM Cloud Console. Go to the [Container Registry](https://cloud.ibm.com/containers-kubernetes/registry/main/start).
 
-    ![](./images/registry-landing.png)
+    ![](../images/registry-landing.png)

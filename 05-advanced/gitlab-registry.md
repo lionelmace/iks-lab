@@ -27,7 +27,7 @@ First of all, you will push a docker image into the Gitlab registry. Then, we wi
 
 1. Create a Deploy Token with only `read_registry` box ticked. To do so, go to the repository Advanced Settings.
 
-    ![Settings](./images/gitlab-settings-token.png)
+    ![Settings](../images/gitlab-settings-token.png)
 
 1. Store the token values in those variables
 

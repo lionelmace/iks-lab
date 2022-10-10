@@ -33,7 +33,7 @@ To create a custom domain, you will need an instance of CIS and the hostname of 
 
 1. To create a new domain, go to Reliability > DNS.
 
-    ![](./images/cis-dns.png)
+    ![](../images/cis-dns.png)
 
 1. Add a DNS record with the following information:
 
@@ -50,15 +50,15 @@ https://cloud.ibm.com/docs/certificate-manager?topic=certificate-manager-orderin
 
 1. In the instance of Certificate Manager, order a new Certificate, select Cloud Internet Services.
 
-    ![](./images/cert-mgr.png)
+    ![](../images/cert-mgr.png)
 
 1. Select your CIS instance and click sub-domain. You should see the CNAME you created in CIS.
 
-    ![](./images/cert-mgr-order.png)
+    ![](../images/cert-mgr-order.png)
 
 1. Get your certificate CRN
 
-    ![](./images/cert-mgr-crn.png)
+    ![](../images/cert-mgr-crn.png)
 
 ## Create a Kubernetes secret to store the TLS certificate
 
