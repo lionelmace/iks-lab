@@ -31,15 +31,15 @@
   - [Monitoring your cluster](04-monitor/monitor-cluster-metrics.md)
 
 - Advanced
-  - [Deploy app in custom namespace](deploy-app-custom-ns.md)
-  - [Using Gitlab Registry with Kubernetes](gitlab-registry.md)
-  - [Create a cluster with CLI](appendix-create-cluster-cli.md)
-  - [Weavescope](weavescope.md)
-  - [Provisioning with Terraform](appendix-terraform.md)
-  - [Control traffic with Calico](calico.md)
-  - [Appendix](appendix.md)
-  - [Pre-Requisites](prepare-prereq.md)
-  - [Install Container Plugins](prepare-plugins.md)
+  - [Deploy app in custom namespace](05-advanced/deploy-app-custom-ns.md)
+  - [Using Gitlab Registry with Kubernetes](05-advanced/gitlab-registry.md)
+  - [Create a cluster with CLI](05-advanced/appendix-create-cluster-cli.md)
+  - [Weavescope](05-advanced/weavescope.md)
+  - [Provisioning with Terraform](05-advanced/appendix-terraform.md)
+  - [Control traffic with Calico](05-advanced/calico.md)
+  - [Appendix](05-advanced/appendix.md)
+  - [Pre-Requisites](05-advanced/prepare-prereq.md)
+  - [Install Container Plugins](05-advanced/prepare-plugins.md)
 
 - Resources
-  - [Resources](resources.md)
+  - [Resources](05-advanced/resources.md)
